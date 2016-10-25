@@ -1,0 +1,6 @@
+from SingleAgent.Utilities.Agent import Agent
+
+print("map test")
+agent1 = Agent(1,0,10)
+print(agent1.getId())
+print(agent1.getStart())

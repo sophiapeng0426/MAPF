@@ -1,0 +1,5 @@
+WALL = '*'
+BLOCK = '#'
+BLANK = '.'
+AGENTSTART = '@'
+AGENTGOAL = '&'
