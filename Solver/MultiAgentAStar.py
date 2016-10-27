@@ -1,10 +1,7 @@
-from Queue import PriorityQueue
-from GeneticAStar import GeneticAStar
 import copy
-
-# from SingleAgent.Utilities.Node import Node
+import time
+from GeneticAStar import GeneticAStar
 from SingleAgent.Utilities.ProblemInstance import ProblemInstance
-from SingleAgent.Utilities.StateClosedList import StateClosedList
 from SingleAgent.Utilities.Agent import Agent
 from SingleAgent.Utilities.Graph import Graph
 from SingleAgent.Utilities.ProblemMap import ProblemMap
@@ -13,6 +10,10 @@ from SingleAgent.States.MultiAgentState import MultiAgentState
 class MultiAgentAStar(GeneticAStar):
     def __init__(self):
         super(MultiAgentAStar, self).__init__()
+
+    def createRoot(self, problemInstance):
+        assert len(problemInstance.getAgents()) >= 1, "Need agent"
+        return MultiAgentState.fromProblemIns(problemInstance)
 
     def getPath(self):
         """
@@ -38,13 +39,13 @@ class MultiAgentAStar(GeneticAStar):
         for s in pathList:
             print(s)
 
-
     def visualizePath(self, problemInstance):
         """
         TODO: print path in map
         :param problemInstance:
         :return:
         """
+        # deep copy to prevent changing of map content
         mapContent = copy.deepcopy(problemInstance.getMap().getContent())
         pathList = self.getPath()
         for state in pathList:
@@ -55,9 +56,6 @@ class MultiAgentAStar(GeneticAStar):
         for i in mapContent:
             print(' '.join(i))
 
-    def createRoot(self, problemInstance):
-        assert len(problemInstance.getAgents()) >= 1, "Need agent"
-        return MultiAgentState.fromProblemIns(problemInstance)
 
 def main():
     graph1 = Graph(ProblemMap(16, 16, {(3, 2): 2, (8, 8): 4, (10, 3): 2, (3, 10): 1}))
@@ -65,8 +63,11 @@ def main():
     problem1 = ProblemInstance(graph1, agent1)
     problem1.plotProblem()
 
+    startTime = time.time()
     solver1 = MultiAgentAStar()
     solver1.solve(problem1)
+    print("===== solver time =======")
+    print(time.time() - startTime)
 
     solver1.printPath()
     solver1.visualizePath(problem1)

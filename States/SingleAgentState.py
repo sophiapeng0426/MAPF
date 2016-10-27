@@ -61,10 +61,8 @@ class SingleAgentState(State):
             return
         if self == self.predecessor():
             if self.goalTest(problemInstance):
-                # print("@goal")
                 self._gValue = self.predecessor().gValue()
             else:
-                # print("stay")
                 self._gValue = self.predecessor().gValue() + costs.STAY   # change stay cost here constant 1
         else:
             self._gValue = self.predecessor().gValue() + 1    # cost is constant 1
@@ -138,8 +136,8 @@ class SingleAgentState(State):
             return res
 
     def __str__(self):
-        return "AgentID: {0}: ".format(self._agentId) + "{0}, ".format((self._gValue, self._hValue))  \
-                + "Position : {0}".format(self._coord.getNode().getPosition())
+        return "{0}: ".format(self._agentId) + "{0}, ".format((self._gValue, self._hValue))  \
+                + "{0}".format(self._coord.getNode().getPosition())
 
 
 def main():

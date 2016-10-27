@@ -1,7 +1,7 @@
 from State import State
 from SingleAgentState import SingleAgentState
 from SingleAgent.Utilities.ProblemInstance import ProblemInstance
-from SingleAgent.Utilities.Node import Node
+# from SingleAgent.Utilities.Node import Node
 from SingleAgent.Utilities.Agent import Agent
 from SingleAgent.Utilities.Graph import Graph
 from SingleAgent.Utilities.ProblemMap import ProblemMap
@@ -54,13 +54,14 @@ class MultiAgentState(State):
         return True
 
     def expand(self, problemInstance):
-        """
+        """ return valid next states
+
         :param problemInstance:
         :return:
         """
         candidateList = []
         for singleState in self._singleAgents:
-            singleStateNeighborList =  singleState.expand(problemInstance)
+            singleStateNeighborList = singleState.expand(problemInstance)
             if len(singleStateNeighborList) == 0:
                 # print("No candiate singleState for state: {0}".format(singleState))
                 return []
@@ -71,19 +72,22 @@ class MultiAgentState(State):
         for multiState in candidateStateList:
             if self.isValid(multiState):  # a shallow copy to prevent change of multistate
                 validStates.append(MultiAgentState(self, multiState, problemInstance))
-
         return validStates
 
-    def isValid(self, mstate):
+    def isValid(self, mstate, StaticOnly = False):
+        """check if multiagent states is valid (no collision static/dynamic)
+        :param mstate: a list of singleAgents states
+        :return:
+        """
         if len(mstate) == 1:
             return True  # only one agent
         for s in mstate:
             assert isinstance(s, SingleAgentState)
-            left = [item.getCoord().getNode() for item in mstate] # copy to prevent changing of mstate
+            left = [item.getCoord().getNode() for item in mstate]  # copy to prevent changing of mstate
             left.remove(s.getCoord().getNode())
             staticCons = s.getCoord().getNode().get_Eight()
 
-            if s.isRoot():
+            if s.isRoot() or StaticOnly:
                 prohibit = set(staticCons)
             else:
                 dynamicCons = s.predecessor().getCoord().getNode().get_Eight()
@@ -164,7 +168,8 @@ def main():
     expand1 = expandStates[1] # 0 is stay
     expand1.setHeuristic(problem1)
     print(expand1)
-    assert not s1 < expand1, "lt test fail"
+    print(s1)
+    assert not expand1 < s1, "lt test fail"
 
     print("==== test eq function =====")
     s3 = SingleAgentState.fromProblemIns(0, problem1)
