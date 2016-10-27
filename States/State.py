@@ -82,12 +82,25 @@ class State(object):
         """
 
     def __lt__(self, other):
+        """Compare two state for priority queue
+        Breaking tie considers smaller hValue
+        :param other: same candidate state
+        :return:
+        """
+        """
+        TODO: break tie considering future violations
+        """
         assert other is not None, "State can not compare with None type"
         if other.hValue() is None or self.hValue() is None:
             print("set Heuristic Value first")
             return None
         dif = self.gValue() - other.gValue() + self.hValue() - other.hValue()
-        return dif < 0
+        # breaking tie considering hValue
+        if dif == 0:
+            return self.hValue() - other.hValue() < 0
+        else:
+            return dif < 0
+        # return dif < 0
 
 def main():
     try:

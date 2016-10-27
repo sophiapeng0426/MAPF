@@ -24,7 +24,7 @@ class Graph:
             row = self.__map.getContent()[r]
             for c in range(self.__size):
                 if row[c] != '#':
-                    self.__nodes[c][r] = Node('.', (c, r)) # does not tell border electrode
+                    self.__nodes[c][r] = Node('.', (c, r))  # does not tell border electrode
         #  populate neighbor nodes
         for i in range(self.__size):
             for j in range(self.__size):
@@ -34,6 +34,10 @@ class Graph:
 
     #  populate node neighbor4 and neighbor8
     def __populateNeighbor(self, node):
+        """
+        :param node: center Node
+        :return:
+        """
         if node is None:
             return
         current = node.getPosition()

@@ -16,7 +16,7 @@ class Agent(object):
 
 
 def main():
-    agent1 = Agent(0, (1,1),(10,10))
+    agent1 = Agent(0, (1, 1), (10, 10))
     print(agent1.__dict__)
     print(type(agent1))
     print(agent1.__class__.__name__)
