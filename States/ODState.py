@@ -120,12 +120,33 @@ class ODState(MultiAgentState):
     def getDir(self):
         return self._direction
 
+    def _isSamePostMove(self, agentNode, restrict1, restrict2):
+        """ Whether agentNode have same set of possible moves under restrict1 and restrict2
+        :param agentNode: node in graph
+        :param restrict1: list of illegal nodes
+        :param restrict2: list of illegal nodes
+        :return:
+        """
+        res1 = []
+        res2 = []
+        l1 = agentNode.get_Four()
+        for i, node in enumerate(l1):
+            if set(node.get_Eight()).isdisjoint(set(restrict1)):
+                res1.append(i)
+            if set(node.get_Eight()).isdisjoint(set(restrict2)):
+                res2.append(i)
+        res1.sort()
+        res2.sort()
+        return res1 == res2
+
     def __eq__(self, other):
-        """TODO: define equal intermediate state => same post move position
-        Compare: each single agent: ID, getCoord.getNode (type and position)
+        """Compare: each single agent: ID, getCoord.getNode (type and position)
                  moveNext and direction
         :param other:
         :return:
+        """
+        """
+        TODO: define equal intermediate state => same post move position
         """
         if other is None or not isinstance(other, ODState):
             return False
@@ -133,8 +154,24 @@ class ODState(MultiAgentState):
             return False
         if self._moveNext != other.getMoveNext():
             return False
-        if self._direction != other.getDir():
-            return False
+
+        if self._moveNext == 0:
+            return True
+        # if self._direction != other.getDir():
+        #     return False
+
+        # check if possible moves for rest agents are the same
+        selfAgents = self.predecessor().getSingleAgents()[0: self._moveNext]
+        RestrictSelf = [x.getCoord().getNode() for x in selfAgents]
+        otherAgents = other.predecessor().getSingleAgents()[0: self._moveNext]
+        RestrictOther = [x.getCoord().getNode() for x in otherAgents]
+        print(RestrictSelf)
+        print(RestrictOther)
+
+        for i in range(self._moveNext, len(self._singleAgents)):
+            agentNode = self._singleAgents[i].getCoord().getNode()
+            if not self._isSamePostMove(agentNode, RestrictSelf, RestrictOther):
+                return False
         return True
 
     def __hash__(self):
@@ -149,20 +186,13 @@ class ODState(MultiAgentState):
             res += '; '
         return res
 
-    # def __lt__(self, other):
-    #     """
-    #     TOBE decide if necessary
-    #     :param other:
-    #     :return:
-    #     """
-
 
 def main():
     graph1 = Graph(ProblemMap(16, 16, {(3, 2): 2, (8, 8): 4, (10, 3): 2, (3, 10): 1}))
     # agent1 = [Agent(0, (9, 6), (9, 2)), Agent(1, (9, 2), (9, 6)), Agent(2, (4, 4), (11, 5))]
-    agent1 = [Agent(0, (9, 5), (9, 3)), Agent(1, (9, 3), (9, 5))]
+    agent1 = [Agent(0, (9, 6), (9, 3)), Agent(1, (9, 3), (9, 6))]
     problem1 = ProblemInstance(graph1, agent1)
-    problem1.plotProblem()
+    # problem1.plotProblem()
 
     s1 = ODState.fromProblemIns(problem1)
     print("=== test constructor, heuristic ===")
@@ -184,14 +214,14 @@ def main():
     print("====  test expand function ====")
     expandStates = s1.expand(problem1)
     map(lambda x: x.setHeuristic(problem1), expandStates)
-    for s in expandStates:
-        print (s)
-    print()
+    # for s in expandStates:
+    #     print (s)
+    # print()
 
     expandStates2 = expandStates[0].expand(problem1)
     map(lambda x: x.setHeuristic(problem1), expandStates2)
-    for s in expandStates2:
-        print (s)
+    # for s in expandStates2:
+    #     print (s)
 
     print("=== test predecessor ===")
     assert expandStates[1].predecessor() == s1
@@ -200,13 +230,36 @@ def main():
     # assert s1 < expandStates[0] and expandStates[1] < expandStates[0], "lt test fail"
 
     print("==== test eq function =====")
-    # p1 = ODState(s1, s1.getSingleAgents(), problem1, 0, s1, [1, -1, -1])
-    # assert p1 != s1
-    # p1 = ODState(s1, s1.getSingleAgents(), problem1, 0, s1, [-1, -1, -1])
-    # assert p1 == s1
+    agent2 = [Agent(0, (5, 6), (6, 10)), Agent(1, (3, 6), (12, 3))]
+    problem2 = ProblemInstance(graph1, agent2)
+    problem2.plotProblem()
+    problem3 = ProblemInstance(graph1, [Agent(0, (7, 6), (6, 10)), Agent(1, (3, 6), (12, 3))])
+
+    p0 = ODState.fromProblemIns(problem2)
+    p1 = p0.expand(problem2)[2]
+
+    p00 = ODState.fromProblemIns(problem3)
+    p11 = p00.expand(problem2)[4]
+
+    assert p1 != p11
+
+    agent2 = [Agent(0, (5, 6), (6, 10)), Agent(1, (2, 7), (12, 3))]
+    problem2 = ProblemInstance(graph1, agent2)
+    problem2.plotProblem()
+    problem3 = ProblemInstance(graph1, [Agent(0, (7, 6), (6, 10)), Agent(1, (2, 7), (12, 3))])
+
+    p0 = ODState.fromProblemIns(problem2)
+    p1 = p0.expand(problem2)[2]
+
+    p00 = ODState.fromProblemIns(problem3)
+    p11 = p00.expand(problem2)[4]
+
+    assert p1 == p11
+
 
     print("=== test isValid ===")
 
+    print("=== test agentNode.getFour ====")
 
 if __name__ == '__main__':
     main()
