@@ -1,7 +1,7 @@
+import copy
 from Graph import Graph
 from Agent import Agent
 from ProblemMap import ProblemMap
-# from SingleAgent.Constants import *
 
 
 class ProblemInstance(object):
@@ -27,11 +27,11 @@ class ProblemInstance(object):
 
     def __duplicateGoalsOrStarts(self):
         """
-        TODO: check if agent positions are accessible,
-        check agents do not collide if more than one agents
         ! Merge case otherwise
         :return: True or False
         """
+        """TODO: check if agent positions are accessible,
+        check agents do not collide if more than one agents"""
         return False
 
     def join(self, otherInstance):
@@ -72,7 +72,7 @@ class ProblemInstance(object):
         graph + agents for visualization
         :return:
         """
-        mapContent = self.getMap().getContent()
+        mapContent = copy.deepcopy(self.getMap().getContent())
         for agent in self.__agents:
             mapContent[agent.getStart()[1]][agent.getStart()[0]] = str(agent.getId())
             mapContent[agent.getGoal()[1]][agent.getGoal()[0]] = str(agent.getId())
