@@ -124,7 +124,7 @@ class MultiAgentState(State):
 
     def __eq__(self, other):
         """
-        each single agent: ID, getCoord.getNode (type and p
+        each single agent: ID, getCoord.getNode (type and p)
         :param other:
         :return:
         """
@@ -180,6 +180,7 @@ def main():
     assert s1 == s2, "eq test2 fail"
     s2.setHeuristic(p2)
     assert s1 == s2, "eq test2 fail"
+
 
     print("=== test isValid ===")
     graph3 = Graph(ProblemMap(16, 16, {(3, 2): 2, (8, 8): 4, (10, 3): 2, (3, 10): 1}))

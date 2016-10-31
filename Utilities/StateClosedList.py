@@ -26,9 +26,10 @@ class StateClosedList(ICLosedList):
             return True
 
     def add(self, state):
+        """ rewrite state
+        """
         assert isinstance(state, State), "ClosedList add requires state class"
         self._closeSet[state] = state
-        # print("added node: {0}".format(state))
 
     def clear(self):
         self._closeSet.clear()

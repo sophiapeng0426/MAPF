@@ -15,30 +15,6 @@ class MultiAgentAStar(GeneticAStar):
         assert len(problemInstance.getAgents()) >= 1, "Need agent"
         return MultiAgentState.fromProblemIns(problemInstance)
 
-    def getPath(self):
-        """
-        :return: list of states as path
-        """
-        if self._goalState is None:
-            print("No path found")
-
-        pathList = []
-        s = self._goalState
-        while s is not None:
-            pathList.append(s)
-            s = s.predecessor()
-        return pathList[::-1]
-
-    def printPath(self):
-        """
-        :return: print list of states as path
-        """
-        pathList = self.getPath()
-        if len(pathList) == 0:
-            print("No path to print")
-        for s in pathList:
-            print(s)
-
     def visualizePath(self, problemInstance):
         """
         TODO: print path in map

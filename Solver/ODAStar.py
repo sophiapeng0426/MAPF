@@ -2,13 +2,12 @@ import copy
 import time
 from GeneticAStar import GeneticAStar
 
-# from SingleAgent.Utilities.Node import Node
 from SingleAgent.Utilities.ProblemInstance import ProblemInstance
-# from SingleAgent.Utilities.StateClosedList import StateClosedList
 from SingleAgent.Utilities.Agent import Agent
 from SingleAgent.Utilities.Graph import Graph
 from SingleAgent.Utilities.ProblemMap import ProblemMap
 from SingleAgent.States.ODState import ODState
+
 
 class ODAStar(GeneticAStar):
     def __init__(self):
@@ -21,53 +20,53 @@ class ODAStar(GeneticAStar):
         assert len(problemInstance.getAgents()) >= 1, "Need agent"
         return ODState.fromProblemIns(problemInstance)
 
-    def solve(self, problemInstance):
-        """
-        :param problemInstance:
-        :return:
-        """
-        assert isinstance(problemInstance, ProblemInstance), "Initialize solve function require problemInstance"
-        self.init(problemInstance) # used previous init from GeneticAStar
-        root = self.createRoot(problemInstance)
-        root.setHeuristic(problemInstance)
-        print("Root state: {0}".format(root))
-        self._openList.put(root)
-
-        while not self._openList.empty():
-            # if self._openList.qsize() % 100 == 0:
-            #     print("OpenList size: {0}".format(self._openList.qsize()))
-
-            currentState = self._openList.get()
-
-            if self.isGoal(currentState, problemInstance):
-                self._goalState = currentState
-                return True
-
-            potentialStates = currentState.expand(problemInstance)
-            if len(potentialStates) == 0:
-                pass
-            elif potentialStates[0].isStandard():
-                for s in potentialStates:
-                    if not self._closeList.contains(s):
-                        s.setHeuristic(problemInstance)
-                        self._openList.put(s)
-            else:
-                for s in potentialStates:
-                    s.setHeuristic(problemInstance)
-                    self._openList.put(s)
-
-            if currentState.isStandard():
-                self._closeList.add(currentState)
-
-            # for s in potentialStates:
-            #     if not self._closeList.contains(s):
-            #         try:
-            #             s.setHeuristic(problemInstance)
-            #         except:
-            #             print ("cannot set hValue for state : {0}".format(s))
-            #         self._openList.put(s)
-            #         self._closeList.add(s)
-            # self._closeList.add(currentState)
+    # def solve(self, problemInstance):
+    #     """
+    #     :param problemInstance:
+    #     :return:
+    #     """
+    #     assert isinstance(problemInstance, ProblemInstance), "Initialize solve function require problemInstance"
+    #     self.init(problemInstance)   # used previous init from GeneticAStar
+    #     root = self.createRoot(problemInstance)
+    #     root.setHeuristic(problemInstance)
+    #     # print("Root state: {0}".format(root))
+    #     self._openList.put(root)
+    #
+    #     while not self._openList.empty():
+    #         if self._openList.qsize() % 100 == 0:
+    #             print("OpenList size: {0}".format(self._openList.qsize()))
+    #
+    #         currentState = self._openList.get()
+    #
+    #         if self.isGoal(currentState, problemInstance):
+    #             self._goalState = currentState
+    #             return True
+    #
+    #         potentialStates = currentState.expand(problemInstance)
+    #         if len(potentialStates) == 0:
+    #             pass
+    #         elif potentialStates[0].isStandard():
+    #             for s in potentialStates:
+    #                 if not self._closeList.contains(s):
+    #                     s.setHeuristic(problemInstance)
+    #                     self._openList.put(s)
+    #         else:
+    #             for s in potentialStates:
+    #                 s.setHeuristic(problemInstance)
+    #                 self._openList.put(s)
+    #
+    #         if currentState.isStandard():
+    #             self._closeList.add(currentState)
+    #
+    #         # for s in potentialStates:
+    #         #     if not self._closeList.contains(s):
+    #         #         try:
+    #         #             s.setHeuristic(problemInstance)
+    #         #         except:
+    #         #             print ("cannot set hValue for state : {0}".format(s))
+    #         #         self._openList.put(s)
+    #         #         self._closeList.add(s)
+    #         # self._closeList.add(currentState)
 
     # def init(self, problemInstance):
     #     """ get cleaned queue and closeList
@@ -82,33 +81,8 @@ class ODAStar(GeneticAStar):
     #     self._closeList.clear()
     #     self._goalState = None
 
-    def getPath(self):
-        """
-        :return: list of states as path
-        """
-        if self._goalState is None:
-            print("No path found")
-
-        pathList = []
-        s = self._goalState
-        while s is not None:
-            pathList.append(s)
-            s = s.predecessor()
-        return pathList[::-1]
-
-    def printPath(self):
-        """
-        :return: print list of states as path
-        """
-        pathList = self.getPath()
-        if len(pathList) == 0:
-            print("No path to print")
-        for s in pathList:
-            print(s)
-
     def visualizePath(self, problemInstance):
-        """
-        TODO: print path in map
+        """ print path in map
         :param problemInstance:
         :return:
         """
@@ -122,9 +96,6 @@ class ODAStar(GeneticAStar):
                 mapContent[y][x] = str(singleState.getAgentId())
         for i in mapContent:
             print(' '.join(i))
-
-
-
 
 
 def main():

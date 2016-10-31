@@ -20,6 +20,9 @@ class ODState(MultiAgentState):
         self._moveNext = moveNext
         self._preState = preState
         self._direction = direction
+        # no restriction by previous
+        self._restrictDir = [[] for i in range(0, len(self._singleAgents))]
+        self._updateRestrictDir()
 
     @classmethod
     def fromProblemIns(cls, problemInstance):
@@ -28,8 +31,21 @@ class ODState(MultiAgentState):
         singleAgents = []
         for i in range(numAgents):
             singleAgents.append(SingleAgentState.fromProblemIns(i, problemInstance))
-        direction = [-1 for i in range(len(singleAgents))]
+        direction = [None for i in range(len(singleAgents))]
         return cls(None, singleAgents, problemInstance, 0, None, direction)
+
+    def _updateRestrictDir(self):
+        """ update self.allowDir using predecessor
+        """
+        if self.predecessor() is None or self._moveNext == 0:
+            return
+        for i in range(self._moveNext, len(self._singleAgents)):
+            restrict = [x.getCoord().getNode() for x in self.predecessor().getSingleAgents()]
+            del restrict[i]  # do not count itself
+            possibleNodes = self._singleAgents[i].getCoord().getNode().get_Four()
+            for direction, nextNode in enumerate(possibleNodes):
+                if (nextNode is not None) and (not set(nextNode.get_Eight()).isdisjoint(restrict)):
+                    self._restrictDir[i].append(direction)
 
     def expand(self, problemInstance):
         """ return valid next states (intermediate/standard)
@@ -120,33 +136,33 @@ class ODState(MultiAgentState):
     def getDir(self):
         return self._direction
 
-    def _isSamePostMove(self, agentNode, restrict1, restrict2):
-        """ Whether agentNode have same set of possible moves under restrict1 and restrict2
-        :param agentNode: node in graph
-        :param restrict1: list of illegal nodes
-        :param restrict2: list of illegal nodes
-        :return:
-        """
-        res1 = []
-        res2 = []
-        l1 = agentNode.get_Four()
-        for i, node in enumerate(l1):
-            if set(node.get_Eight()).isdisjoint(set(restrict1)):
-                res1.append(i)
-            if set(node.get_Eight()).isdisjoint(set(restrict2)):
-                res2.append(i)
-        res1.sort()
-        res2.sort()
-        return res1 == res2
+    def getRestricDir(self):
+        return self._restrictDir
+
+    # def _isSamePostMove(self, agentNode, restrict1, restrict2):
+    #     """ Whether agentNode have same set of possible moves under restrict1 and restrict2
+    #     :param agentNode: node in graph
+    #     :param restrict1: list of illegal nodes
+    #     :param restrict2: list of illegal nodes
+    #     :return:
+    #     """
+    #     res1 = []
+    #     res2 = []
+    #     l1 = agentNode.get_Four()
+    #     for i, node in enumerate(l1):
+    #         if set(node.get_Eight()).isdisjoint(set(restrict1)):
+    #             res1.append(i)
+    #         if set(node.get_Eight()).isdisjoint(set(restrict2)):
+    #             res2.append(i)
+    #     res1.sort()
+    #     res2.sort()
+    #     return res1 == res2
 
     def __eq__(self, other):
         """Compare: each single agent: ID, getCoord.getNode (type and position)
-                 moveNext and direction
+                 moveNext and all possible moves of unassigned agents
         :param other:
         :return:
-        """
-        """
-        TODO: define equal intermediate state => same post move position
         """
         if other is None or not isinstance(other, ODState):
             return False
@@ -161,21 +177,20 @@ class ODState(MultiAgentState):
         #     return False
 
         # check if possible moves for rest agents are the same
-        selfAgents = self.predecessor().getSingleAgents()[0: self._moveNext]
-        RestrictSelf = [x.getCoord().getNode() for x in selfAgents]
-        otherAgents = other.predecessor().getSingleAgents()[0: self._moveNext]
-        RestrictOther = [x.getCoord().getNode() for x in otherAgents]
-        print(RestrictSelf)
-        print(RestrictOther)
-
-        for i in range(self._moveNext, len(self._singleAgents)):
-            agentNode = self._singleAgents[i].getCoord().getNode()
-            if not self._isSamePostMove(agentNode, RestrictSelf, RestrictOther):
-                return False
-        return True
+        # selfAgents = self.predecessor().getSingleAgents()[0: self._moveNext]
+        # RestrictSelf = [x.getCoord().getNode() for x in selfAgents]
+        # otherAgents = other.predecessor().getSingleAgents()[0: self._moveNext]
+        # RestrictOther = [x.getCoord().getNode() for x in otherAgents]
+        #
+        # for i in range(self._moveNext, len(self._singleAgents)):
+        #     agentNode = self._singleAgents[i].getCoord().getNode()
+        #     if not self._isSamePostMove(agentNode, RestrictSelf, RestrictOther):
+        #         return False
+        # return True
+        return str(self._restrictDir) == str(other.getRestricDir())
 
     def __hash__(self):
-        return super(ODState, self).__hash__() + 23 * (hash(self._moveNext) + 23 * hash(tuple(self._direction)))
+        return super(ODState, self).__hash__() + 23 * hash(self._moveNext) + hash(str(self._restrictDir))
 
     def __str__(self):
         res = "gValue: {0}, ".format(self._gValue) + "hValue: {0}, ".format(self._hValue)
@@ -192,10 +207,9 @@ def main():
     # agent1 = [Agent(0, (9, 6), (9, 2)), Agent(1, (9, 2), (9, 6)), Agent(2, (4, 4), (11, 5))]
     agent1 = [Agent(0, (9, 6), (9, 3)), Agent(1, (9, 3), (9, 6))]
     problem1 = ProblemInstance(graph1, agent1)
-    # problem1.plotProblem()
 
+    print("=== test constructor ===")
     s1 = ODState.fromProblemIns(problem1)
-    print("=== test constructor, heuristic ===")
     s1.setHeuristic(problem1)
     print(s1)
     assert s1.predecessor() is None
@@ -233,7 +247,9 @@ def main():
     agent2 = [Agent(0, (5, 6), (6, 10)), Agent(1, (3, 6), (12, 3))]
     problem2 = ProblemInstance(graph1, agent2)
     problem2.plotProblem()
+
     problem3 = ProblemInstance(graph1, [Agent(0, (7, 6), (6, 10)), Agent(1, (3, 6), (12, 3))])
+    problem3.plotProblem()
 
     p0 = ODState.fromProblemIns(problem2)
     p1 = p0.expand(problem2)[2]
@@ -241,6 +257,8 @@ def main():
     p00 = ODState.fromProblemIns(problem3)
     p11 = p00.expand(problem2)[4]
 
+    # print(p1.getRestricDir())
+    # print(p11.getRestricDir())
     assert p1 != p11
 
     agent2 = [Agent(0, (5, 6), (6, 10)), Agent(1, (2, 7), (12, 3))]
@@ -253,7 +271,8 @@ def main():
 
     p00 = ODState.fromProblemIns(problem3)
     p11 = p00.expand(problem2)[4]
-
+    print(p1.getRestricDir())
+    print(p11.getRestricDir())
     assert p1 == p11
 
 
