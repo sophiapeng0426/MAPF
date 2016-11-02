@@ -1,7 +1,6 @@
 class Node(object):
     def __init__(self, type, position):
         """
-        constructor for Node
         :param type: string for wall/block/. etc.
         :param position: tuple for the (x,y)
         neighborFour: Valid 4 neighbors
@@ -31,12 +30,6 @@ class Node(object):
 
     def getPosition(self):
         return self.__position
-
-    # def getX(self):
-    #     return self.__x
-    #
-    # def getY(self):
-    #     return self.__y
 
     def __hash__(self):
         prime = 31

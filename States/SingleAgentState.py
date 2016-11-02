@@ -29,13 +29,18 @@ class SingleAgentState(State):
 
     @classmethod
     def fromProblemIns(cls, agentId, problemInstance):
-        """
-        Start from problemInstance, with Agent and Graph
-        Note: make sure nodes used to construct coord is from problemInstance(with neighbors)
+        """ construct single state based on agentId
         :param problemInstance:
         """
-        agent = problemInstance.getAgents()[agentId]
-        startPosition = agent.getStart()
+        targetAgent = None
+        if len(problemInstance.getAgents()) == 1:
+            targetAgent = problemInstance.getAgents()[0]
+        else:
+            for agent in problemInstance.getAgents():
+                if agent.getId() == agentId:
+                    targetAgent = agent
+                    continue
+        startPosition = targetAgent.getStart()
         startNode = problemInstance.getGraph().getNode()[startPosition[0]][startPosition[1]]
         return cls(agentId, startNode, None, problemInstance)
 
@@ -142,7 +147,7 @@ class SingleAgentState(State):
 
 def main():
     graph1 = Graph(ProblemMap(16, 16, {(3, 2): 2, (8, 8): 4, (10, 3): 2, (3, 10): 1}))
-    agent1 = [Agent(0, (9, 4), (12, 12)), Agent(1, (13,13), (9, 2))]
+    agent1 = [Agent(0, (9, 4), (12, 12)), Agent(1, (13, 13), (9, 2))]
     problem1 = ProblemInstance(graph1, agent1)
     problem1.plotProblem()
 

@@ -16,13 +16,7 @@ class SingleAgentAStar(GeneticAStar):
         assert len(problemInstance.getAgents()) == 1, "Not a singleAgent problemInstance"
         return SingleAgentState.fromProblemIns(0, problemInstance)
 
-    def visualizePath(self, problemInstance):
-        """
-        TODO: print path in map
-        :param problemInstance:
-        :return:
-        """
-
+    # def visualizePath(self, problemInstance)
 
 def main():
     graph1 = Graph(ProblemMap(16, 16, {(3, 2): 2, (8, 8): 4, (10, 3): 2, (3, 10): 1}))

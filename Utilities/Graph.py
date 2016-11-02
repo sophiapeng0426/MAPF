@@ -6,11 +6,9 @@ class Graph:
     # constructor: ProblemMap include blocks and size
     #   List of agents (id, start and goal)
     def __init__(self, problemMap):
-        """
-        for n x n shape
-        __nodes: (n-1) x (n-1),
-        (x,y) for position (x,y) in the map, None of (x,y) is block/out
-        :param problemMap:
+        """ nodes' neighbor generated in graph
+        __nodes: (n-1) x (n-1), (x,y) for position (x,y) in the map, None of (x,y) is block/out
+        :param problemMap: 2D matrix of string
         """
         self.__size = problemMap.getHeight() - 1
         self.__map = problemMap
@@ -18,8 +16,9 @@ class Graph:
 #         note: nodes[0][1]._position = (0,1)
         self.__generateGraph()
 
-    #   populate nodes list with nodes, populate nodes neighbors
     def __generateGraph(self):
+        """ populate nodes list with nodes, populate nodes neighbors
+        """
         for r in range(self.__size):
             row = self.__map.getContent()[r]
             for c in range(self.__size):
@@ -46,7 +45,6 @@ class Graph:
             node.add_Four(0, up)
             node.add_Eight(0, up)
         if self.__map.isNodeValid((current[0] + 1, current[1])):
-            # print(self.__nodes[current[0] + 1][current[1]])
             right = self.__nodes[current[0] + 1][current[1]]
             node.add_Four(1, right)
             node.add_Eight(1, right)

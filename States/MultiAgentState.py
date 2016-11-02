@@ -28,7 +28,8 @@ class MultiAgentState(State):
         numAgents = len(problemInstance.getAgents())
         singleAgents = []
         for i in range(numAgents):
-            singleAgents.append(SingleAgentState.fromProblemIns(i, problemInstance))
+            agentId = problemInstance.getAgents()[i].getId()
+            singleAgents.append(SingleAgentState.fromProblemIns(agentId, problemInstance))
         return cls(None, singleAgents, problemInstance)
 
     def getSingleAgents(self):

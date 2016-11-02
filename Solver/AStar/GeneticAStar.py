@@ -1,24 +1,21 @@
 # from SingleAgent.Utilities.ProblemInstance import ProblemInstance
-import abc
-import copy
+# import abc
 from Queue import PriorityQueue
+from SingleAgent.Solver.ConstraintSolver import ConstraintSolver
 from SingleAgent.Utilities.StateClosedList import StateClosedList
 from SingleAgent.Utilities.ProblemInstance import ProblemInstance
 
 
-class GeneticAStar(object):
-    __metaclass__ = abc.ABCMeta
-
+class GeneticAStar(ConstraintSolver):
     def __init__(self):
         """
-        TODO:
-        reservation table and conflict avoidance table, as member variable
-        advanced heuristic cost, as member variable
-        openList
-        closeList
-        goalState: searched goal state (used for reconstruct path)
-        :param problemInstance:
+        _openList: priority queue
+        _closeList: stateCloseList
+        _goalState: result goal state (used for reconstruct path)
         """
+        """TODO: reservation table and conflict avoidance table,
+        advanced heuristic cost"""
+        super(GeneticAStar, self).__init__()
         self._openList = PriorityQueue()
         self._closeList = StateClosedList()
         self._goalState = None
@@ -28,19 +25,16 @@ class GeneticAStar(object):
         :param problemInstance:
         :return:
         """
-        """
-        TODO: add reservation table for independent detection
-        """
+        """ TODO: more efficient data structure for openList"""
         assert isinstance(problemInstance, ProblemInstance), "Initialize solve function require problemInstance"
         self.init(problemInstance)
         root = self.createRoot(problemInstance)
         root.setHeuristic(problemInstance)
-        print("Root state: {0}".format(root))
         self._openList.put(root)
         self._closeList.add(root)
 
         while not self._openList.empty():
-            if self._openList.qsize() % 100 == 0:
+            if self._openList.qsize() % 1000 == 0:
                 print("OpenList size: {0}".format(self._openList.qsize()))
             currentState = self._openList.get()
 
@@ -58,6 +52,7 @@ class GeneticAStar(object):
                     self._openList.put(s)
                     self._closeList.add(s)
             # self._closeList.add(currentState)
+        return False
 
     def init(self, problemInstance):
         """
@@ -97,10 +92,6 @@ class GeneticAStar(object):
         for s in pathList:
             print(s)
 
-    @abc.abstractmethod
-    def createRoot(self, problemInstance):
-        """
-        :param problemInstance:
-        :return:
-        """
+
+
 

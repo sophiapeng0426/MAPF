@@ -42,8 +42,7 @@ def main():
     startTime = time.time()
     solver1 = MultiAgentAStar()
     solver1.solve(problem1)
-    print("===== solver time =======")
-    print(time.time() - startTime)
+    print("solver time: {0} ".format(time.time() - startTime))
 
     solver1.printPath()
     solver1.visualizePath(problem1)

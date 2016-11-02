@@ -30,7 +30,9 @@ class ODState(MultiAgentState):
         numAgents = len(problemInstance.getAgents())
         singleAgents = []
         for i in range(numAgents):
-            singleAgents.append(SingleAgentState.fromProblemIns(i, problemInstance))
+            agentId = problemInstance.getAgents()[i].getId()
+            singleAgents.append(SingleAgentState.fromProblemIns(agentId, problemInstance))
+
         direction = [None for i in range(len(singleAgents))]
         return cls(None, singleAgents, problemInstance, 0, None, direction)
 
@@ -59,10 +61,10 @@ class ODState(MultiAgentState):
 
         newODStates = []
         for s in newSingleStates:
-            mAgents = self._singleAgents[:] ## copy every singleAgent state??
+            mAgents = self._singleAgents[:]
             mAgents[self._moveNext] = s
 
-            if self._moveNext == 0:   ## self is standard state
+            if self._moveNext == 0:
                 newODStates.append(ODState(self, mAgents, problemInstance, self.getNewMoveNext(),
                                            self, self._updatedDir(s)))
             else:
@@ -72,7 +74,7 @@ class ODState(MultiAgentState):
         return validStates
 
     def isValid(self, s, StaticOnly = False):
-        """ check OD state valid
+        """ check dynamic and static fluid constraint
         :param s: OD state
         :param StaticOnly:
         :return:
