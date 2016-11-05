@@ -110,8 +110,8 @@ class ODAStar(GeneticAStar):
 
 def main():
     graph1 = Graph(ProblemMap(16, 16, {(3, 2): 2, (8, 8): 4, (10, 3): 2, (3, 10): 1}))
-    # agent1 = [Agent(0, (9, 6), (9, 2)), Agent(1, (9, 2), (9, 6)), Agent(2, (4, 4), (11, 5))]
-    agent1 = [Agent(0, (9, 6), (9, 2))]
+    agent1 = [Agent(0, (9, 6), (9, 2)), Agent(1, (9, 2), (9, 6)), Agent(2, (4, 4), (11, 5))]
+    # agent1 = [Agent(0, (9, 6), (9, 2))]
     problem1 = ProblemInstance(graph1, agent1)
     problem1.plotProblem()
 

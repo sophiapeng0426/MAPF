@@ -17,6 +17,7 @@ class State(object):
         self._gValue = None
         self._hValue = None
         self._backPointer = backPointer
+        self._sharedNodes = 0
         # print("State class initialized")
 
     def predecessor(self):
@@ -33,7 +34,7 @@ class State(object):
 
     def __str__(self):
         return "gValue: {0} ".format(self._gValue) + "hValue: {0} ".format(self._hValue)
-               # "g+h: {0} ".format(self._gValue + self._hValue)
+        # "g+h: {0} ".format(self._gValue + self._hValue)
 
     @abc.abstractmethod
     def expand(self, problemInstance):
@@ -54,6 +55,15 @@ class State(object):
         """
         Calcualte gValue
         :return:
+        """
+    # @abc.abstractmethod
+    def updateSharedNodes(self, visitTable):
+        """
+        :param visitTable:
+        :return:
+        """
+        """ TODO: add this state to visitTable, update visitTable and self._sharedNodes
+                        = predecessor()._sharedNodes() + induce by this state
         """
 
     @abc.abstractmethod
@@ -88,7 +98,8 @@ class State(object):
         :return:
         """
         """
-        TODO: break tie considering future violations
+        TODO: break tie considering _sharedNodesm (visitTable)
+            ; and future violations (CAT)
         """
         assert other is not None, "State can not compare with None type"
         if other.hValue() is None or self.hValue() is None:
@@ -101,6 +112,7 @@ class State(object):
         else:
             return dif < 0
         # return dif < 0
+
 
 def main():
     try:

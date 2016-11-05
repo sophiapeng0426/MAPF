@@ -46,7 +46,7 @@ class IDSolver(ConstraintSolver):
                 self._pathList[id1] = self._solver.getPath()
                 self._problemList[id2] = None
                 self._pathList[id2] = None
-                print("ProblemList: {0}".format(self._problemList))
+                # print("ProblemList: {0}".format(self._problemList))
         return True
 
     def populatePath(self, problemInstance):
@@ -107,7 +107,7 @@ class IDSolver(ConstraintSolver):
 
 def main():
     graph1 = Graph(ProblemMap(16, 16, {(3, 2): 2, (8, 8): 4, (10, 3): 2, (3, 10): 1}))
-    # agent1 = [Agent(0, (9, 6), (9, 2)), Agent(1, (9, 2), (9, 6)), Agent(2, (4, 4), (11, 5))]
+    # agent1 = [Agent(0, (9, 6), (9, 2)), Agent(1, (9, 2), (9, 6))]
     agent1 = [Agent(0, (9, 6), (9, 2)), Agent(1, (9, 2), (9, 6)), Agent(2, (4, 4), (11, 5))]
     problem1 = ProblemInstance(graph1, agent1)
     problem1.plotProblem()
@@ -120,9 +120,11 @@ def main():
     solver1.printPath()
     solver1.visualizePath(problem1)
 
-    # solver1.printPath()
-    # solver1.visualizePath(problem1)
-    # problem1.plotProblem()
+    # print(solver1.paths())
+    solver1.getVisitTable().fillTable(solver1.paths())
+    print(solver1.getVisitTable())
+    print("ExtraPins: {0}".format(solver1.getVisitTable().getExtraPins()))
+
 
 if __name__ == "__main__":
     main()

@@ -1,4 +1,5 @@
 import abc
+from SingleAgent.Solver.VisitTable import VisitTable
 
 
 class ConstraintSolver(object):
@@ -11,7 +12,7 @@ class ConstraintSolver(object):
 
         """
         self._reservation = None
-        self._visitTable = None
+        self._visitTable = VisitTable()
         self._cat = None
 
     def getReservation(self):

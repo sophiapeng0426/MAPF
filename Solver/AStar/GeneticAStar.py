@@ -13,8 +13,9 @@ class GeneticAStar(ConstraintSolver):
         _closeList: stateCloseList
         _goalState: result goal state (used for reconstruct path)
         """
-        """TODO: reservation table and conflict avoidance table,
-        advanced heuristic cost"""
+        """TODO:
+        1, reservation table and visitTable,
+        2, advanced heuristic cost"""
         super(GeneticAStar, self).__init__()
         self._openList = PriorityQueue()
         self._closeList = StateClosedList()
@@ -25,7 +26,12 @@ class GeneticAStar(ConstraintSolver):
         :param problemInstance:
         :return:
         """
-        """ TODO: more efficient data structure for openList"""
+        """
+        TODO:
+        1. more efficient data structure for openList
+        2. ADD root.updateSharedNodes(self._visitTable)
+                child.updateSharedNodes(self._visitTable)
+        """
         assert isinstance(problemInstance, ProblemInstance), "Initialize solve function require problemInstance"
         self.init(problemInstance)
         root = self.createRoot(problemInstance)
@@ -60,6 +66,10 @@ class GeneticAStar(ConstraintSolver):
         :param problemInstance:
         :return:
         """
+        """
+        TODO:
+        update visitTable using pathList, init(self, problemInstance, pathList)
+        """
         while not self._openList.empty():
             self._openList.get()
         self._closeList.clear()
@@ -91,6 +101,10 @@ class GeneticAStar(ConstraintSolver):
             print("No path to print")
         for s in pathList:
             print(s)
+
+    def createRoot(self, problemInstance):
+        """create root node for AStar solver"""
+        pass
 
 
 
