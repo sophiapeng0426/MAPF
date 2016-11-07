@@ -117,7 +117,7 @@ def main():
 
     startTime = time.time()
     solver1 = ODAStar()
-    solver1.solve(problem1)
+    solver1.solve(problem1, None)
     print("solver time: {0} ".format(time.time() - startTime))
 
     solver1.printPath()

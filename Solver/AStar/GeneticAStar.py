@@ -1,5 +1,3 @@
-# from SingleAgent.Utilities.ProblemInstance import ProblemInstance
-# import abc
 from Queue import PriorityQueue
 from SingleAgent.Solver.ConstraintSolver import ConstraintSolver
 from SingleAgent.Utilities.StateClosedList import StateClosedList
@@ -14,35 +12,45 @@ class GeneticAStar(ConstraintSolver):
         _goalState: result goal state (used for reconstruct path)
         """
         """TODO:
-        1, reservation table and visitTable,
+        1, reservation table
         2, advanced heuristic cost"""
         super(GeneticAStar, self).__init__()
         self._openList = PriorityQueue()
         self._closeList = StateClosedList()
         self._goalState = None
 
-    def solve(self, problemInstance):
+    def solve(self, problemInstance, pathList):
         """ solver for singleAgent and multiAgent
         :param problemInstance:
         :return:
         """
         """
         TODO:
-        1. more efficient data structure for openList
-        2. ADD root.updateSharedNodes(self._visitTable)
-                child.updateSharedNodes(self._visitTable)
+        more efficient data structure for openList
         """
         assert isinstance(problemInstance, ProblemInstance), "Initialize solve function require problemInstance"
         self.init(problemInstance)
+
         root = self.createRoot(problemInstance)
         root.setHeuristic(problemInstance)
+
+        if pathList is not None:
+            root.initVisitTable(pathList)
+            root.updateVisitTable(None)
+            # print(root.visitTable())
+
         self._openList.put(root)
         self._closeList.add(root)
 
+        kk = 0
         while not self._openList.empty():
-            if self._openList.qsize() % 1000 == 0:
-                print("OpenList size: {0}".format(self._openList.qsize()))
+            # if self._openList.qsize() % 1000 == 0:
+            #     print("OpenList size: {0}".format(self._openList.qsize()))
+
             currentState = self._openList.get()
+            if kk % 100 == 0:
+                print("current state: {0}".format(currentState))
+            self._closeList.add(currentState)
 
             if self.isGoal(currentState, problemInstance):
                 self._goalState = currentState
@@ -51,24 +59,24 @@ class GeneticAStar(ConstraintSolver):
             potentialStates = currentState.expand(problemInstance)
             for s in potentialStates:
                 if not self._closeList.contains(s):
-                    try:
-                        s.setHeuristic(problemInstance)
-                    except:
-                        print ("cannot set hValue for state : {0}".format(s))
+
+                    s.setHeuristic(problemInstance)
+                    if pathList is not None:
+                        s.updateVisitTable(currentState.visitTable())
+                    if kk % 100 == 0:
+                        print("children: {0}".format(s))
+                        print(s.visitTable())
+
                     self._openList.put(s)
                     self._closeList.add(s)
-            # self._closeList.add(currentState)
+            kk += 1
+
         return False
 
     def init(self, problemInstance):
         """
-        TODO: implement initialization for reservation and heuristics
         :param problemInstance:
         :return:
-        """
-        """
-        TODO:
-        update visitTable using pathList, init(self, problemInstance, pathList)
         """
         while not self._openList.empty():
             self._openList.get()
@@ -106,6 +114,5 @@ class GeneticAStar(ConstraintSolver):
         """create root node for AStar solver"""
         pass
 
-
-
-
+    def __str__(self):
+        return "AStar"

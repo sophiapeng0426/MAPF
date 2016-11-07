@@ -11,7 +11,7 @@ from SingleAgent.Utilities.Utils import Util
 
 class IDSolver(ConstraintSolver):
     def __init__(self, solver):
-        """ _reservation, _visitTable, _cat
+        """ _reservation, _cat
             _pathList: n
             _problemList: n
         """
@@ -40,7 +40,10 @@ class IDSolver(ConstraintSolver):
                 # update _problemList[id1]
                 self._problemList[id1].join(self._problemList[id2])
 
-                if not self._solver.solve(self._problemList[id1]):
+                otherPathList = self._pathList[:]
+                otherPathList[id1] = None
+                otherPathList[id2] = None
+                if not self._solver.solve(self._problemList[id1], otherPathList):
                     print("fail to find new path")
                     return False
                 self._pathList[id1] = self._solver.getPath()
@@ -55,7 +58,7 @@ class IDSolver(ConstraintSolver):
             self._problemList.append(ProblemInstance(problemInstance.getGraph(), [agent]))
 
         for problem in self._problemList:
-            if not self._solver.solve(problem):
+            if not self._solver.solve(problem, None):
                 return False
             self._pathList.append(self._solver.getPath())
         return True
@@ -104,6 +107,8 @@ class IDSolver(ConstraintSolver):
         for i in mapContent:
             print(' '.join(i))
 
+    def __str__(self):
+        return "IDSolver"
 
 def main():
     graph1 = Graph(ProblemMap(16, 16, {(3, 2): 2, (8, 8): 4, (10, 3): 2, (3, 10): 1}))
@@ -121,9 +126,7 @@ def main():
     solver1.visualizePath(problem1)
 
     # print(solver1.paths())
-    solver1.getVisitTable().fillTable(solver1.paths())
-    print(solver1.getVisitTable())
-    print("ExtraPins: {0}".format(solver1.getVisitTable().getExtraPins()))
+
 
 
 if __name__ == "__main__":

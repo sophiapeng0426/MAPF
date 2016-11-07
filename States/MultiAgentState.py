@@ -54,6 +54,9 @@ class MultiAgentState(State):
                 return False
         return True
 
+    def updateVisitTable(self, table):
+        self._extraPins = 1
+
     def expand(self, problemInstance):
         """ return valid next states
 
@@ -131,7 +134,12 @@ class MultiAgentState(State):
         """
         if (other is None) or (not isinstance(other, MultiAgentState)):
             return False
-        return self._singleAgents == other.getSingleAgents()
+        if len(self._singleAgents) != len(other.getSingleAgents()):
+            return False
+        for i in range(len(self._singleAgents)):
+            if self._singleAgents[i] != other.getSingleAgents()[i]:
+                return False
+        return True
 
     def __hash__(self):
         prime = 31
@@ -143,7 +151,8 @@ class MultiAgentState(State):
         return res
 
     def __str__(self):
-        res = "gValue: {0}, ".format(self._gValue) + "hValue: {0}, ".format(self._hValue)
+        res = "gValue: {0}, ".format(self._gValue) + "hValue: {0}, ".format(self._hValue) +\
+              "extraPins: {0} ".format(self._extraPins)
         for singleState in self._singleAgents:
             res += str(singleState)
             res += '; '

@@ -5,19 +5,19 @@ from SingleAgent.Utilities.Node import Node
 class VisitTable(object):
     def __init__(self):
         self._nodeList = {}
-        self._nodeNum = 0
-        self._extraPins = 0
 
-    def fillTable(self, pathList, timeit = False):
+    def setNodeList(self, nodeList):
+        self._nodeList = nodeList
+
+    def fillTable(self, pathList1, timeit = False):
         """ fill nodeList with otherPaths
         :param pathList:
         :return:
         """
         startTime = time.time()
-        pathList = filter(lambda x: x is not None, pathList)
+        pathList = filter(lambda x: x is not None, pathList1)
         for i in range(len(pathList)):
             path = pathList[i]
-
             for j in range(len(path) - 1):
                 # print("== add state at time: {0} ==".format(j))
                 thisState = path[j]
@@ -48,8 +48,6 @@ class VisitTable(object):
                 pinNum = timeStep % 3
                 self.addNode(node, pinNum)
                 self.addNeighborNodes(node, None, thisDir[nth], 1)
-
-        self.updateNodeNum()
 
         if timeit == True:
             print("Fill visit table time: {0}".format(time.time() - startTime))
@@ -108,38 +106,37 @@ class VisitTable(object):
         else:
             self._nodeList[node] = set([pinNum])
 
-    def addCoord(self, coord):
-        """
-        TODO: add coord to _nodeList
-        :param coord:
-        :return:
-        """
+    # def addCoord(self, node, pin):
+    #     """
+    #     TODO: add coord to _nodeList
+    #     :param coord:
+    #     :return:
+    #     """
+    #
+    # def deleteCoord(self, coord):
+    #     """
+    #     TODO: delete coord from _nodeList, may not be necessary
+    #     :param coord:
+    #     :return:
+    #     """
 
-
-    def deleteCoord(self, coord):
-        """
-        TODO: delete coord from _nodeList, may not be necessary
-        :param coord:
-        :return:
-        """
-
-    def updateExtraPins(self):
+    def getExtraPins(self):
         extraPins = 0
         for key, value in self._nodeList.iteritems():
             if len(value) > 1:
                 extraPins += 1
-        self._extraPins = extraPins
+        return extraPins
 
-    def getExtraPins(self):
-        self.updateExtraPins()
-        return self._extraPins
+    def size(self):
+        return len(self._nodeList)
 
-    def updateNodeNum(self):
-        self._nodeNum = len(self._nodeList)
-
-    def getNodeNum(self):
-        self.updateNodeNum()
-        return self._nodeNum
+    def copy(self):
+        newDict = {}
+        for key, value in self._nodeList.iteritems():
+            newDict[key] = value.copy()
+        newVisitTable = VisitTable()
+        newVisitTable.setNodeList(newDict)
+        return newVisitTable
 
     def __str__(self):
         printList = []

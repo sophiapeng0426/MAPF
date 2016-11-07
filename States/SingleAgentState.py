@@ -6,6 +6,7 @@ from SingleAgent.Utilities.Coordinate import Coordinate
 from SingleAgent.Utilities.Agent import Agent
 from SingleAgent.Utilities.Graph import Graph
 from SingleAgent.Utilities.ProblemMap import ProblemMap
+from SingleAgent.Utilities.Util2 import Util2
 
 
 class SingleAgentState(State):
@@ -82,6 +83,48 @@ class SingleAgentState(State):
         goalPos = problemInstance.getGoals()[self._agentId]
         self._hValue = self._mDistance(self._coord.getNode().getPosition(), goalPos)
 
+    def updateVisitTable(self, table):
+        """ update self
+        :param visitTable:
+        :return:
+        # """
+        # self._extraPins = 1
+        if table is not None:
+            self._visitTable = table.copy()
+        self.addSingleAgent(self._visitTable)
+        # update extraPins
+        self._extraPins = self._visitTable.getExtraPins()
+
+    def addSingleAgent(self, table):
+        """add single agent (self) to visit table"""
+        # add current position to table
+        table.addNode(self.getCoord().getNode(), self.getCoord().getTimeStep() % 3)
+
+        # deal with previous node's surrounding
+        if self.isRoot():
+            return
+        nextState = self
+        thisState = self.predecessor()
+        preState = self.predecessor().predecessor()
+        neighbors = self.predecessor().getCoord().getNode().get_Four()[:]
+        nextDir = Util2().moveDir(thisState.getCoord().getNode(), nextState.getCoord().getNode())
+        if preState is None:
+            # predecessor is root node
+            if nextDir != 0:
+                nextDir -= 1
+                neighbors[nextDir] = None
+        else:
+            preDir = Util2().moveDir(thisState.getCoord().getNode(), preState.getCoord().getNode())
+            if nextDir != 0 and preDir != 0:
+                nextDir -= 1
+                preDir -= 1
+                neighbors[nextDir] = None
+                neighbors[preDir] = None
+
+        for node in neighbors:
+            if node is not None:
+                table.addNode(node, 4)
+
     def expand(self, problemInstance):
         """
         TODO: a list of singleAgentStates corresponding to its neighbors(valid neighbors)
@@ -141,8 +184,9 @@ class SingleAgentState(State):
             return res
 
     def __str__(self):
-        return "{0}: ".format(self._agentId) + "{0}, ".format((self._gValue, self._hValue))  \
-                + "{0}".format(self._coord.getNode().getPosition())
+        return "{0}: ".format(self._agentId)  +  "{0}".format(self._coord.getNode().getPosition())
+        # return "ID{0}: ".format(self._agentId) + "pins: {0}, ".format(self._extraPins) \
+        #        + "{0}".format(self._coord.getNode().getPosition())
 
 
 def main():

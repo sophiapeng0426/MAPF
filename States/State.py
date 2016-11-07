@@ -1,6 +1,5 @@
-# from SingleAgent.Utilities.ProblemInstance import ProblemInstance
 import abc
-# from abc import ABCMeta, abstractmethod
+from SingleAgent.Solver.VisitTable import VisitTable
 
 
 class State(object):
@@ -11,14 +10,13 @@ class State(object):
 
     def __init__(self, backPointer):
         """
-
         :param backPointer:
         """
         self._gValue = None
         self._hValue = None
         self._backPointer = backPointer
-        self._sharedNodes = 0
-        # print("State class initialized")
+        self._extraPins = 0
+        self._visitTable = None
 
     def predecessor(self):
         return self._backPointer
@@ -32,9 +30,26 @@ class State(object):
     def isRoot(self):
         return self._backPointer is None
 
-    def __str__(self):
-        return "gValue: {0} ".format(self._gValue) + "hValue: {0} ".format(self._hValue)
-        # "g+h: {0} ".format(self._gValue + self._hValue)
+    # def __str__(self):
+    #     return "gValue: {0} ".format(self._gValue) + "hValue: {0} ".format(self._hValue)
+    #     # "g+h: {0} ".format(self._gValue + self._hValue)
+
+    def initVisitTable(self, pathList):
+        self._visitTable = VisitTable()
+        self._visitTable.fillTable(pathList)
+
+    def visitTable(self):
+        return self._visitTable
+
+    def extraPins(self):
+        return self._extraPins
+
+    @abc.abstractmethod
+    def updateVisitTable(self, table):
+        """
+        :param visitTable:
+        :return:
+        """
 
     @abc.abstractmethod
     def expand(self, problemInstance):
@@ -55,15 +70,6 @@ class State(object):
         """
         Calcualte gValue
         :return:
-        """
-    # @abc.abstractmethod
-    def updateSharedNodes(self, visitTable):
-        """
-        :param visitTable:
-        :return:
-        """
-        """ TODO: add this state to visitTable, update visitTable and self._sharedNodes
-                        = predecessor()._sharedNodes() + induce by this state
         """
 
     @abc.abstractmethod
@@ -108,17 +114,8 @@ class State(object):
         dif = self.gValue() - other.gValue() + self.hValue() - other.hValue()
         # breaking tie considering hValue
         if dif == 0:
-            return self.hValue() - other.hValue() < 0
+            # return self.hValue() - other.hValue() < 0
+            return self.extraPins() - other.extraPins() < 0
         else:
             return dif < 0
         # return dif < 0
-
-
-def main():
-    try:
-        state1 = State(None)
-    except:
-        print("Cannot instantiate abstract class")
-
-if __name__ == '__main__':
-    main()

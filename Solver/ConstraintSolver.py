@@ -1,5 +1,4 @@
 import abc
-from SingleAgent.Solver.VisitTable import VisitTable
 
 
 class ConstraintSolver(object):
@@ -12,7 +11,6 @@ class ConstraintSolver(object):
 
         """
         self._reservation = None
-        self._visitTable = VisitTable()
         self._cat = None
 
     def getReservation(self):
@@ -21,11 +19,11 @@ class ConstraintSolver(object):
     def setReservation(self, reservation):
         self._reservation = reservation
 
-    def getVisitTable(self):
-        return self._visitTable
-
-    def setVisitTable(self, visitTable):
-        self._visitTable = visitTable
+    # def getVisitTable(self):
+    #     return self._visitTable
+    #
+    # def setVisitTable(self, visitTable):
+    #     self._visitTable = visitTable
 
     def getCAT(self):
         return self._cat
@@ -33,9 +31,9 @@ class ConstraintSolver(object):
     def setCAT(self, catTable):
         self._cat = catTable
 
-    @abc.abstractmethod
-    def solve(self, problemInstance):
-        """ solve initial problem"""
+    # @abc.abstractmethod
+    # def solve(self, problemInstance, pathList):
+    #     """ solve initial problem"""
 
     @abc.abstractmethod
     def getPath(self):

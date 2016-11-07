@@ -49,6 +49,20 @@ class ODState(MultiAgentState):
                 if (nextNode is not None) and (not set(nextNode.get_Eight()).isdisjoint(restrict)):
                     self._restrictDir[i].append(direction)
 
+    def updateVisitTable(self, table):
+        if table is not None:
+            self._visitTable = table.copy()
+            # print("original table: {0}".format(self._visitTable))
+
+        if self.isStandard():
+            updateRange = len(self._singleAgents)
+        else:
+            updateRange = self._moveNext
+
+        for singleAgent in self._singleAgents[0: updateRange]:
+            singleAgent.addSingleAgent(self._visitTable)
+        self._extraPins = self._visitTable.getExtraPins()
+
     def expand(self, problemInstance):
         """ return valid next states (intermediate/standard)
         :param problemInstance:
@@ -172,6 +186,9 @@ class ODState(MultiAgentState):
             return False
         if self._moveNext != other.getMoveNext():
             return False
+        # if other is not None and super(ODState, self).__eq__(other) and \
+        #                 self._moveNext == other.getMoveNext() and self._extraPins != other.extraPins():
+        #     return False
 
         if self._moveNext == 0:
             return True
@@ -195,7 +212,8 @@ class ODState(MultiAgentState):
         return super(ODState, self).__hash__() + 23 * hash(self._moveNext) + hash(str(self._restrictDir))
 
     def __str__(self):
-        res = "gValue: {0}, ".format(self._gValue) + "hValue: {0}, ".format(self._hValue)
+        res = "gValue: {0}, ".format(self._gValue) + "hValue: {0}, ".format(self._hValue) + \
+              "extraPins: {0}, ".format(self._extraPins)
         res += "moveNext: {0}, ".format(self._moveNext)
         res += "dir: {0}, ".format(self._direction)
         for singleState in self._singleAgents:

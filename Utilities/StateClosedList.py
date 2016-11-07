@@ -22,8 +22,11 @@ class StateClosedList(ICLosedList):
         if state.gValue() < preState.gValue():
             del self._closeSet[preState]
             return False
-        else:
-            return True
+        elif state.gValue == preState.gValue():
+            if state.extraPins() < preState.extraPins():
+                del self._closeSet[preState]
+                return False
+        return True
 
     def add(self, state):
         """ rewrite state
@@ -40,6 +43,11 @@ class StateClosedList(ICLosedList):
     def empty(self):
         return len(self._closeSet) == 0
 
+    def __str__(self):
+        res = ''
+        for key, value in self._closeSet.iteritems():
+            res += str(key) + '\n'
+        return res
 
 def main():
     graph1 = Graph(ProblemMap(16, 16, {(3, 2): 2, (8, 8): 4, (10, 3): 2, (3, 10): 1}))
