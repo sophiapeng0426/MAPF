@@ -109,20 +109,44 @@ class ODAStar(GeneticAStar):
 
 
 def main():
-    graph1 = Graph(ProblemMap(16, 16, {(3, 2): 2, (8, 8): 4, (10, 3): 2, (3, 10): 1}))
-    agent1 = [Agent(0, (9, 6), (9, 2)), Agent(1, (9, 2), (9, 6)), Agent(2, (4, 4), (11, 5))]
-    # agent1 = [Agent(0, (9, 6), (9, 2))]
-    problem1 = ProblemInstance(graph1, agent1)
-    problem1.plotProblem()
+    # graph1 = Graph(ProblemMap(16, 16, {(3, 2): 2, (8, 8): 4, (10, 3): 2, (3, 10): 1}))
+    # agent1 = [Agent(0, (9, 6), (9, 2)), Agent(1, (9, 2), (9, 6)), Agent(2, (4, 4), (11, 5))]
+    # # agent1 = [Agent(0, (9, 6), (9, 2))]
+    # problem1 = ProblemInstance(graph1, agent1)
+    # problem1.plotProblem()
+    #
+    # startTime = time.time()
+    # solver1 = ODAStar()
+    # solver1.solve(problem1, None)
+    # print("solver time: {0} ".format(time.time() - startTime))
+    #
+    # solver1.printPath()
+    # solver1.visualizePath(problem1)
+    # problem1.plotProblem()
+
+
+    mapdict = {(2, 5): 2, (2, 7): 2, (2, 9): 1, (3, 9): 1,
+               (7, 1): 2, (9, 1): 2, (11, 1): 1, (11, 2): 1,
+               (8, 6): 2, (8, 8): 2
+               }
+    graph2 = Graph(ProblemMap(14, 14, mapdict))
+    agent2 = [Agent(1, (0, 4), (0, 9)),
+              Agent(2, (0, 6), (3, 0)),
+              Agent(3, (0, 2), (9, 4))
+              # Agent(4, (13, 6), (4, 2)),
+              # Agent(5, (13, 0), (1, 3)),
+              # Agent(6, (6, 9), (12, 7))
+              ]
+    testProblem1 = ProblemInstance(graph2, agent2)
+    testProblem1.plotProblem()
 
     startTime = time.time()
     solver1 = ODAStar()
-    solver1.solve(problem1, None)
+    solver1.solve(testProblem1, None)
     print("solver time: {0} ".format(time.time() - startTime))
 
     solver1.printPath()
-    solver1.visualizePath(problem1)
-    # problem1.plotProblem()
+    solver1.visualizePath(testProblem1)
 
 if __name__ == "__main__":
     main()

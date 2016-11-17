@@ -12,7 +12,6 @@ from SingleAgent.Utilities.Util2 import Util2
 class SingleAgentState(State):
     def __init__(self, agentId, currentNode, backPointer, problemInstance):
         """
-        TODO: move set Heuristic to initialzation step??
         :param agentId:
         :param currentNode: Agent position
         :param backPointer: Agent predecessor
@@ -25,7 +24,7 @@ class SingleAgentState(State):
         super(SingleAgentState, self).__init__(backPointer)
         self._agentId = agentId
         self._coord = None
-        self.__initializeCoord(currentNode)
+        self._initializeCoord(currentNode)
         self.calculateCost(problemInstance)  # update gValue
 
     @classmethod
@@ -45,7 +44,7 @@ class SingleAgentState(State):
         startNode = problemInstance.getGraph().getNode()[startPosition[0]][startPosition[1]]
         return cls(agentId, startNode, None, problemInstance)
 
-    def __initializeCoord(self, node):
+    def _initializeCoord(self, node):
         if self.predecessor() is not None:
             self._coord = Coordinate(self.predecessor().getCoord().getTimeStep() + 1, node)
         else:
@@ -88,7 +87,6 @@ class SingleAgentState(State):
         :param visitTable:
         :return:
         # """
-        # self._extraPins = 1
         if table is not None:
             self._visitTable = table.copy()
         self.addSingleAgent(self._visitTable)
@@ -109,7 +107,7 @@ class SingleAgentState(State):
         neighbors = self.predecessor().getCoord().getNode().get_Four()[:]
         nextDir = Util2().moveDir(thisState.getCoord().getNode(), nextState.getCoord().getNode())
         if preState is None:
-            # predecessor is root node
+        #  predecessor is root node
             if nextDir != 0:
                 nextDir -= 1
                 neighbors[nextDir] = None
@@ -184,7 +182,7 @@ class SingleAgentState(State):
             return res
 
     def __str__(self):
-        return "{0}: ".format(self._agentId)  +  "{0}".format(self._coord.getNode().getPosition())
+        return "{0}: ".format(self._agentId) + "{0}".format(self._coord.getNode().getPosition())
         # return "ID{0}: ".format(self._agentId) + "pins: {0}, ".format(self._extraPins) \
         #        + "{0}".format(self._coord.getNode().getPosition())
 

@@ -34,22 +34,21 @@ class GeneticAStar(ConstraintSolver):
         root = self.createRoot(problemInstance)
         root.setHeuristic(problemInstance)
 
-        if pathList is not None:
-            root.initVisitTable(pathList)
-            root.updateVisitTable(None)
-            # print(root.visitTable())
+        # if pathList is not None:
+        #     root.initVisitTable(pathList)
+        #     root.updateVisitTable(None)
 
         self._openList.put(root)
         self._closeList.add(root)
 
         kk = 0
         while not self._openList.empty():
-            # if self._openList.qsize() % 1000 == 0:
-            #     print("OpenList size: {0}".format(self._openList.qsize()))
+            if self._openList.qsize() % 1000 == 0:
+                print("OpenList size: {0}".format(self._openList.qsize()))
 
             currentState = self._openList.get()
-            if kk % 100 == 0:
-                print("current state: {0}".format(currentState))
+            # if kk % 100 == 0:
+            #     print("current state: {0}".format(currentState))
             self._closeList.add(currentState)
 
             if self.isGoal(currentState, problemInstance):
@@ -61,11 +60,12 @@ class GeneticAStar(ConstraintSolver):
                 if not self._closeList.contains(s):
 
                     s.setHeuristic(problemInstance)
-                    if pathList is not None:
-                        s.updateVisitTable(currentState.visitTable())
-                    if kk % 100 == 0:
-                        print("children: {0}".format(s))
-                        print(s.visitTable())
+                    # if pathList is not None:
+                    #     s.updateVisitTable(currentState.visitTable())
+
+                    # if kk % 100 == 0:
+                        # print("children: {0}".format(s))
+                        # print(s.visitTable())
 
                     self._openList.put(s)
                     self._closeList.add(s)

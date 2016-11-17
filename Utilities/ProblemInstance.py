@@ -2,7 +2,7 @@ import copy
 from Graph import Graph
 from Agent import Agent
 from ProblemMap import ProblemMap
-
+from Util2 import Util2
 
 class ProblemInstance(object):
     def __init__(self, graph, agents):
@@ -23,22 +23,20 @@ class ProblemInstance(object):
             self.__goals[agent.getId()] = agent.getGoal()
 
     def __duplicateGoalsOrStarts(self):
-        """
-        ! Merge case otherwise
+        """ check if have duplicates
         :return: True or False
         """
-        """TODO: check if agent positions are not occupied;
-        check agents do not collide if more than one agents"""
+        """ Merge case otherwise? """
+        for i in range(len(self.__agents)):
+            for j in range(i+1, len(self.__agents)):
+                agent1 = self.__agents[i]
+                agent2 = self.__agents[j]
+                # print(agent1.getGoal())
+                # print(agent2.getGoal())
+                if Util2().withinDis(agent1.getStart(), agent2.getStart()) or \
+                        Util2().withinDis(agent1.getGoal(), agent2.getGoal()):
+                    return True
         return False
-
-    # def getSingleInstance(self, agentID):
-    #     """ get new problem Instance consists of single Agent
-    #     :param agentID: int
-    #     :return: problemInstance (1 agent)
-    #     """
-    #     for agent in self.__agents:
-    #         if agent.getId() == agentID:
-    #             return ProblemInstance(self.__graph, agent)
 
     def join(self, otherInstance):
         """ merge self with otherInstance
@@ -88,6 +86,7 @@ class ProblemInstance(object):
             mapContent[agent.getGoal()[1]][agent.getGoal()[0]] = str(agent.getId())
         for i in mapContent:
             print(' '.join(i))
+            # print('\n')
 
 
 def main():

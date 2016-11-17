@@ -1,5 +1,6 @@
 import time
-from SingleAgent.Utilities.Node import Node
+from SingleAgent.Utilities.Util2 import Util2
+# from SingleAgent.Utilities.Node import Node
 
 
 class VisitTable(object):
@@ -9,96 +10,103 @@ class VisitTable(object):
     def setNodeList(self, nodeList):
         self._nodeList = nodeList
 
-    def fillTable(self, pathList1, timeit = False):
+    def fillTable(self, pathList1, timeit=False):
         """ fill nodeList with otherPaths
-        :param pathList:
+        :param pathList1:
+        :param timeit: report time to generate filltable
         :return:
         """
         startTime = time.time()
         pathList = filter(lambda x: x is not None, pathList1)
-        for i in range(len(pathList)):
-            path = pathList[i]
-            for j in range(len(path) - 1):
-                # print("== add state at time: {0} ==".format(j))
+        for path in pathList:
+            for j in range(len(path)):
                 thisState = path[j]
-                nextState = path[j+1]
-                singleAgents = thisState.getSingleAgents()
-                nextDir = nextState.getDir()
-                thisDir = thisState.getDir()
-                for nth, agent in enumerate(singleAgents):
-                    # print("put singleAgent: {0}".format(agent) + "next direction: {0}".format(nextDir[nth]) +
-                    #       "this direction:{0}".format(thisDir[nth]))
-                    node = agent.getCoord().getNode()
-                    timeStep = agent.getCoord().getTimeStep()
-                    pinNum = timeStep % 3
-                    # print("add pinnum: {0}".format(pinNum))
-                    self.addNode(node, pinNum)
+                if j == len(path) - 1:
+                    nextState = None
+                else:
+                    nextState = path[j + 1]
+                prevState = thisState.predecessor()
 
-            # first state in path
-                    if j == 0:
-                        self.addNeighborNodes(node, nextDir[nth], None, 0)
+                for n in range(len(thisState.getSingleAgents())):
+                    thisNode = thisState.getSingleAgents()[n].getCoord().getNode()
+                    # get preDir
+                    if prevState is not None:
+                        prevNode = prevState.getSingleAgents()[n].getCoord().getNode()
+                        preDir = Util2().moveDir(thisNode, prevNode)
                     else:
-                        self.addNeighborNodes(node, nextDir[nth], thisDir[nth], 2)
-            #  for last state in path
-            singleAgents = nextState.getSingleAgents()
-            thisDir = nextState.getDir()
-            for nth, agent in enumerate(singleAgents):
-                node = agent.getCoord().getNode()
-                timeStep = agent.getCoord().getTimeStep()
-                pinNum = timeStep % 3
-                self.addNode(node, pinNum)
-                self.addNeighborNodes(node, None, thisDir[nth], 1)
+                        preDir = None
+                    # get nextDir
+                    if nextState is not None:
+                        nextNode = nextState.getSingleAgents()[n].getCoord().getNode()
+                        nextDir = Util2().moveDir(thisNode, nextNode)
+                    else:
+                        nextDir = None
 
-        if timeit == True:
+                    timeStep = thisState.getSingleAgents()[n].getCoord().getTimeStep()
+                    pinNum = timeStep % 3
+                    self.addNode(thisNode, pinNum)
+                    if j == 0:
+                        self.addNeighborNodes(thisNode, nextDir, None, 'to')
+                    elif j == len(path) - 1:
+                        self.addNeighborNodes(thisNode, None, preDir, 'from')
+                    else:
+                        self.addNeighborNodes(thisNode, nextDir, preDir, 'both')
+        if timeit is True:
             print("Fill visit table time: {0}".format(time.time() - startTime))
 
     def addNeighborNodes(self, node, nextDir, preDir, preventDir):
-        """Add neighbor node to nodeList
-        preventDir: prevent from assigning 4
-                    to: 0, from: 1, to and from: 2
+        """ Add neighbor node to nodeList
+        :param node:
+        :param nextDir:
+        :param preDir:
+        :param preventDir: prevent from assigning 4
+        :return:
         """
-        neighbor = node.get_Four()
-        res = neighbor[:]
+        res = node.get_Four()[:]
 
-        if preventDir == 0:
+        if preventDir == 'to':
             if nextDir is not None and nextDir != 0:
                 nextDir -= 1
                 res[nextDir] = None
 
-        if preventDir == 1:
+        if preventDir == 'from':
             if preDir is not None and preDir != 0:
                 preDir -= 1
-                res[self._oppositeDir(preDir)] = None
+                res[preDir] = None
 
-        if preventDir == 2:
+        if preventDir == 'both':
             if nextDir is not None and nextDir != 0 and preDir is not None and preDir != 0:
                 nextDir -= 1
                 preDir -= 1
                 res[nextDir] = None
-                res[self._oppositeDir(preDir)] = None
-            elif preDir is None or preDir == 0:
-                res = []
-
+                res[preDir] = None
+            if nextDir is None:
+                if preDir is not None:
+                    preDir -= 1
+                    res[preDir] = None
+            if preDir is None:
+                if nextDir is not None:
+                    nextDir -= 1
+                    res[nextDir] = None
         #===== debug =====
         # index = []
         # for i in range(len(res)):
         #     if res[i] is not None:
         #         index.append(i)
         # print("add neigbhbors from directions[0-3]: {0}".format(index))
-
         res = filter(lambda x: x is not None, res)
         for node in res:
             self.addNode(node, 4)
-
-    def _oppositeDir(self, dir):
-        if dir == 0:
-            return 2
-        elif dir == 2:
-            return 0
-        elif dir == 1:
-            return 3
-        elif dir == 3:
-            return 1
+    #
+    # def _oppositeDir(self, dir):
+    #     if dir == 0:
+    #         return 2
+    #     elif dir == 2:
+    #         return 0
+    #     elif dir == 1:
+    #         return 3
+    #     elif dir == 3:
+    #         return 1
 
     def addNode(self, node, pinNum):
         if node in self._nodeList:
@@ -145,18 +153,6 @@ class VisitTable(object):
         return '\n'.join(printList)
 
 
-
-def main():
-    table = VisitTable()
-    node1 = Node('*', (0, 0))
-    table.addNode(node1, 1)
-    # testdic = {}
-    # testdic[node1] = set([1])
-    # testdic[node1].add(2)
-    # print(testdic)
-
-if __name__ == "__main__":
-    main()
 
 
 

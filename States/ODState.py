@@ -4,50 +4,65 @@ from SingleAgent.Utilities.ProblemInstance import ProblemInstance
 from SingleAgent.Utilities.Agent import Agent
 from SingleAgent.Utilities.Graph import Graph
 from SingleAgent.Utilities.ProblemMap import ProblemMap
+from SingleAgent.Utilities.Util2 import Util2
 
 
 class ODState(MultiAgentState):
-    def __init__(self, backPointer, singleAgents, problemInstance, moveNext, preState, direction):
+    def __init__(self, backPointer, singleAgents, problemInstance, moveNext, preState):
         """
+        _restrictDir: to-move droplets cannot move to spots occupied by other droplets in last
+            step
         :param backPointer:
-        :param singleAgents: []
+        :param singleAgents: list of singleAgents
         :param problemInstance:
-        :param moveNext: integer
+        :param moveNext: next agent to move
         :param preState: previous intermediate state
-        :param Dir: initialized with [-1 -1 ..]
+        :param direction: so far assigned directions
         """
         super(ODState, self).__init__(backPointer, singleAgents, problemInstance)
         self._moveNext = moveNext
         self._preState = preState
-        self._direction = direction
+        self._direction = None
         # no restriction by previous
         self._restrictDir = [[] for i in range(0, len(self._singleAgents))]
         self._updateRestrictDir()
+        self._updatedDir()
 
     @classmethod
     def fromProblemIns(cls, problemInstance):
-        # mstate = super(ODState, cls).fromProblemIns(problemInstance)
         numAgents = len(problemInstance.getAgents())
         singleAgents = []
         for i in range(numAgents):
             agentId = problemInstance.getAgents()[i].getId()
             singleAgents.append(SingleAgentState.fromProblemIns(agentId, problemInstance))
-
-        direction = [None for i in range(len(singleAgents))]
-        return cls(None, singleAgents, problemInstance, 0, None, direction)
+        return cls(None, singleAgents, problemInstance, 0, None)
 
     def _updateRestrictDir(self):
         """ update self.allowDir using predecessor
         """
-        if self.predecessor() is None or self._moveNext == 0:
+        if self.predecessor() is None or self.isStandard():
             return
         for i in range(self._moveNext, len(self._singleAgents)):
             restrict = [x.getCoord().getNode() for x in self.predecessor().getSingleAgents()]
             del restrict[i]  # do not count itself
-            possibleNodes = self._singleAgents[i].getCoord().getNode().get_Four()
+            possibleNodes = self._singleAgents[i].getCoord().getNode().get_Four()[:]
             for direction, nextNode in enumerate(possibleNodes):
                 if (nextNode is not None) and (not set(nextNode.get_Eight()).isdisjoint(restrict)):
                     self._restrictDir[i].append(direction)
+
+    def _updatedDir(self):
+        """ update _direction for last moved agent
+        :return: direction
+        """
+        if self.isStandard():
+            self._direction = [None for i in range(len(self._singleAgents))]
+            return
+        self._direction = self.getPreState().getDir()[:]
+        updatedIndex = self._moveNext - 1
+        preNode = self.getPreState().getSingleAgents()[updatedIndex].getCoord().getNode()
+        currentNode = self._singleAgents[updatedIndex].getCoord().getNode()
+        direction = Util2().moveDir(preNode, currentNode)
+        self._direction[updatedIndex] = direction
 
     def updateVisitTable(self, table):
         if table is not None:
@@ -79,11 +94,9 @@ class ODState(MultiAgentState):
             mAgents[self._moveNext] = s
 
             if self._moveNext == 0:
-                newODStates.append(ODState(self, mAgents, problemInstance, self.getNewMoveNext(),
-                                           self, self._updatedDir(s)))
+                newODStates.append(ODState(self, mAgents, problemInstance, self.getNewMoveNext(), self))
             else:
-                newODStates.append(ODState(self.predecessor(), mAgents, problemInstance,
-                                           self.getNewMoveNext(), self, self._updatedDir(s)))
+                newODStates.append(ODState(self.predecessor(), mAgents, problemInstance, self.getNewMoveNext(), self))
         validStates = filter(lambda x: self.isValid(x), newODStates)
         return validStates
 
@@ -107,29 +120,6 @@ class ODState(MultiAgentState):
 
     def isStandard(self):
         return self._moveNext == 0
-
-    def _updatedDir(self, newState):
-        """ get moving direction of current state
-        :return: direction
-        """
-        currentState = self._singleAgents[self._moveNext]
-        newDirection = self._direction[:]
-
-        pos1 = currentState.getCoord().getNode().getPosition()
-        pos2 = newState.getCoord().getNode().getPosition()
-        res = -1
-        if pos1[0] == pos2[0] and pos1[1] == pos2[1]:
-            res = 0
-        elif pos1[1] - pos2[1] == 1:
-            res = 1
-        elif pos1[0] - pos2[0] == -1:
-            res = 2
-        elif pos1[1] - pos2[1] == -1:
-            res = 3
-        elif pos1[0] - pos2[0] == 1:
-            res = 4
-        newDirection[self._moveNext] = res
-        return newDirection
 
     def goalTest(self, problemInstance):
         if not self.isStandard():
