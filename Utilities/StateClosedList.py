@@ -23,7 +23,7 @@ class StateClosedList(ICLosedList):
             del self._closeSet[preState]
             return False
         elif state.gValue == preState.gValue():
-            if state.extraPins() < preState.extraPins():
+            if state.getUsedElectrode() < preState.getUsedElectrode():
                 del self._closeSet[preState]
                 return False
         return True

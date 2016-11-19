@@ -6,7 +6,6 @@ from SingleAgent.Utilities.Graph import Graph
 from SingleAgent.Utilities.ProblemMap import ProblemMap
 from SingleAgent.Utilities.Util2 import Util2
 
-
 class ODState(MultiAgentState):
     def __init__(self, backPointer, singleAgents, problemInstance, moveNext, preState):
         """
@@ -23,10 +22,16 @@ class ODState(MultiAgentState):
         self._moveNext = moveNext
         self._preState = preState
         self._direction = None
+
+        self._newPosition = []
+        self._usedElectrode = 0
+
         # no restriction by previous
         self._restrictDir = [[] for i in range(0, len(self._singleAgents))]
         self._updateRestrictDir()
         self._updatedDir()
+
+        self._updateNewPosition(problemInstance)
 
     @classmethod
     def fromProblemIns(cls, problemInstance):
@@ -64,19 +69,40 @@ class ODState(MultiAgentState):
         direction = Util2().moveDir(preNode, currentNode)
         self._direction[updatedIndex] = direction
 
-    def updateVisitTable(self, table):
-        if table is not None:
-            self._visitTable = table.copy()
-            # print("original table: {0}".format(self._visitTable))
+    def _updateNewPosition(self, problemInstance):
+        for singleAgent in self._singleAgents:
+            nsize = problemInstance.getGraph().getSize()
+            indexFromPos = singleAgent.getCoord().getNode().getPosition()[0] * nsize + \
+                           singleAgent.getCoord().getNode().getPosition()[1]
+            self._newPosition.append(indexFromPos)
 
-        if self.isStandard():
-            updateRange = len(self._singleAgents)
-        else:
-            updateRange = self._moveNext
+    def setUsedElectrode(self, usedTable):
+        """
+        update _usedElectrode number
+        :param usedTable:
+        :return:
+        """
+        table = usedTable.cellListCopy()
+        current = self
+        while current is not None:
+            for index in current.getNewPosition():
+                table[index] = 1
+            current = current.predecessor()
+        self._usedElectrode = sum(table)
 
-        for singleAgent in self._singleAgents[0: updateRange]:
-            singleAgent.addSingleAgent(self._visitTable)
-        self._extraPins = self._visitTable.getExtraPins()
+    # def updateVisitTable(self, table):
+    #     if table is not None:
+    #         self._visitTable = table.copy()
+    #         # print("original table: {0}".format(self._visitTable))
+    #
+    #     if self.isStandard():
+    #         updateRange = len(self._singleAgents)
+    #     else:
+    #         updateRange = self._moveNext
+    #
+    #     for singleAgent in self._singleAgents[0: updateRange]:
+    #         singleAgent.addSingleAgent(self._visitTable)
+    #     self._extraPins = self._visitTable.getExtraPins()
 
     def expand(self, problemInstance):
         """ return valid next states (intermediate/standard)
@@ -145,6 +171,11 @@ class ODState(MultiAgentState):
     def getRestricDir(self):
         return self._restrictDir
 
+    def getNewPosition(self):
+        return self._newPosition
+
+    def getUsedElectrode(self):
+        return self._usedElectrode
     # def _isSamePostMove(self, agentNode, restrict1, restrict2):
     #     """ Whether agentNode have same set of possible moves under restrict1 and restrict2
     #     :param agentNode: node in graph
@@ -202,8 +233,8 @@ class ODState(MultiAgentState):
         return super(ODState, self).__hash__() + 23 * hash(self._moveNext) + hash(str(self._restrictDir))
 
     def __str__(self):
-        res = "gValue: {0}, ".format(self._gValue) + "hValue: {0}, ".format(self._hValue) + \
-              "extraPins: {0}, ".format(self._extraPins)
+        res = "gValue: {0}, ".format(self._gValue) + "hValue: {0}, ".format(self._hValue) \
+              + "used: {0}, ".format(self._usedElectrode)
         res += "moveNext: {0}, ".format(self._moveNext)
         res += "dir: {0}, ".format(self._direction)
         for singleState in self._singleAgents:
@@ -211,8 +242,31 @@ class ODState(MultiAgentState):
             res += '; '
         return res
 
+    def __lt__(self, other):
+        """Compare two state for priority queue
+        Breaking tie considers smaller hValue
+        :param other: same candidate state
+        :return:
+        """
+        """
+        TODO: break tie considering _sharedNodesm (visitTable)
+            ; and future violations (CAT)
+        """
+        assert other is not None, "State can not compare with None type"
+        if other.hValue() is None or self.hValue() is None:
+            print("set Heuristic Value first")
+            return None
+        dif = self.gValue() - other.gValue() + self.hValue() - other.hValue()
+        # breaking tie considering hValue
+        if dif == 0:
+            return self.hValue() - other.hValue() < 0
+            # return self.getUsedElectrode() - other.getUsedElectrode() < 0
+        else:
+            return dif < 0
+            # return dif < 0
 
 def main():
+    import sys
     graph1 = Graph(ProblemMap(16, 16, {(3, 2): 2, (8, 8): 4, (10, 3): 2, (3, 10): 1}))
     # agent1 = [Agent(0, (9, 6), (9, 2)), Agent(1, (9, 2), (9, 6)), Agent(2, (4, 4), (11, 5))]
     agent1 = [Agent(0, (9, 6), (9, 3)), Agent(1, (9, 3), (9, 6))]
@@ -241,7 +295,7 @@ def main():
     # for s in expandStates:
     #     print (s)
     # print()
-
+    print("memory: {0}".format(sys.getsizeof(expandStates[0])))
     expandStates2 = expandStates[0].expand(problem1)
     map(lambda x: x.setHeuristic(problem1), expandStates2)
     # for s in expandStates2:

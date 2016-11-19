@@ -54,8 +54,8 @@ class MultiAgentState(State):
                 return False
         return True
 
-    def updateVisitTable(self, table):
-        self._extraPins = 1
+    # def updateVisitTable(self, table):
+    #     self._extraPins = 1
 
     def expand(self, problemInstance):
         """ return valid next states

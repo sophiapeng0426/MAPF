@@ -9,6 +9,7 @@ from SingleAgent.Utilities.Graph import Graph
 from SingleAgent.Utilities.ProblemInstance import ProblemInstance
 from SingleAgent.Utilities.ProblemMap import ProblemMap
 from SingleAgent.Utilities.Util2 import Util2
+from SingleAgent.Solver.UsedTable import UsedTable
 
 
 class IDSolver(ConstraintSolver):
@@ -21,7 +22,7 @@ class IDSolver(ConstraintSolver):
         self._pathList = []
         self._problemList = []
         self._solver = solver
-        self._resPins = None
+        # self._resPins = None
 
     def solve(self, problemInstance):
         """simple independent detection
@@ -79,9 +80,14 @@ class IDSolver(ConstraintSolver):
         """ get list of states as path"""
         return Util().mergePaths(self._pathList)
 
-    def countPins(self):
-        self._resPins = Util().countPins(self._pathList)
-        return self._resPins
+    # def countPins(self):
+    #     self._resPins = Util().countPins(self._pathList)
+    #     return self._resPins
+
+    def totalElectrode(self, problemInstance):
+        usedTable = UsedTable(problemInstance)
+        usedTable.fillTable(self._pathList)
+        return sum(usedTable.cellList())
 
     def printPath(self):
         """print paths"""
@@ -152,7 +158,10 @@ def main():
 
     mapdict = {(2, 5): 2, (2, 7): 2, (2, 9): 1, (3, 9): 1,
                (7, 1): 2, (9, 1): 2, (11, 1): 1, (11, 2): 1,
-               (8, 6): 2, (8, 8): 2
+               (8, 6): 2, (8, 8): 2,
+               (1, 10): 2, (4, 10): 4, (8, 10): 4, (12, 10): 2
+
+
                }
     graph2 = Graph(ProblemMap(14, 14, mapdict))
     agent2 = [Agent(1, (0, 4), (0, 9)),
@@ -171,8 +180,9 @@ def main():
     print("solver time: {0} ".format(time.time() - startTime))
 
     solver1.correctcheck(solver1.getPath())
-    print("Count pins: {0}".format(solver1.countPins()))
+    # print("Count pins: {0}".format(solver1.countPins()))
     solver1.printPath()
+    print("Total cell used: {0}".format(solver1.totalElectrode(testProblem1)))
     solver1.visualizePath(testProblem1)
 
 

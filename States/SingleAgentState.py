@@ -6,7 +6,6 @@ from SingleAgent.Utilities.Coordinate import Coordinate
 from SingleAgent.Utilities.Agent import Agent
 from SingleAgent.Utilities.Graph import Graph
 from SingleAgent.Utilities.ProblemMap import ProblemMap
-from SingleAgent.Utilities.Util2 import Util2
 
 
 class SingleAgentState(State):
@@ -82,46 +81,46 @@ class SingleAgentState(State):
         goalPos = problemInstance.getGoals()[self._agentId]
         self._hValue = self._mDistance(self._coord.getNode().getPosition(), goalPos)
 
-    def updateVisitTable(self, table):
-        """ update self
-        :param visitTable:
-        :return:
-        # """
-        if table is not None:
-            self._visitTable = table.copy()
-        self.addSingleAgent(self._visitTable)
-        # update extraPins
-        self._extraPins = self._visitTable.getExtraPins()
+    # def updateVisitTable(self, table):
+    #     """ update self
+    #     :param visitTable:
+    #     :return:
+    #     # """
+    #     if table is not None:
+    #         self._visitTable = table.copy()
+    #     self.addSingleAgent(self._visitTable)
+    #     # update extraPins
+    #     self._extraPins = self._visitTable.getExtraPins()
 
-    def addSingleAgent(self, table):
-        """add single agent (self) to visit table"""
-        # add current position to table
-        table.addNode(self.getCoord().getNode(), self.getCoord().getTimeStep() % 3)
-
-        # deal with previous node's surrounding
-        if self.isRoot():
-            return
-        nextState = self
-        thisState = self.predecessor()
-        preState = self.predecessor().predecessor()
-        neighbors = self.predecessor().getCoord().getNode().get_Four()[:]
-        nextDir = Util2().moveDir(thisState.getCoord().getNode(), nextState.getCoord().getNode())
-        if preState is None:
-        #  predecessor is root node
-            if nextDir != 0:
-                nextDir -= 1
-                neighbors[nextDir] = None
-        else:
-            preDir = Util2().moveDir(thisState.getCoord().getNode(), preState.getCoord().getNode())
-            if nextDir != 0 and preDir != 0:
-                nextDir -= 1
-                preDir -= 1
-                neighbors[nextDir] = None
-                neighbors[preDir] = None
-
-        for node in neighbors:
-            if node is not None:
-                table.addNode(node, 4)
+    # def addSingleAgent(self, table):
+    #     """add single agent (self) to visit table"""
+    #     # add current position to table
+    #     table.addNode(self.getCoord().getNode(), self.getCoord().getTimeStep() % 3)
+    #
+    #     # deal with previous node's surrounding
+    #     if self.isRoot():
+    #         return
+    #     nextState = self
+    #     thisState = self.predecessor()
+    #     preState = self.predecessor().predecessor()
+    #     neighbors = self.predecessor().getCoord().getNode().get_Four()[:]
+    #     nextDir = Util2().moveDir(thisState.getCoord().getNode(), nextState.getCoord().getNode())
+    #     if preState is None:
+    #     #  predecessor is root node
+    #         if nextDir != 0:
+    #             nextDir -= 1
+    #             neighbors[nextDir] = None
+    #     else:
+    #         preDir = Util2().moveDir(thisState.getCoord().getNode(), preState.getCoord().getNode())
+    #         if nextDir != 0 and preDir != 0:
+    #             nextDir -= 1
+    #             preDir -= 1
+    #             neighbors[nextDir] = None
+    #             neighbors[preDir] = None
+    #
+    #     for node in neighbors:
+    #         if node is not None:
+    #             table.addNode(node, 4)
 
     def expand(self, problemInstance):
         """
@@ -188,6 +187,7 @@ class SingleAgentState(State):
 
 
 def main():
+    import sys
     graph1 = Graph(ProblemMap(16, 16, {(3, 2): 2, (8, 8): 4, (10, 3): 2, (3, 10): 1}))
     agent1 = [Agent(0, (9, 4), (12, 12)), Agent(1, (13, 13), (9, 2))]
     problem1 = ProblemInstance(graph1, agent1)
@@ -196,6 +196,10 @@ def main():
     print("=== test consructor ===")
     s1 = SingleAgentState(0, Node('.', (9, 4)), None, problem1)
     s1_pi = SingleAgentState.fromProblemIns(0, problem1)
+
+    print("Memory: {0}".format(sys.getsizeof(s1_pi)))
+    print("Memory: {0}".format(sys.getsizeof(s1_pi.predecessor()) + sys.getsizeof(s1_pi.getCoord())))
+
 
     print("==== test coordinate, cost and heuristic ====")
     print(s1_pi.getCoord())

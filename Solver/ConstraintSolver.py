@@ -12,6 +12,7 @@ class ConstraintSolver(object):
         """
         self._reservation = None
         self._cat = None
+        self._usedTable = None
 
     def getReservation(self):
         return self._reservation
@@ -30,6 +31,12 @@ class ConstraintSolver(object):
 
     def setCAT(self, catTable):
         self._cat = catTable
+
+    def getUsedTable(self):
+        return self._usedTable
+
+    def setUsedTable(self, usedTable):
+        self._usedTable = usedTable
 
     # @abc.abstractmethod
     # def solve(self, problemInstance, pathList):

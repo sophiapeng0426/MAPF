@@ -86,12 +86,15 @@ class Util(object):
                 r = len(path)
         return r
 
-    def countPins(self, pathList):
-        res = []
-        paths = filter(lambda x: x is not None, pathList)
-        for path in paths:
-            res.append(path[-1].extraPins())
-        return res
+    # def countPins(self, pathList):
+    #     res = []
+    #     paths = filter(lambda x: x is not None, pathList)
+    #     for path in paths:
+    #         res.append(path[-1].extraPins())
+    #     return res
+
+
+
 
 def main():
     pass

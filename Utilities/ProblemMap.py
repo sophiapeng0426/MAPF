@@ -1,5 +1,4 @@
 from SingleAgent.Constants import *
-# import random
 
 
 class ProblemMap(object):

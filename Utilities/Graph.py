@@ -65,6 +65,9 @@ class Graph:
         if self.__map.isNodeValid((current[0] - 1, current[1] - 1)):
             node.add_Eight(7, self.__nodes[current[0] - 1][current[1] - 1])
 
+    def getSize(self):
+        return self.__size
+
     def getNode(self):
         return self.__nodes
 

@@ -1,5 +1,4 @@
 import abc
-from SingleAgent.Solver.VisitTable import VisitTable
 
 
 class State(object):
@@ -15,8 +14,9 @@ class State(object):
         self._gValue = None
         self._hValue = None
         self._backPointer = backPointer
-        self._extraPins = 0
-        self._visitTable = None
+
+        # self._extraPins = 0
+        # self._visitTable = None
 
     def predecessor(self):
         return self._backPointer
@@ -34,22 +34,22 @@ class State(object):
     #     return "gValue: {0} ".format(self._gValue) + "hValue: {0} ".format(self._hValue)
     #     # "g+h: {0} ".format(self._gValue + self._hValue)
 
-    def initVisitTable(self, pathList):
-        self._visitTable = VisitTable()
-        self._visitTable.fillTable(pathList)
+    # def initVisitTable(self, pathList):
+    #     self._visitTable = VisitTable()
+    #     self._visitTable.fillTable(pathList)
 
-    def visitTable(self):
-        return self._visitTable
+    # def visitTable(self):
+    #     return self._visitTable
 
-    def extraPins(self):
-        return self._extraPins
+    # def extraPins(self):
+    #     return self._extraPins
 
-    @abc.abstractmethod
-    def updateVisitTable(self, table):
-        """
-        :param visitTable:
-        :return:
-        """
+    # @abc.abstractmethod
+    # def updateVisitTable(self, table):
+    #     """
+    #     :param visitTable:
+    #     :return:
+    #     """
 
     @abc.abstractmethod
     def expand(self, problemInstance):
@@ -114,8 +114,8 @@ class State(object):
         dif = self.gValue() - other.gValue() + self.hValue() - other.hValue()
         # breaking tie considering hValue
         if dif == 0:
-            # return self.hValue() - other.hValue() < 0
-            return self.extraPins() - other.extraPins() < 0
+            return self.hValue() - other.hValue() < 0
+            # return self.extraPins() - other.extraPins() < 0
         else:
             return dif < 0
         # return dif < 0

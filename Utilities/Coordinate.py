@@ -62,6 +62,7 @@ class Coordinate(object):
 
 
 def main():
+    import sys
     node1 = Node('.', (2, 2))
     coord1 = Coordinate(0, node1)
     coord2 = coord1
@@ -73,7 +74,8 @@ def main():
     coord4 = Coordinate(1, Node('.', (2, 2)))
     assert not coord4 == coord1, "test3 fail"
 
-    print(coord1.__dict__)
-
+    # print(coord1.__dict__)
+    print("Memory consumption:{0}".format(345 + sys.getsizeof(coord1) + sys.getsizeof(coord1.getTimeStep())))
+#     433
 if __name__ == '__main__':
     main()
