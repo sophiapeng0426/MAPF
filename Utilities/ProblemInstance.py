@@ -4,11 +4,12 @@ from Agent import Agent
 from ProblemMap import ProblemMap
 from Util2 import Util2
 
+
 class ProblemInstance(object):
     def __init__(self, graph, agents):
         """
         _goals: {agentId: (x, y)}
-        :param graph: Graph(ProblemMap(16, 16, {(3, 2): 2, (8, 8): 4, (10, 3): 2, (3, 10): 1}))
+        :param graph:
         :param agents: list of Agents, example [Agent(0, (1,1),(10,10))]
         """
         self.__graph = graph
@@ -90,17 +91,30 @@ class ProblemInstance(object):
 
 
 def main():
-    graph1 = Graph(ProblemMap(16, 16, {(3, 2): 2, (8, 8): 4, (10, 3): 2, (3, 10): 1}))
+    graph1 = Graph(ProblemMap(16, {(3, 2): (2, 2), (8, 8): (4, 4), (10, 3): (2, 2), (3, 10): (1, 1)}))
     agent1 = [Agent(2, (9, 4), (12, 12)), Agent(1, (13, 13), (9, 2))]
     problem1 = ProblemInstance(graph1, agent1)
-
     node_agent1Start = problem1.getGraph().getNode()[15][15]
     print(node_agent1Start.get_Eight())
 
     print(problem1.getGoals())
-
     problem1.plotProblem()
 
+    graph2 = Graph(ProblemMap(14, {(2, 5): (5, 2),
+                              (0, 10): (5, 16),
+                              (7, 1): (2, 5),
+                              (8, 6): (4, 2)
+                              }))
+    agent2 = [Agent(1, (0, 4), (0, 9)),
+              Agent(2, (0, 6), (3, 0)),
+              Agent(3, (0, 2), (9, 4)),
+              Agent(4, (13, 6), (4, 2)),
+              Agent(5, (13, 0), (1, 3)),
+              Agent(6, (6, 9), (12, 7))
+              ]
+    problem2 = ProblemInstance(graph2, agent2)
+    print(problem2.getGoals())
+    problem2.plotProblem()
 
 if __name__ == '__main__':
     main()

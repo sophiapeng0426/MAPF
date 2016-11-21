@@ -83,7 +83,13 @@ class Util2(object):
             return abs(node1.getPosition()[0] - node2.getPosition()[0]) < 2 \
                and abs(node1.getPosition()[1] - node2.getPosition()[1]) < 2
 
+    def posToIndex(self, pos, nsize):
+        return pos[0] * nsize + pos[1]
 
+    def indexToPos(self, index, nsize):
+        x = index // nsize
+        y = index % nsize
+        return (x,y)
 
 ##### Example call #####
 

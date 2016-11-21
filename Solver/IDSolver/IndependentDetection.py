@@ -131,8 +131,9 @@ class IDSolver(ConstraintSolver):
                     agent1 = state[i]
                     agent2 = state[j]
                     if Util2().withinDis(agent1.getCoord().getNode(), agent2.getCoord().getNode()):
+                        print("=== solution is WRONG ===")
                         return False
-        print("== Solution is correct. ==")
+        print("== Solution is CORRECT ==")
         return True
 
     def __str__(self):
@@ -155,15 +156,11 @@ def main():
     # solver1.visualizePath(problem1)
 
     print("==== test case 1 ====")
-
-    mapdict = {(2, 5): 2, (2, 7): 2, (2, 9): 1, (3, 9): 1,
-               (7, 1): 2, (9, 1): 2, (11, 1): 1, (11, 2): 1,
-               (8, 6): 2, (8, 8): 2,
-               (1, 10): 2, (4, 10): 4, (8, 10): 4, (12, 10): 2
-
-
-               }
-    graph2 = Graph(ProblemMap(14, 14, mapdict))
+    graph2 = graph2 = Graph(ProblemMap(14, {(2, 5): (5, 2),
+                              (0, 10): (5, 16),
+                              (7, 1): (2, 5),
+                              (8, 6): (4, 2)
+                              }))
     agent2 = [Agent(1, (0, 4), (0, 9)),
               Agent(2, (0, 6), (3, 0)),
               Agent(3, (0, 2), (9, 4)),

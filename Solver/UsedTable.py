@@ -23,6 +23,9 @@ class UsedTable(object):
     def cellListCopy(self):
         return self._cellList[:]
 
+    def getSize(self):
+        return self._size
+
     def __str__(self):
         return 'a cellList'
 

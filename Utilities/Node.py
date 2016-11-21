@@ -1,17 +1,14 @@
 class Node(object):
-    def __init__(self, type, position):
+    def __init__(self, position):
         """
         :param type: string for wall/block/. etc.
         :param position: tuple for the (x,y)
         neighborFour: Valid 4 neighbors
         neighborEight: valid 8 neighbors
         """
-        self.__type = type
         self.__position = position
-        # self.__x = self.__position[0]
-        # self.__y = self.__position[1]
         self.__neighborFour = [None for i in range(4)]
-        self.__neighborEight = [None for i in range(8)]
+        self.__neighborEight = [None for i in range(4)]
 
     def add_Four(self, index, newNode):
         self.__neighborFour[index] = newNode
@@ -25,32 +22,17 @@ class Node(object):
     def get_Eight(self):
         return self.__neighborEight
 
-    def getType(self):
-        return self.__type
+    def get_neighbor(self):
+        return self.__neighborFour + self.__neighborEight
 
     def getPosition(self):
         return self.__position
 
     def __hash__(self):
-        prime = 31
-        res = 1
-        res = prime * res + hash(self.__position) * prime + hash(self.__type)
-        return res
+        return hash(self.__position)
 
     def __eq__(self, other):
-        """
-        Node type and position are same
-        :param other:
-        :return:
-        """
-        # if self == other:
-        #     return True
-
-        if other is None:
-            return False
-        if type(self) != type(other):
-            return False
-        if self.__type != other.getType():
+        if other is None or type(self) != type(other):
             return False
         if self.__position != other.getPosition():
             return False
@@ -60,28 +42,23 @@ class Node(object):
         return not self.__eq__(other)
 
     def __str__(self):
-        return "Type: {0}, Position: {1}".format(self.__type, self.__position)
+        return "Pos: {0}".format(self.__position)
 
 
 def main():
-    node1 = Node('*', (0, 0))
-    node2 = Node('*', (0, 0))
-    print(node1)
-    print(node2)
+    node1 = Node((1, 1))
+    node2 = Node((0, 0))
+    assert node1 != node2
 
-    print(node1 != node2)
+    node1.add_Four(0, Node((1, 0)))
+    node1.add_Four(1, Node((2, 1)))
+    node1.add_Four(2, Node((1, 2)))
+    node1.add_Four(3, Node((1, 2)))
 
-    node1.add_Four(1, Node('*', (1, 0)))
-    node1.add_Eight(2, Node('*', (0, 1)))
+    node1.add_Eight(2, Node((0, 1)))
     print(node1.get_Four())
-    print(node1)
-    print(node1.get_Four()[1])
 
-    print(node1 != node1.get_Four()[1])
-
-    # print
-    # print(node1.__hash__())
-#
+    assert node1 != node1.get_Four()[1]
 
 if __name__ == '__main__':
     main()

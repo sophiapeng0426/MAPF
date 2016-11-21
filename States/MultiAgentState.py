@@ -1,7 +1,6 @@
 from State import State
 from SingleAgentState import SingleAgentState
 from SingleAgent.Utilities.ProblemInstance import ProblemInstance
-# from SingleAgent.Utilities.Node import Node
 from SingleAgent.Utilities.Agent import Agent
 from SingleAgent.Utilities.Graph import Graph
 from SingleAgent.Utilities.ProblemMap import ProblemMap
@@ -42,10 +41,10 @@ class MultiAgentState(State):
         for singleState in self._singleAgents:
             self._gValue += singleState.gValue()
 
-    def setHeuristic(self, problemInstance):
+    def setHeuristic(self, mode, input):
         self._hValue = 0
         for singleState in self._singleAgents:
-            singleState.setHeuristic(problemInstance) # first set heuristic for each singleAgentState
+            singleState.setHeuristic(mode, input) # first set heuristic for each singleAgentState
             self._hValue += singleState.hValue()
 
     def goalTest(self, problemInstance):
@@ -53,9 +52,6 @@ class MultiAgentState(State):
             if not singleState.goalTest(problemInstance):
                 return False
         return True
-
-    # def updateVisitTable(self, table):
-    #     self._extraPins = 1
 
     def expand(self, problemInstance):
         """ return valid next states
@@ -89,12 +85,12 @@ class MultiAgentState(State):
             assert isinstance(s, SingleAgentState)
             left = [item.getCoord().getNode() for item in mstate]  # copy to prevent changing of mstate
             left.remove(s.getCoord().getNode())
-            staticCons = s.getCoord().getNode().get_Eight()
+            staticCons = s.getCoord().getNode().get_neighbor()
 
             if s.isRoot() or StaticOnly:
                 prohibit = set(staticCons)
             else:
-                dynamicCons = s.predecessor().getCoord().getNode().get_Eight()
+                dynamicCons = s.predecessor().getCoord().getNode().get_neighbor()
                 prohibit = set(staticCons) | set(dynamicCons)
             prohibit.add(s)
 
@@ -151,21 +147,20 @@ class MultiAgentState(State):
         return res
 
     def __str__(self):
-        res = "gValue: {0}, ".format(self._gValue) + "hValue: {0}, ".format(self._hValue) +\
-              "extraPins: {0} ".format(self._extraPins)
+        res = "gValue: {0}, ".format(self._gValue) + "hValue: {0}, ".format(self._hValue)
         for singleState in self._singleAgents:
             res += str(singleState)
             res += '; '
         return res
 
 def main():
-    graph1 = Graph(ProblemMap(16, 16, {(3, 2): 2, (8, 8): 4, (10, 3): 2, (3, 10): 1}))
+    graph1 = Graph(ProblemMap(16, {(3, 2): (2, 2), (8, 8): (4, 4), (10, 3): (2, 2), (3, 10): (1, 1)}))
     agent1 = [Agent(0, (9, 4), (12, 12)), Agent(1, (13, 13), (9, 2))]
     problem1 = ProblemInstance(graph1, agent1)
 
     s1 = MultiAgentState.fromProblemIns(problem1)
     print("=== test constructor, heuristic ===")
-    s1.setHeuristic(problem1)
+    s1.setHeuristic('manhatten', problem1)
     print(s1)
 
     print("====  test expand function ====")
@@ -176,7 +171,7 @@ def main():
 
     print("=== test setHeuristic/ lt function ===")
     expand1 = expandStates[1] # 0 is stay
-    expand1.setHeuristic(problem1)
+    expand1.setHeuristic('manhatten', problem1)
     print(expand1)
     print(s1)
     assert not expand1 < s1, "lt test fail"
@@ -188,12 +183,12 @@ def main():
     p2 = ProblemInstance(graph1, [Agent(0, (9, 4), (5, 5)), Agent(1, (13, 13), (9, 2))])
     s2 = MultiAgentState.fromProblemIns(p2)
     assert s1 == s2, "eq test2 fail"
-    s2.setHeuristic(p2)
+    s2.setHeuristic('manhatten', p2)
     assert s1 == s2, "eq test2 fail"
 
 
     print("=== test isValid ===")
-    graph3 = Graph(ProblemMap(16, 16, {(3, 2): 2, (8, 8): 4, (10, 3): 2, (3, 10): 1}))
+    graph3 = Graph(ProblemMap(16, {(3, 2): (2,2), (8, 8): (4, 4), (10, 3): (2, 2), (3, 10): (1, 1)}))
     agent3 = [Agent(0, (9, 4), (9, 6)), Agent(1, (9, 6), (9, 4))]
     problem3 = ProblemInstance(graph3, agent3)
     problem3.plotProblem()

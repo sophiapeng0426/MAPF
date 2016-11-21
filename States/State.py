@@ -15,6 +15,7 @@ class State(object):
         self._hValue = None
         self._backPointer = backPointer
 
+        self._usedElectrode = 0
         # self._extraPins = 0
         # self._visitTable = None
 
@@ -26,6 +27,12 @@ class State(object):
 
     def hValue(self):
         return self._hValue
+
+    def getUsedElectrode(self):
+        return self._usedElectrode
+
+    def setUsedElectrode(self, num):
+        self._usedElectrode = num
 
     def isRoot(self):
         return self._backPointer is None
@@ -59,7 +66,7 @@ class State(object):
         :return: a list if states
         """
     @abc.abstractmethod
-    def setHeuristic(self, problemInstance):
+    def setHeuristic(self, mode, problemInstanceOrHeuristic):
         """
         Set hValue
         :param problemInstance:

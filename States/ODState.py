@@ -23,15 +23,14 @@ class ODState(MultiAgentState):
         self._preState = preState
         self._direction = None
 
-        self._newPosition = []
-        self._usedElectrode = 0
+        # self._newPosition = []
 
         # no restriction by previous
         self._restrictDir = [[] for i in range(0, len(self._singleAgents))]
         self._updateRestrictDir()
         self._updatedDir()
 
-        self._updateNewPosition(problemInstance)
+        # self._updateNewPosition(problemInstance)
 
     @classmethod
     def fromProblemIns(cls, problemInstance):
@@ -52,7 +51,7 @@ class ODState(MultiAgentState):
             del restrict[i]  # do not count itself
             possibleNodes = self._singleAgents[i].getCoord().getNode().get_Four()[:]
             for direction, nextNode in enumerate(possibleNodes):
-                if (nextNode is not None) and (not set(nextNode.get_Eight()).isdisjoint(restrict)):
+                if (nextNode is not None) and (not set(nextNode.get_neighbor()).isdisjoint(restrict)):
                     self._restrictDir[i].append(direction)
 
     def _updatedDir(self):
@@ -69,12 +68,12 @@ class ODState(MultiAgentState):
         direction = Util2().moveDir(preNode, currentNode)
         self._direction[updatedIndex] = direction
 
-    def _updateNewPosition(self, problemInstance):
-        for singleAgent in self._singleAgents:
-            nsize = problemInstance.getGraph().getSize()
-            indexFromPos = singleAgent.getCoord().getNode().getPosition()[0] * nsize + \
-                           singleAgent.getCoord().getNode().getPosition()[1]
-            self._newPosition.append(indexFromPos)
+    # def _updateNewPosition(self, problemInstance):
+    #     for singleAgent in self._singleAgents:
+    #         nsize = problemInstance.getGraph().getSize()
+    #         indexFromPos = singleAgent.getCoord().getNode().getPosition()[0] * nsize + \
+    #                        singleAgent.getCoord().getNode().getPosition()[1]
+    #         self._newPosition.append(indexFromPos)
 
     def setUsedElectrode(self, usedTable):
         """
@@ -83,9 +82,12 @@ class ODState(MultiAgentState):
         :return:
         """
         table = usedTable.cellListCopy()
+        nsize = usedTable.getSize()
+
         current = self
         while current is not None:
-            for index in current.getNewPosition():
+            for singleAgent in current.getSingleAgents():
+                index = Util2().posToIndex(singleAgent.getCoord().getNode().getPosition(), nsize)
                 table[index] = 1
             current = current.predecessor()
         self._usedElectrode = sum(table)
@@ -171,11 +173,8 @@ class ODState(MultiAgentState):
     def getRestricDir(self):
         return self._restrictDir
 
-    def getNewPosition(self):
-        return self._newPosition
-
-    def getUsedElectrode(self):
-        return self._usedElectrode
+    # def getNewPosition(self):
+    #     return self._newPosition
     # def _isSamePostMove(self, agentNode, restrict1, restrict2):
     #     """ Whether agentNode have same set of possible moves under restrict1 and restrict2
     #     :param agentNode: node in graph
@@ -267,7 +266,7 @@ class ODState(MultiAgentState):
 
 def main():
     import sys
-    graph1 = Graph(ProblemMap(16, 16, {(3, 2): 2, (8, 8): 4, (10, 3): 2, (3, 10): 1}))
+    graph1 = Graph(ProblemMap(16, {(3, 2): (2, 2), (8, 8): (4, 4), (10, 3): (2, 2), (3, 10): (1, 1)}))
     # agent1 = [Agent(0, (9, 6), (9, 2)), Agent(1, (9, 2), (9, 6)), Agent(2, (4, 4), (11, 5))]
     agent1 = [Agent(0, (9, 6), (9, 3)), Agent(1, (9, 3), (9, 6))]
     problem1 = ProblemInstance(graph1, agent1)

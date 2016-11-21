@@ -1,10 +1,4 @@
 from GeneticAStar import GeneticAStar
-
-# from SingleAgent.Utilities.Node import Node
-from SingleAgent.Utilities.ProblemInstance import ProblemInstance
-from SingleAgent.Utilities.Agent import Agent
-from SingleAgent.Utilities.Graph import Graph
-from SingleAgent.Utilities.ProblemMap import ProblemMap
 from SingleAgent.States.SingleAgentState import SingleAgentState
 
 
@@ -19,13 +13,18 @@ class SingleAgentAStar(GeneticAStar):
     # def visualizePath(self, problemInstance)
 
 def main():
-    graph1 = Graph(ProblemMap(16, 16, {(3, 2): 2, (8, 8): 4, (10, 3): 2, (3, 10): 1}))
+    from SingleAgent.Utilities.ProblemInstance import ProblemInstance
+    from SingleAgent.Utilities.Agent import Agent
+    from SingleAgent.Utilities.Graph import Graph
+    from SingleAgent.Utilities.ProblemMap import ProblemMap
+
+    graph1 = Graph(ProblemMap(16, {(3, 2): (2, 2), (8, 8): (4, 4), (10, 3): (2, 2), (3, 10): (1, 1)}))
     agent1 = [Agent(0, (2, 2), (5, 5))]  # can only test single state
     problem1 = ProblemInstance(graph1, agent1)
     problem1.plotProblem()
 
     solver1 = SingleAgentAStar()
-    solver1.solve(problem1)
+    solver1.solve(problem1, None)
 
     solver1.printPath()
 

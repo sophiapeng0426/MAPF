@@ -1,11 +1,9 @@
 from State import State
 from SingleAgent.Constants import *
+from SingleAgent.Utilities.Coordinate import Coordinate
+from SingleAgent.Solver.AStar.TDHeuristic import TDHeuristic
 from SingleAgent.Utilities.ProblemInstance import ProblemInstance
 from SingleAgent.Utilities.Node import Node
-from SingleAgent.Utilities.Coordinate import Coordinate
-from SingleAgent.Utilities.Agent import Agent
-from SingleAgent.Utilities.Graph import Graph
-from SingleAgent.Utilities.ProblemMap import ProblemMap
 
 
 class SingleAgentState(State):
@@ -34,6 +32,7 @@ class SingleAgentState(State):
         targetAgent = None
         if len(problemInstance.getAgents()) == 1:
             targetAgent = problemInstance.getAgents()[0]
+            agentId = targetAgent.getId()
         else:
             for agent in problemInstance.getAgents():
                 if agent.getId() == agentId:
@@ -71,16 +70,28 @@ class SingleAgentState(State):
         else:
             self._gValue = self.predecessor().gValue() + 1    # cost is constant 1
 
-    def setHeuristic(self, problemInstance):
+    def setHeuristic(self, mode, input):
         """
-        Use manhatten distance as heuristic, update hValue
-        :param heuristic:
-        :return: None
+        :param mode: manhatten or trueDistance
+        :param problemInstanceOrHeuristic:
+        :return:
         """
-        assert isinstance(problemInstance, ProblemInstance), "require problemInstance type"
-        goalPos = problemInstance.getGoals()[self._agentId]
-        self._hValue = self._mDistance(self._coord.getNode().getPosition(), goalPos)
+        if mode == "manhatten":
+            assert isinstance(input, ProblemInstance), "Manhatten require problemInstance"
+            problemInstance = input
+            goalPos = problemInstance.getGoals()[self._agentId]
+            self._hValue = self._mDistance(self._coord.getNode().getPosition(), goalPos)
+        elif mode == "trueDistance":
+            # assert isinstance(input, TDHeuristic), "trueDis require TDHeuristic, {0}, {1}".format(type(input), input)
+            heuristic = input
+            self._hValue = heuristic.trueDistance(self.getAgentId(), self.getCoord().getNode().getPosition())
+            # print("set true distance: {0}".format(self._hValue))
 
+        elif mode == "constant":
+            assert isinstance(input, int)
+            self._hValue = input
+        else:
+            assert False, "unknown heuristic"
     # def updateVisitTable(self, table):
     #     """ update self
     #     :param visitTable:
@@ -121,7 +132,6 @@ class SingleAgentState(State):
     #     for node in neighbors:
     #         if node is not None:
     #             table.addNode(node, 4)
-
     def expand(self, problemInstance):
         """
         TODO: a list of singleAgentStates corresponding to its neighbors(valid neighbors)
@@ -182,30 +192,34 @@ class SingleAgentState(State):
 
     def __str__(self):
         return "{0}: ".format(self._agentId) + "{0}".format(self._coord.getNode().getPosition())
+               # + "{0}".format(self.gValue())
         # return "ID{0}: ".format(self._agentId) + "pins: {0}, ".format(self._extraPins) \
         #        + "{0}".format(self._coord.getNode().getPosition())
 
 
 def main():
     import sys
-    graph1 = Graph(ProblemMap(16, 16, {(3, 2): 2, (8, 8): 4, (10, 3): 2, (3, 10): 1}))
+    from SingleAgent.Utilities.Agent import Agent
+    from SingleAgent.Utilities.Graph import Graph
+    from SingleAgent.Utilities.ProblemMap import ProblemMap
+
+    graph1 = Graph(ProblemMap(16, {(3, 2): (2, 2), (8, 8): (4, 4), (10, 3): (2, 2), (3, 10): (1, 1)}))
     agent1 = [Agent(0, (9, 4), (12, 12)), Agent(1, (13, 13), (9, 2))]
     problem1 = ProblemInstance(graph1, agent1)
     problem1.plotProblem()
 
-    print("=== test consructor ===")
-    s1 = SingleAgentState(0, Node('.', (9, 4)), None, problem1)
+    print("=== test constructor ===")
+    s1 = SingleAgentState(0, Node((9, 4)), None, problem1)
     s1_pi = SingleAgentState.fromProblemIns(0, problem1)
 
     print("Memory: {0}".format(sys.getsizeof(s1_pi)))
     print("Memory: {0}".format(sys.getsizeof(s1_pi.predecessor()) + sys.getsizeof(s1_pi.getCoord())))
 
-
     print("==== test coordinate, cost and heuristic ====")
     print(s1_pi.getCoord())
     assert s1_pi.isRoot() == True, "Root test fail"
     assert s1_pi.gValue() == 0, "calculateCost is wrong"
-    s1_pi.setHeuristic(problem1)
+    s1_pi.setHeuristic('manhatten', problem1)
     assert s1_pi.hValue() == 11, "heuristic is wrong"
 
     print("====  test expand function ====")
@@ -215,7 +229,7 @@ def main():
 
     print("=== test lt function ===")
     expand1 = expandStates[1] # 0 is stay
-    expand1.setHeuristic(problem1)
+    expand1.setHeuristic('manhatten', problem1)
     assert s1_pi < expand1, "lt test fail"
 
     print("==== test eq function =====")
@@ -228,7 +242,7 @@ def main():
     assert s1_pi == s3, "eq test2 fail"
 
     # change backpointer => ==
-    s4 = SingleAgentState(0, Node('.', (9, 4)), s1_pi, problem1)
+    s4 = SingleAgentState(0, Node((9, 4)), s1_pi, problem1)
     assert s1_pi == s4, "eq test3 fail"
 
 if __name__ == '__main__':

@@ -49,11 +49,11 @@ class Util(object):
 
     def _conflictStateHelper(self, singleAgents, comparePos):
         for s in singleAgents:
-            staticCons = s.getCoord().getNode().get_Eight()
+            staticCons = s.getCoord().getNode().get_neighbor()
             if s.isRoot():
                 prohibit = set(staticCons)
             else:
-                dynamicCons = s.predecessor().getCoord().getNode().get_Eight()
+                dynamicCons = s.predecessor().getCoord().getNode().get_neighbor()
                 prohibit = set(staticCons) | set(dynamicCons)
             prohibit.add(s)
             if not prohibit.isdisjoint(set(comparePos)):

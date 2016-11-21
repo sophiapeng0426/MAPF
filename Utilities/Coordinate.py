@@ -3,8 +3,6 @@ from Node import Node
 
 class Coordinate(object):
     def __init__(self, timeStep, node):
-        assert isinstance(node, Node), "Input is not Node"
-        assert isinstance(timeStep, int), "Input is not int (timestep)"
         self.__timeStep = timeStep
         self.__node = node
 
@@ -33,9 +31,6 @@ class Coordinate(object):
         if other.getNode() is None:
             return False
         if other.getNode() != self.__node:
-            print("node")
-            print(other.getNode())
-            print(self.__node)
             return False
         if other.getTimeStep() != self.__timeStep:
             return False
@@ -51,27 +46,27 @@ class Coordinate(object):
         if self.__node is None:
             result = prime * result
         else:
-            result = prime * result + self.__node.__hash__()
+            result = prime * result + hash(self.__node)
         result = prime * result + hash(self.__timeStep)
         return result
 
     def __str__(self):
         s1 = "timeStep: {0}, ".format(self.__timeStep)
-        s2 = "Node: ({0},{1})".format(self.__node.getType(), self.__node.getPosition())
+        s2 = "Node: ({0})".format(str(self.__node))
         return "Coordinate: " + s1 + ' ' + s2
 
 
 def main():
     import sys
-    node1 = Node('.', (2, 2))
+    node1 = Node((2, 2))
     coord1 = Coordinate(0, node1)
     coord2 = coord1
     assert coord1 == coord2, "test1 fail"
 
-    coord3 = Coordinate(0, Node('.', (2, 2)))
+    coord3 = Coordinate(0, Node((2, 2)))
     assert coord3 == coord1, "test2 fail"
 
-    coord4 = Coordinate(1, Node('.', (2, 2)))
+    coord4 = Coordinate(1, Node((2, 2)))
     assert not coord4 == coord1, "test3 fail"
 
     # print(coord1.__dict__)

@@ -13,8 +13,9 @@ class GeneticAStar(ConstraintSolver):
         _goalState: result goal state (used for reconstruct path)
         """
         """TODO:
-        1, reservation table
-        2, advanced heuristic cost"""
+        reservation table
+        cat table
+        """
         super(GeneticAStar, self).__init__()
         self._openList = PriorityQueue()
         self._closeList = StateClosedList()
@@ -27,14 +28,15 @@ class GeneticAStar(ConstraintSolver):
         :return:
         """
         """
-        TODO:
-        more efficient data structure for openList
+        TODO: more efficient data structure for openList
         """
         assert isinstance(problemInstance, ProblemInstance), "Initialize solve function require problemInstance"
         self.init(problemInstance, pathList)
 
         root = self.createRoot(problemInstance)
-        root.setHeuristic(problemInstance)
+        # self.setHeuristic(root, 'manhatten', problemInstance)
+        # print(root)
+        self.setHeuristic(root, 'trueDistance', self._heuristic)
 
         if pathList is not None:
             root.setUsedElectrode(self.getUsedTable())
@@ -46,11 +48,10 @@ class GeneticAStar(ConstraintSolver):
         while not self._openList.empty():
             currentState = self._openList.get()
 
-            if self._openList.qsize() % 1000 == 0:
-                print("OpenList size: {0}".format(self._openList.qsize()))
-                # print("pop state:{0}".format(currentState))
-
-            self._closeList.add(currentState)
+            if self._openList.qsize() % 5000 == 0:
+                print("OpenList size: {0};  closedList size ~: {1}".format(self._openList.qsize(),
+                                                                         self.closeList().size() - self._openList.qsize()))
+            # self._closeList.add(currentState)
 
             if self.isGoal(currentState, problemInstance):
                 self._goalState = currentState
@@ -59,14 +60,11 @@ class GeneticAStar(ConstraintSolver):
             potentialStates = currentState.expand(problemInstance)
             for s in potentialStates:
                 if not self._closeList.contains(s):
-                    s.setHeuristic(problemInstance)
+                    # self.setHeuristic(s, 'manhatten', problemInstance)
+                    self.setHeuristic(s, 'trueDistance', self._heuristic)
 
                     if pathList is not None:
                         s.setUsedElectrode(self._usedTable)
-
-                        # if kk % 100 == 0:
-                        # print("children: {0}".format(s))
-                        # print(s.visitTable())
 
                     self._openList.put(s)
                     self._closeList.add(s)
@@ -77,9 +75,11 @@ class GeneticAStar(ConstraintSolver):
     def init(self, problemInstance, pathList):
         """
         :param problemInstance:
+        :param pathList:
         :return:
         """
-        """init used table"""
+        from TDHeuristic import TDHeuristic
+
         while not self._openList.empty():
             self._openList.get()
         self._closeList.clear()
@@ -90,6 +90,20 @@ class GeneticAStar(ConstraintSolver):
             usedTable = UsedTable(problemInstance)
             usedTable.fillTable(pathList)
             self.setUsedTable(usedTable)
+
+        # initialize heuristic
+        self._heuristic = TDHeuristic(problemInstance)
+
+    def getHeuristicTable(self):
+        return self._heuristic
+
+    def setHeuristic(self, s, mode, input):
+        if mode == 'manhatten':
+            s.setHeuristic(mode, input)
+        elif mode == 'trueDistance':
+            s.setHeuristic(mode, input)
+        else:
+            assert False, 'unknown heuristic'
 
     def isGoal(self, s, problemInstance):
         return s.goalTest(problemInstance)
@@ -117,6 +131,9 @@ class GeneticAStar(ConstraintSolver):
             print("No path to print")
         for s in pathList:
             print(s)
+
+    def closeList(self):
+        return self._closeList
 
     def createRoot(self, problemInstance):
         """create root node for AStar solver"""

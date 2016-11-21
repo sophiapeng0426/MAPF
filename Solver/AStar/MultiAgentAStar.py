@@ -1,11 +1,6 @@
-import copy
-import time
 from GeneticAStar import GeneticAStar
-from SingleAgent.Utilities.ProblemInstance import ProblemInstance
-from SingleAgent.Utilities.Agent import Agent
-from SingleAgent.Utilities.Graph import Graph
-from SingleAgent.Utilities.ProblemMap import ProblemMap
 from SingleAgent.States.MultiAgentState import MultiAgentState
+
 
 class MultiAgentAStar(GeneticAStar):
     def __init__(self):
@@ -21,6 +16,7 @@ class MultiAgentAStar(GeneticAStar):
         :param problemInstance:
         :return:
         """
+        import copy
         # deep copy to prevent changing of map content
         mapContent = copy.deepcopy(problemInstance.getMap().getContent())
         pathList = self.getPath()
@@ -34,14 +30,20 @@ class MultiAgentAStar(GeneticAStar):
 
 
 def main():
-    graph1 = Graph(ProblemMap(16, 16, {(3, 2): 2, (8, 8): 4, (10, 3): 2, (3, 10): 1}))
+    from SingleAgent.Utilities.ProblemInstance import ProblemInstance
+    from SingleAgent.Utilities.Agent import Agent
+    from SingleAgent.Utilities.Graph import Graph
+    from SingleAgent.Utilities.ProblemMap import ProblemMap
+    import time
+
+    graph1 = Graph(ProblemMap(16, {(3, 2): (2, 2), (8, 8): (4, 4), (10, 3): (2, 2), (3, 10): (1, 1)}))
     agent1 = [Agent(0, (9, 6), (9, 2)), Agent(1, (9, 2), (9, 6)), Agent(2, (4, 4), (11, 5))]
     problem1 = ProblemInstance(graph1, agent1)
     problem1.plotProblem()
 
     startTime = time.time()
     solver1 = MultiAgentAStar()
-    solver1.solve(problem1)
+    solver1.solve(problem1, None)
     print("solver time: {0} ".format(time.time() - startTime))
 
     solver1.printPath()

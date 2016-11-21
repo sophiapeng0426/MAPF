@@ -1,1 +1,1 @@
-__all__ = ["Block","Symbols","costs"]
+__all__ = ["Block","Symbols","costs", "Position"]
