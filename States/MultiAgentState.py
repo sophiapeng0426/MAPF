@@ -1,9 +1,11 @@
+import math
 from State import State
 from SingleAgentState import SingleAgentState
 from SingleAgent.Utilities.ProblemInstance import ProblemInstance
 from SingleAgent.Utilities.Agent import Agent
 from SingleAgent.Utilities.Graph import Graph
 from SingleAgent.Utilities.ProblemMap import ProblemMap
+from SingleAgent.Utilities.Util2 import Util2
 
 
 class MultiAgentState(State):
@@ -34,6 +36,8 @@ class MultiAgentState(State):
     def getSingleAgents(self):
         return self._singleAgents
 
+    """ ============  functions to update member variable ==========
+    """
     def calculateCost(self, problemInstance):
         self._gValue = 0
         if self.predecessor() is None:
@@ -47,12 +51,26 @@ class MultiAgentState(State):
             singleState.setHeuristic(mode, input) # first set heuristic for each singleAgentState
             self._hValue += singleState.hValue()
 
-    def goalTest(self, problemInstance):
-        for singleState in self._singleAgents:
-            if not singleState.goalTest(problemInstance):
-                return False
-        return True
+    def updateCATViolations(self, cat):
+        newViolation = cat.violation(self)
+        if self.predecessor() is None:
+            self._conflictViolations = newViolation
+        else:
+            self._conflictViolations = self.predecessor().conflictViolations() + newViolation
 
+    def updateUsedElectrode(self, table, nsize):
+        tempList = table.toList(nsize)
+
+        current = self
+        while current is not None:
+            for singleAgent in current.getSingleAgents():
+                index = Util2().posToIndex(singleAgent.getCoord().getNode().getPosition(), nsize)
+                tempList[index] = 1
+            current = current.predecessor()
+        self._usedElectrode = sum(tempList)
+
+    """ ============  functions for astar ==========
+    """
     def expand(self, problemInstance):
         """ return valid next states
 
@@ -122,6 +140,14 @@ class MultiAgentState(State):
                 res.append(comb + [element])
         return res
 
+    def goalTest(self, problemInstance):
+        for singleState in self._singleAgents:
+            if not singleState.goalTest(problemInstance):
+                return False
+        return True
+
+    """============  functions for compare ==========
+    """
     def __eq__(self, other):
         """
         each single agent: ID, getCoord.getNode (type and p)
@@ -147,11 +173,13 @@ class MultiAgentState(State):
         return res
 
     def __str__(self):
-        res = "gValue: {0}, ".format(self._gValue) + "hValue: {0}, ".format(self._hValue)
+        res = "gValue: {0}, hValue: {1}, violations: {2}, electrode: {3}, ".format(self._gValue, self._hValue,
+                                                    self._conflictViolations, self._usedElectrode)
         for singleState in self._singleAgents:
             res += str(singleState)
             res += '; '
         return res
+
 
 def main():
     graph1 = Graph(ProblemMap(16, {(3, 2): (2, 2), (8, 8): (4, 4), (10, 3): (2, 2), (3, 10): (1, 1)}))

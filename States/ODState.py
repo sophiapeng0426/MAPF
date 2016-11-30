@@ -6,6 +6,8 @@ from SingleAgent.Utilities.Graph import Graph
 from SingleAgent.Utilities.ProblemMap import ProblemMap
 from SingleAgent.Utilities.Util2 import Util2
 
+
+
 class ODState(MultiAgentState):
     def __init__(self, backPointer, singleAgents, problemInstance, moveNext, preState):
         """
@@ -74,23 +76,8 @@ class ODState(MultiAgentState):
     #         indexFromPos = singleAgent.getCoord().getNode().getPosition()[0] * nsize + \
     #                        singleAgent.getCoord().getNode().getPosition()[1]
     #         self._newPosition.append(indexFromPos)
-
-    def setUsedElectrode(self, usedTable):
-        """
-        update _usedElectrode number
-        :param usedTable:
-        :return:
-        """
-        table = usedTable.cellListCopy()
-        nsize = usedTable.getSize()
-
-        current = self
-        while current is not None:
-            for singleAgent in current.getSingleAgents():
-                index = Util2().posToIndex(singleAgent.getCoord().getNode().getPosition(), nsize)
-                table[index] = 1
-            current = current.predecessor()
-        self._usedElectrode = sum(table)
+    """ ============  functions to update member variable ==========
+    """
 
     # def updateVisitTable(self, table):
     #     if table is not None:
@@ -105,7 +92,8 @@ class ODState(MultiAgentState):
     #     for singleAgent in self._singleAgents[0: updateRange]:
     #         singleAgent.addSingleAgent(self._visitTable)
     #     self._extraPins = self._visitTable.getExtraPins()
-
+    """ ============  functions for astar ==========
+    """
     def expand(self, problemInstance):
         """ return valid next states (intermediate/standard)
         :param problemInstance:
@@ -146,13 +134,15 @@ class ODState(MultiAgentState):
             return False
         return True
 
-    def isStandard(self):
-        return self._moveNext == 0
-
     def goalTest(self, problemInstance):
         if not self.isStandard():
             return False
         return super(ODState, self).goalTest(problemInstance)
+
+    """ ============  auxillary ==========
+    """
+    def isStandard(self):
+        return self._moveNext == 0
 
     def getNewMoveNext(self):
         if self._moveNext == len(self._singleAgents) - 1:
@@ -193,7 +183,8 @@ class ODState(MultiAgentState):
     #     res1.sort()
     #     res2.sort()
     #     return res1 == res2
-
+    """ ============  functions for compare ==========
+    """
     def __eq__(self, other):
         """Compare: each single agent: ID, getCoord.getNode (type and position)
                  moveNext and all possible moves of unassigned agents
@@ -231,38 +222,39 @@ class ODState(MultiAgentState):
     def __hash__(self):
         return super(ODState, self).__hash__() + 23 * hash(self._moveNext) + hash(str(self._restrictDir))
 
-    def __str__(self):
-        res = "gValue: {0}, ".format(self._gValue) + "hValue: {0}, ".format(self._hValue) \
-              + "used: {0}, ".format(self._usedElectrode)
-        res += "moveNext: {0}, ".format(self._moveNext)
-        res += "dir: {0}, ".format(self._direction)
-        for singleState in self._singleAgents:
-            res += str(singleState)
-            res += '; '
-        return res
+    # def __str__(self):
+    #     res = "gValue: {0}, hValue: {1}, violations: {2}, electrode: {3}, ".format(self._gValue, self._hValue,
+    #                                                                                self._conflictViolations,
+    #                                                                                self._usedElectrode)
+    #     # res += "moveNext: {0}, ".format(self._moveNext)
+    #     # res += "dir: {0}, ".format(self._direction)
+    #     for singleState in self._singleAgents:
+    #         res += str(singleState)
+    #         res += '; '
+    #     return res
 
-    def __lt__(self, other):
-        """Compare two state for priority queue
-        Breaking tie considers smaller hValue
-        :param other: same candidate state
-        :return:
-        """
-        """
-        TODO: break tie considering _sharedNodesm (visitTable)
-            ; and future violations (CAT)
-        """
-        assert other is not None, "State can not compare with None type"
-        if other.hValue() is None or self.hValue() is None:
-            print("set Heuristic Value first")
-            return None
-        dif = self.gValue() - other.gValue() + self.hValue() - other.hValue()
-        # breaking tie considering hValue
-        if dif == 0:
-            return self.hValue() - other.hValue() < 0
-            # return self.getUsedElectrode() - other.getUsedElectrode() < 0
-        else:
-            return dif < 0
-            # return dif < 0
+    # def __lt__(self, other):
+    #     """Compare two state for priority queue
+    #     Breaking tie considers smaller hValue
+    #     :param other: same candidate state
+    #     :return:
+    #     """
+    #     """
+    #     TODO: break tie considering _sharedNodesm (visitTable)
+    #         ; and future violations (CAT)
+    #     """
+    #     assert other is not None, "State can not compare with None type"
+    #     if other.hValue() is None or self.hValue() is None:
+    #         print("set Heuristic Value first")
+    #         return None
+    #     dif = self.gValue() - other.gValue() + self.hValue() - other.hValue()
+    #     # breaking tie considering hValue
+    #     if dif == 0:
+    #         # return self.hValue() - other.hValue() < 0
+    #         return self.conflictViolations() - other.conflictViolations() < 0
+    #     else:
+    #         return dif < 0
+    #         # return dif < 0
 
 def main():
     import sys

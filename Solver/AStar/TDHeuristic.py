@@ -6,9 +6,11 @@ from SingleAgent.Utilities.Util2 import Util2
 
 class TDHeuristic(object):
     def __init__(self, problemInstance):
-        self._nsize = problemInstance.getGraph().getSize()
         nAgent = len(problemInstance.getAgents())
-        # lookupTable[ID][index] is the distance
+        self._nsize = problemInstance.getGraph().getSize()
+        self._idTable = {}
+
+        # lookupTable[self._idTable[ID]][index] is the distance
         self._lookupTable = [[0 for i in range(self._nsize * self._nsize)] for j in range(nAgent)]
         self._init(problemInstance)
         print("TDHeuristic initialized, size: {0} x {1}".format(len(self._lookupTable), len(self._lookupTable[0])))
@@ -21,6 +23,7 @@ class TDHeuristic(object):
         """
         goals = problemInstance.getGoals()
 
+        k = 0
         for ID, goalPos in goals.items():
             newagent = Agent(ID, goalPos, None)  # fake goal position
             newProblem = ProblemInstance(problemInstance.getGraph(), [newagent])
@@ -30,12 +33,13 @@ class TDHeuristic(object):
             position, distance = bfs.finalList()
             for i in range(len(position)):
                 index = Util2().posToIndex(position[i], self._nsize)
-                self._lookupTable[ID][index] = distance[i]
+                self._lookupTable[k][index] = distance[i]
+                self._idTable[ID] = k
+            k += 1
 
     def trueDistance(self, agentId, pos):
         index = Util2().posToIndex(pos, self._nsize)
-        return self._lookupTable[agentId][index]
-
+        return self._lookupTable[self._idTable[agentId]][index]
 
 
 def main():

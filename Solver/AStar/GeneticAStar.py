@@ -2,7 +2,6 @@ from Queue import PriorityQueue
 from SingleAgent.Solver.ConstraintSolver import ConstraintSolver
 from SingleAgent.Utilities.StateClosedList import StateClosedList
 from SingleAgent.Utilities.ProblemInstance import ProblemInstance
-from SingleAgent.Solver.UsedTable import UsedTable
 
 
 class GeneticAStar(ConstraintSolver):
@@ -22,37 +21,37 @@ class GeneticAStar(ConstraintSolver):
         self._goalState = None
         self._heuristic = None
 
-    def solve(self, problemInstance, pathList):
+    def solve(self, problemInstance):
         """ solver for singleAgent and multiAgent
         :param problemInstance:
         :return:
         """
         """
         TODO: more efficient data structure for openList
+        Do not setUsedElectrode/cat if not initialized
+        Do not setcat if isEmpty
         """
         assert isinstance(problemInstance, ProblemInstance), "Initialize solve function require problemInstance"
-        self.init(problemInstance, pathList)
+        self.init(problemInstance)
 
         root = self.createRoot(problemInstance)
         # self.setHeuristic(root, 'manhatten', problemInstance)
-        # print(root)
         self.setHeuristic(root, 'trueDistance', self._heuristic)
+        self._setTables(root, problemInstance)
 
-        if pathList is not None:
-            root.setUsedElectrode(self.getUsedTable())
-
+        # if pathList is not None:
+        #     root.setUsedElectrode(self.getUsedTable())
         self._openList.put(root)
         self._closeList.add(root)
 
-        kk = 0
         while not self._openList.empty():
             currentState = self._openList.get()
 
             if self._openList.qsize() % 5000 == 0:
                 print("OpenList size: {0};  closedList size ~: {1}".format(self._openList.qsize(),
-                                                                         self.closeList().size() - self._openList.qsize()))
+                                     self.closeList().size() - self._openList.qsize()))
+                # print("pop state: {0}".format(currentState))
             # self._closeList.add(currentState)
-
             if self.isGoal(currentState, problemInstance):
                 self._goalState = currentState
                 return True
@@ -62,48 +61,54 @@ class GeneticAStar(ConstraintSolver):
                 if not self._closeList.contains(s):
                     # self.setHeuristic(s, 'manhatten', problemInstance)
                     self.setHeuristic(s, 'trueDistance', self._heuristic)
+                    self._setTables(s, problemInstance)
 
-                    if pathList is not None:
-                        s.setUsedElectrode(self._usedTable)
-
+                    # if pathList is not None:
+                    #     s.setUsedElectrode(self._usedTabl
                     self._openList.put(s)
                     self._closeList.add(s)
-            kk += 1
-
         return False
 
-    def init(self, problemInstance, pathList):
+    def init(self, problemInstance):
         """
         :param problemInstance:
         :param pathList:
         :return:
         """
         from TDHeuristic import TDHeuristic
-
         while not self._openList.empty():
             self._openList.get()
         self._closeList.clear()
         self._goalState = None
-
-        # initialize electrode used table
-        if pathList is not None:
-            usedTable = UsedTable(problemInstance)
-            usedTable.fillTable(pathList)
-            self.setUsedTable(usedTable)
-
-        # initialize heuristic
+        # init TDHeuristic
         self._heuristic = TDHeuristic(problemInstance)
+        print("usedtable size: {0}".format(self.getUsedTable().getSize()))
+        print("cat size: {0}".format(self.getCAT().getSize()))
+        # initialize electrode used table/ heuristic
+        # if pathList is not None:
+        #     usedTable = UsedTable()
+        #     usedTable.fillTable(pathList)
+        #     self.setUsedTable(usedTable)
+
+        # initialize reservation, cat
 
     def getHeuristicTable(self):
         return self._heuristic
 
     def setHeuristic(self, s, mode, input):
-        if mode == 'manhatten':
-            s.setHeuristic(mode, input)
-        elif mode == 'trueDistance':
-            s.setHeuristic(mode, input)
-        else:
-            assert False, 'unknown heuristic'
+        s.setHeuristic(mode, input)
+
+    def _setTables(self, s, problemInstance):
+        """
+        set s._conflictViolations and s._usedElectrode
+        :param s: multiagentstate or ODstate, not implemented for single agentstate
+        :return:
+        """
+        nsize = problemInstance.getGraph().getSize()
+        if self.getUsedTable().isInitialized() is True:
+            s.updateUsedElectrode(self.getUsedTable(), nsize)
+        if self.getCAT().isInitialized() is True and self.getCAT().isEmpty() is False:
+            s.updateCATViolations(self.getCAT())
 
     def isGoal(self, s, problemInstance):
         return s.goalTest(problemInstance)

@@ -1,9 +1,10 @@
 from State import State
 from SingleAgent.Constants import *
 from SingleAgent.Utilities.Coordinate import Coordinate
-from SingleAgent.Solver.AStar.TDHeuristic import TDHeuristic
 from SingleAgent.Utilities.ProblemInstance import ProblemInstance
 from SingleAgent.Utilities.Node import Node
+from SingleAgent.Utilities.Util2 import Util2
+
 
 
 class SingleAgentState(State):
@@ -54,10 +55,8 @@ class SingleAgentState(State):
     def getAgentId(self):
         return self._agentId
 
-    def goalTest(self, problemInstance):
-        # problemInstance can be multiple/single
-        return self._coord.getNode().getPosition() == problemInstance.getGoals()[self._agentId]
-
+    """ ============  functions to update member variable ==========
+    """
     def calculateCost(self, problemInstance):
         if self.predecessor() is None:
             self._gValue = 0
@@ -86,12 +85,29 @@ class SingleAgentState(State):
             heuristic = input
             self._hValue = heuristic.trueDistance(self.getAgentId(), self.getCoord().getNode().getPosition())
             # print("set true distance: {0}".format(self._hValue))
-
         elif mode == "constant":
             assert isinstance(input, int)
             self._hValue = input
         else:
             assert False, "unknown heuristic"
+
+    def updateCATViolations(self, cat):
+        """ update self._conflictViolations"""
+        # newViolation = cat.violation(self)
+        # self._conflictViolations = self.predecessor().ConflictViolations() + newViolation
+        return
+
+    def updateUsedElectrode(self, usedTable, nsize):
+        """ not implemented"""
+        tempTable = usedTable.toList(nsize)
+        nsize = usedTable.getSize()
+
+        current = self
+        while current is not None:
+            index = Util2().posToIndex(current.getCoord().getNode().getPosition(), nsize)
+            tempTable[index] = 1
+            current = current.predecessor()
+        self._usedElectrode = sum(tempTable)
     # def updateVisitTable(self, table):
     #     """ update self
     #     :param visitTable:
@@ -132,6 +148,9 @@ class SingleAgentState(State):
     #     for node in neighbors:
     #         if node is not None:
     #             table.addNode(node, 4)
+
+    """============  functions for astar ==========
+    """
     def expand(self, problemInstance):
         """
         TODO: a list of singleAgentStates corresponding to its neighbors(valid neighbors)
@@ -159,6 +178,12 @@ class SingleAgentState(State):
         """
         return SingleAgentState(self._agentId, self._coord.getNode(), self, problemInstance)
 
+    def goalTest(self, problemInstance):
+        # problemInstance can be multiple/single
+        return self._coord.getNode().getPosition() == problemInstance.getGoals()[self._agentId]
+
+    """============  functions for compare ==========
+    """
     def __eq__(self, other):
         """
         AgentId, Coordinate.Node (position and type)

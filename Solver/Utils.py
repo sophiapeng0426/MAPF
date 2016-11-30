@@ -1,4 +1,3 @@
-from SingleAgent.States import ODState
 from SingleAgent.Utilities.Conflict import Conflict
 
 
@@ -34,6 +33,7 @@ class Util(object):
         :param compareState:
         :return: bool
         """
+        from SingleAgent.States import ODState
         assert isinstance(thisState, ODState.ODState)
         assert isinstance(compareState, ODState.ODState)
 

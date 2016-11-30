@@ -21,9 +21,13 @@ class StateClosedList(ICLosedList):
             del self._closeSet[preState]
             return False
         elif state.gValue == preState.gValue():
-            if state.getUsedElectrode() < preState.getUsedElectrode():
+            if state.conflictViolations() < preState.conflictViolations():
                 del self._closeSet[preState]
                 return False
+            elif state.conflictViolations() == preState.conflictViolations():
+                if state.usedElectrode() < preState.usedElectrode():
+                    del self._closeSet[preState]
+                    return False
         return True
 
     def add(self, state):

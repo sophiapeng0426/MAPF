@@ -14,7 +14,7 @@ class State(object):
         self._gValue = None
         self._hValue = None
         self._backPointer = backPointer
-
+        self._conflictViolations = 0
         self._usedElectrode = 0
         # self._extraPins = 0
         # self._visitTable = None
@@ -28,11 +28,11 @@ class State(object):
     def hValue(self):
         return self._hValue
 
-    def getUsedElectrode(self):
+    def usedElectrode(self):
         return self._usedElectrode
 
-    def setUsedElectrode(self, num):
-        self._usedElectrode = num
+    def conflictViolations(self):
+        return self._conflictViolations
 
     def isRoot(self):
         return self._backPointer is None
@@ -58,6 +58,8 @@ class State(object):
     #     :return:
     #     """
 
+    """================== astar functions =================
+    """
     @abc.abstractmethod
     def expand(self, problemInstance):
         """
@@ -65,8 +67,19 @@ class State(object):
         :param problemInstance:
         :return: a list if states
         """
+
     @abc.abstractmethod
-    def setHeuristic(self, mode, problemInstanceOrHeuristic):
+    def goalTest(self, problemInstance):
+        """
+        test if state is goal state
+        :param problemInstance:
+        :return:
+        """
+
+    """=========== functions to update member variables =========
+    """
+    @abc.abstractmethod
+    def setHeuristic(self, mode, input):
         """
         Set hValue
         :param problemInstance:
@@ -78,15 +91,23 @@ class State(object):
         Calcualte gValue
         :return:
         """
-
     @abc.abstractmethod
-    def goalTest(self, problemInstance):
+    def updateCATViolations(self, cat):
         """
-        test if state is goal state
-        :param problemInstance:
+        update _conflictViolations
+        :param cat:
         :return:
         """
 
+    @abc.abstractmethod
+    def updateUsedElectrode(self, table, nsize):
+        """
+        udpate _usedElectrode
+        :param table:
+        :return:
+        """
+    """================= functions to compare ===============
+    """
     @abc.abstractmethod
     def __eq__(self, other):
         """
@@ -111,8 +132,8 @@ class State(object):
         :return:
         """
         """
-        TODO: break tie considering _sharedNodesm (visitTable)
-            ; and future violations (CAT)
+        TODO: break tie considering _usedElectrode (visitTable)
+            ; and _conflictViolations (CAT)
         """
         assert other is not None, "State can not compare with None type"
         if other.hValue() is None or self.hValue() is None:
@@ -121,8 +142,12 @@ class State(object):
         dif = self.gValue() - other.gValue() + self.hValue() - other.hValue()
         # breaking tie considering hValue
         if dif == 0:
-            return self.hValue() - other.hValue() < 0
-            # return self.extraPins() - other.extraPins() < 0
+            dif2 = self.conflictViolations() - other.conflictViolations()
+            if dif2 == 0:
+                return self.usedElectrode() - other.usedElectrode() < 0
+            else:
+                return dif2 < 0
+            # return self.hValue() - other.hValue() < 0
         else:
             return dif < 0
         # return dif < 0

@@ -1,4 +1,7 @@
 import abc
+from SingleAgent.Solver.UsedTable import UsedTable
+from SingleAgent.Solver.ConflictAvoidanceTable import ConflictAvoidanceTable
+from SingleAgent.Solver.Reservation import Reservation
 
 
 class ConstraintSolver(object):
@@ -10,21 +13,15 @@ class ConstraintSolver(object):
         _visitTable: {coord, [group]}
 
         """
-        self._reservation = None
-        self._cat = None
-        self._usedTable = None
+        self._reservation = Reservation()
+        self._cat = ConflictAvoidanceTable()
+        self._usedTable = UsedTable()
 
     def getReservation(self):
         return self._reservation
 
     def setReservation(self, reservation):
         self._reservation = reservation
-
-    # def getVisitTable(self):
-    #     return self._visitTable
-    #
-    # def setVisitTable(self, visitTable):
-    #     self._visitTable = visitTable
 
     def getCAT(self):
         return self._cat
@@ -37,6 +34,12 @@ class ConstraintSolver(object):
 
     def setUsedTable(self, usedTable):
         self._usedTable = usedTable
+
+    # def getVisitTable(self):
+    #     return self._visitTable
+    #
+    # def setVisitTable(self, visitTable):
+    #     self._visitTable = visitTable
 
     # @abc.abstractmethod
     # def solve(self, problemInstance, pathList):
