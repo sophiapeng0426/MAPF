@@ -184,8 +184,8 @@ def main():
               Agent(1, (0, 6), (3, 0)),
               Agent(2, (0, 2), (9, 4)),
               Agent(3, (13, 6), (4, 2)),
-              Agent(4, (13, 0), (1, 3))
-              # Agent(5, (6, 9), (12, 7))
+              Agent(4, (13, 0), (1, 3)),
+              Agent(5, (6, 9), (12, 7))
               ]
     testProblem1 = ProblemInstance(graph2, agent2)
     testProblem1.plotProblem()
