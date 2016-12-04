@@ -146,6 +146,9 @@ class MultiAgentState(State):
                 return False
         return True
 
+    def timeStep(self):
+        return self._singleAgents[0].timeStep()
+
     """============  functions for compare ==========
     """
     def __eq__(self, other):

@@ -75,6 +75,9 @@ class State(object):
         :param problemInstance:
         :return:
         """
+    @abc.abstractmethod
+    def timeStep(self):
+        """return timestep of this state"""
 
     """=========== functions to update member variables =========
     """

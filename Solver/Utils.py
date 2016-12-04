@@ -10,6 +10,7 @@ class Util(object):
         :return:
         """
         thisPath = pathList[index]
+        isGoalState = False
         if thisPath is None:
             return None
         for i in range(startIndex, len(pathList)):
@@ -20,14 +21,15 @@ class Util(object):
                     thisState = thisPath[t]
                     if t > len(path) - 1:
                         compareState = path[-1]
+                        isGoalState = True
                     else:
                         compareState = path[t]
-                    if self.conflictState(thisState, compareState):
+                    if self.conflictState(thisState, compareState, isGoalState):
                         # return earliest conflict of thisPath and pathList
                         return Conflict(t, index, i)
         return None
 
-    def conflictState(self, thisState, compareState):
+    def conflictState(self, thisState, compareState, isGoal):
         """ check if two states have time conflict
         :param thisState:
         :param compareState:
@@ -42,21 +44,24 @@ class Util(object):
         thisPos = [state.getCoord().getNode() for state in thisSingleAgents]
         comparePos = [state.getCoord().getNode() for state in compareSingleAgents]
 
-        if self._conflictStateHelper(thisSingleAgents, comparePos) or self._conflictStateHelper(compareSingleAgents, thisPos):
+        if self._conflictStateHelper(thisSingleAgents, comparePos, isGoal=False) or \
+                self._conflictStateHelper(compareSingleAgents, thisPos, isGoal):
             return True
         else:
             return False
 
-    def _conflictStateHelper(self, singleAgents, comparePos):
+    def _conflictStateHelper(self, singleAgents, comparePos, isGoal):
         for s in singleAgents:
             staticCons = s.getCoord().getNode().get_neighbor()
-            if s.isRoot():
+            if s.isRoot() or isGoal is True:
                 prohibit = set(staticCons)
             else:
                 dynamicCons = s.predecessor().getCoord().getNode().get_neighbor()
                 prohibit = set(staticCons) | set(dynamicCons)
             prohibit.add(s)
             if not prohibit.isdisjoint(set(comparePos)):
+                # print(singleAgents[0])
+                # print(singleAgents[0].getCoord())
                 return True
         return False
 

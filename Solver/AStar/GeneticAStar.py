@@ -47,26 +47,44 @@ class GeneticAStar(ConstraintSolver):
         while not self._openList.empty():
             currentState = self._openList.get()
 
-            if self._openList.qsize() % 5000 == 0:
-                print("OpenList size: {0};  closedList size ~: {1}".format(self._openList.qsize(),
-                                     self.closeList().size() - self._openList.qsize()))
+            # if self._openList.qsize() % 5000 == 0:
+                # print("OpenList size: {0};  closedList size ~: {1}".format(self._openList.qsize(),
+                #                      self.closeList().size() - self._openList.qsize()))
                 # print("pop state: {0}".format(currentState))
+
             # self._closeList.add(currentState)
+
+            # reach goal state
             if self.isGoal(currentState, problemInstance):
-                self._goalState = currentState
-                return True
+                if currentState.timeStep() >= self.getReservation().getLastTimeStep():
+                    print("%% current time: {0}, lts: {1}".format(currentState.timeStep(),
+                                                                  self.getReservation().getLastTimeStep()))
+                    self._goalState = currentState
+                    return True
+                else:
+                    print("%%% put goal state back %%%")
+                    potentialStates = currentState.expand(problemInstance)
+                    for s in potentialStates:
+                        if s == currentState:
+                            # TODO: generate this directly by copy if works
+                            self.setHeuristic(s, 'trueDistance', self._heuristic)
+                            self._setTables(s, problemInstance)
+                            self._openList.put(s)
 
-            potentialStates = currentState.expand(problemInstance)
-            for s in potentialStates:
-                if not self._closeList.contains(s):
-                    # self.setHeuristic(s, 'manhatten', problemInstance)
-                    self.setHeuristic(s, 'trueDistance', self._heuristic)
-                    self._setTables(s, problemInstance)
+            # not reach goal state
+            else:
+                potentialStates = currentState.expand(problemInstance)
+                for s in potentialStates:
+                    if self.getReservation().isValid(s) and not self._closeList.contains(s):
+                        # self.setHeuristic(s, 'manhatten', problemInstance)
+                        self.setHeuristic(s, 'trueDistance', self._heuristic)
+                        self._setTables(s, problemInstance)
 
-                    # if pathList is not None:
-                    #     s.setUsedElectrode(self._usedTabl
-                    self._openList.put(s)
-                    self._closeList.add(s)
+                        # if pathList is not None:
+                        #     s.setUsedElectrode(self._usedTabl
+                        self._openList.put(s)
+                        self._closeList.add(s)
+        print("failed to find path.\n")
         return False
 
     def init(self, problemInstance):
@@ -82,8 +100,9 @@ class GeneticAStar(ConstraintSolver):
         self._goalState = None
         # init TDHeuristic
         self._heuristic = TDHeuristic(problemInstance)
-        print("usedtable size: {0}".format(self.getUsedTable().getSize()))
-        print("cat size: {0}".format(self.getCAT().getSize()))
+        # print("usedtable size: {0}".format(self.getUsedTable().getSize()))
+        # print("cat size: {0}".format(self.getCAT().getSize()))
+
         # initialize electrode used table/ heuristic
         # if pathList is not None:
         #     usedTable = UsedTable()

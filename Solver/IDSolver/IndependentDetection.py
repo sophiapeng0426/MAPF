@@ -1,10 +1,9 @@
 import copy
 from SingleAgent.Solver.AStar.ODAStar import ODAStar
 from SingleAgent.Solver.ConstraintSolver import ConstraintSolver
-from SingleAgent.Solver.Utils import Util
 from SingleAgent.Utilities.ProblemInstance import ProblemInstance
+from SingleAgent.Solver.Utils import Util
 from SingleAgent.Utilities.Util2 import Util2
-# from SingleAgent.Solver.UsedTable import UsedTable
 
 
 class IDSolver(ConstraintSolver):

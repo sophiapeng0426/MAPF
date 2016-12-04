@@ -182,6 +182,9 @@ class SingleAgentState(State):
         # problemInstance can be multiple/single
         return self._coord.getNode().getPosition() == problemInstance.getGoals()[self._agentId]
 
+    def timeStep(self):
+        return self.getCoord().getTimeStep()
+
     """============  functions for compare ==========
     """
     def __eq__(self, other):

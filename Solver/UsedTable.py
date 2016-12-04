@@ -31,7 +31,7 @@ class UsedTable(object):
         return len(self._cellTable) == 0
 
     def addPath(self, path, id):
-        print("usedTable add path {0}".format(id))
+        # print("usedTable add path {0}".format(id))
         self._initial = True
         for i in range(len(path)):
             thisState = path[i]
@@ -49,7 +49,7 @@ class UsedTable(object):
     #             self.addPath(paths[i], i)
 
     def deletePath(self, path, id):
-        print("usedTable delete path {0}".format(id))
+        # print("usedTable delete path {0}".format(id))
         if path is None:
             return
         for i in range(len(path)):
