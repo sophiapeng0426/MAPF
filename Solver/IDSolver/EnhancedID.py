@@ -4,29 +4,37 @@ from SingleAgent.Solver.Utils import Util
 
 
 class EnhandcedID(IDSolver):
-    def __init__(self, solver):
+    def __init__(self, solver, maxGroupSize):
         super(EnhandcedID, self).__init__(solver)
         self._conflictInPast = []
+        self._mgs = maxGroupSize
 
-    # def solve(self, problemInstance):
-    #     self._initialProblem = problemInstance
-    #     if not self.populatePath(self._initialProblem):
-    #         return False
-    #
-    #     for i in range(len(self.paths())):
-    #         self.solver().getCAT().addPath(self.paths()[i], i)
-    #         self.solver().getUsedTable().addPath(self.paths()[i], i)
-    #
-    #     index = 0
-    #     while index < len(self._pathList):
-    #         conflict = Util().conflict(index, 0, self._pathList)
-    #         if conflict is None:
-    #             index += 1
-    #         else:
-    #             if not self.resolveConflict(conflict.getGroup1(), conflict.getGroup2()):
-    #                 print("fail to find new path")
-    #                 return False
-    #     return True
+    def solve(self, problemInstance):
+        # TODO: add permutation to the problemInstance
+        self._initialProblem = problemInstance
+        self._permutationProblem()
+
+        if not self.populatePath(self._initialProblem):
+            return False
+
+        for i in range(len(self.paths())):
+            self.solver().getCAT().addPath(self.paths()[i], i)
+            self.solver().getUsedTable().addPath(self.paths()[i], i)
+
+        index = 0
+        while index < len(self._pathList):
+            conflict = Util().conflict(index, 0, self._pathList)
+            if conflict is None:
+                index += 1
+            else:
+                if not self.resolveConflict(conflict.getGroup1(), conflict.getGroup2()):
+                    print("fail to find new path")
+                    return False
+        return True
+
+    def _permutationProblem(self):
+        return
+    # TODO: add permuation problem.
 
     def populatePath(self, problemInstance):
         for agent in problemInstance.getAgents():
@@ -71,29 +79,32 @@ class EnhandcedID(IDSolver):
 
     def resolveConflict(self, id1, id2):
         print("\n==== Resovle Conflict {0} {1} ====".format(id1, id2))
+        totalSize = len(self._problemList[id1].getAgents()) + len(self._problemList[id2].getAgents())
+        exceed = totalSize > self._mgs
         # resolved before
         if self._conflictInPast[id1][id2] is True:
-            self.updateConflictPast(id1)
-            # changed pathlist, problemList, cat, usedtable
-            return super(EnhandcedID, self).resolveConflict(id1, id2)
+            if exceed is False:
+                self.updateConflictPast(id1)
+                # changed pathlist, problemList, cat, usedtable
+                return super(EnhandcedID, self).resolveConflict(id1, id2)
+            else:
+                print("Exceed MGS, fail to find path. ")
+                return False
         # not encounter before
         else:
-            alternative = self._findAlternativePath(id1, id2)
+            alternative = self._findAlternativePath(id1, id2, exceed)
             if not alternative:
-                alternative = self._findAlternativePath(id2, id1)
+                alternative = self._findAlternativePath(id2, id1, exceed)
             # solved by rerouting
+            self._conflictInPast[id1][id2] = True
+            self._conflictInPast[id2][id1] = True
             if alternative:
                 print("found new path.")
-                self._conflictInPast[id1][id2] = True
-                self._conflictInPast[id2][id1] = True
                 return True
-            # need to combine
             else:
-                print("fail to find alternative path, merge...")
-                self.updateConflictPast(id1)
-                return super(EnhandcedID, self).resolveConflict(id1, id2)
+                return self.resolveConflict(id1, id2)
 
-    def _findAlternativePath(self, id1, id2):
+    def _findAlternativePath(self, id1, id2, exceed):
         """
         find alternative path for problem[id1], while reserving id2
         :param id1:
@@ -119,32 +130,47 @@ class EnhandcedID(IDSolver):
             for state in path2:
                 print(state)
             print("\n")
-
-            if self.solver().getPath()[-1].gValue() == costLimit:
-                # update new path1
-                newpath1 = self.solver().getPath()
-
-                # ====== confirm newpath is no conflict ===========
-                tempPaths = [newpath1, path2]
-                tempConflict = Util().conflict(0, 0, tempPaths)
-                if tempConflict is not None:
-                    print(tempConflict)
-                assert tempConflict is None
-                tempConflict = Util().conflict(1, 0, tempPaths)
-                assert tempConflict is None
-                # ====== end ===========
+            # ====== confirm newpath is no conflict ===========
+            newpath1 = self.solver().getPath()
+            tempPaths = [newpath1, path2]
+            tempConflict = Util().conflict(0, 0, tempPaths)
+            if tempConflict is not None:
+                print(tempConflict)
+            assert tempConflict is None
+            tempConflict = Util().conflict(1, 0, tempPaths)
+            assert tempConflict is None
+            # ====== end ===========
+            if exceed is False:
+                if self.solver().getPath()[-1].gValue() == costLimit:
+                    # find optimal solution, update new path1
+                    self.paths()[id1] = newpath1
+                    # clear reservation, update cat and usedtable
+                    self.solver().getReservation().clear()
+                    self.solver().getCAT().addPath(newpath1, id1)
+                    self.solver().getUsedTable().addPath(newpath1, id1)
+                    return True
+                else:
+                    # did not find optimal solution -> clear reservation and update cat, usedtable
+                    self.solver().getReservation().clear()
+                    self.solver().getCAT().addPath(path1, id1)
+                    self.solver().getUsedTable().addPath(path1, id1)
+                    return False
+            # free costlimit constraint
+            else:
+                print("MGS exceed, find alternative path with new cost. ")
                 self.paths()[id1] = newpath1
-
                 # clear reservation, update cat and usedtable
                 self.solver().getReservation().clear()
                 self.solver().getCAT().addPath(newpath1, id1)
                 self.solver().getUsedTable().addPath(newpath1, id1)
                 return True
-        # did not find optimal solution -> clear reservation and update cat, usedtable
-        self.solver().getReservation().clear()
-        self.solver().getCAT().addPath(path1, id1)
-        self.solver().getUsedTable().addPath(path1, id1)
-        return False
+        else:
+            print("failed to find a path.\n")
+            self.solver().getReservation().clear()
+            self.solver().getCAT().addPath(path1, id1)
+            self.solver().getUsedTable().addPath(path1, id1)
+            return False
+
 
     def updateConflictPast(self, id):
         # set all index from id and to id to false
@@ -187,7 +213,7 @@ def main():
               Agent(4, (13, 0), (1, 3)),
               Agent(5, (6, 9), (12, 7))
               ]
-    # agent2 = agent2[::-1]
+    agent2 = agent2[::-1]
     testProblem1 = ProblemInstance(graph2, agent2)
     testProblem1.plotProblem()
 
@@ -218,15 +244,16 @@ def main():
 
 
     startTime = time.time()
-    solver1 = EnhandcedID(ODAStar())
-    solver1.solve(testProblem1)
-    print("solver time: {0} ".format(time.time() - startTime))
+    solver1 = EnhandcedID(ODAStar(), 5)
+    if solver1.solve(testProblem1):
 
-    solver1.correctcheck(solver1.getPath())
-    # print("Count pins: {0}".format(solver1.countPins()))
-    solver1.printPath()
-    # print("Total cell used: {0}".format(solver1.totalElectrode(testProblem1)))
-    solver1.visualizePath(testProblem1)
+        print("solver time: {0} ".format(time.time() - startTime))
+
+        solver1.correctcheck(solver1.getPath())
+        # print("Count pins: {0}".format(solver1.countPins()))
+        solver1.printPath()
+        # print("Total cell used: {0}".format(solver1.totalElectrode(testProblem1)))
+        solver1.visualizePath(testProblem1)
 
 
 if __name__ == '__main__':
