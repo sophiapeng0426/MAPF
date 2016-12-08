@@ -44,12 +44,15 @@ class GeneticAStar(ConstraintSolver):
         self._openList.put(root)
         self._closeList.add(root)
 
+        startPrint = False
         while not self._openList.empty():
             currentState = self._openList.get()
 
-            # if self._openList.qsize() % 5000 == 0:
-                # print("OpenList size: {0};  closedList size ~: {1}".format(self._openList.qsize(),
-                #                      self.closeList().size() - self._openList.qsize()))
+            if self._openList.qsize() % 20000 == 0 or startPrint is True:
+                print("OpenList size: {0};  closedList size ~: {1}".format(self._openList.qsize(),
+                                     self.closeList().size()))
+            #     print(currentState)
+            #     print(currentState.timeStep())
                 # print("pop state: {0}".format(currentState))
 
             # self._closeList.add(currentState)
@@ -62,14 +65,14 @@ class GeneticAStar(ConstraintSolver):
                     self._goalState = currentState
                     return True
                 else:
-                    print("%%% put goal state back %%%")
-                    potentialStates = currentState.expand(problemInstance)
-                    for s in potentialStates:
-                        if s == currentState:
-                            # TODO: generate this directly by copy if works
-                            self.setHeuristic(s, 'trueDistance', self._heuristic)
-                            self._setTables(s, problemInstance)
-                            self._openList.put(s)
+                    startPrint = True
+                    print("%%% put goal state back: {0}, \ntimestep: {1} %%%".format(currentState, currentState.timeStep()))
+                    nextgoal = currentState.generateNextGoal(problemInstance)
+                    print("put back {0}, \ntimestep: {1} ".format(nextgoal, nextgoal.timeStep()))
+
+                    self.setHeuristic(nextgoal, 'trueDistance', self._heuristic)
+                    self._setTables(nextgoal, problemInstance)
+                    self._openList.put(nextgoal)
 
             # not reach goal state
             else:

@@ -108,6 +108,10 @@ class SingleAgentState(State):
             tempTable[index] = 1
             current = current.predecessor()
         self._usedElectrode = sum(tempTable)
+
+    def goalSingleAgent(self, problemInstance):
+        return SingleAgentState(self._agentId, self._coord.getNode(), self, problemInstance)
+
     # def updateVisitTable(self, table):
     #     """ update self
     #     :param visitTable:

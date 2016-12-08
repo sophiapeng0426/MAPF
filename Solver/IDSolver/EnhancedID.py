@@ -104,21 +104,21 @@ class EnhandcedID(IDSolver):
         path1 = self.paths()[id1]
         path2 = self.paths()[id2]
         costLimit = path1[-1].gValue()
-        print("original cost: {0}".format(costLimit))
 
         # update reservation, cat and usedtable
         self.solver().getReservation().reservePath(path2)
+        print("=== reserved path ===")
+        for state in path2:
+            print(state)
         self.solver().getCAT().deletePath(path1, id1)
         self.solver().getUsedTable().deletePath(path1, id1)
 
         # solve new constrained problem and find cost
+        print("original cost: {0}".format(costLimit))
         if self.solver().solve(self.problems()[id1]):
             print("=== find new path, new cost: {0} ===".format(self.solver().getPath()[-1].gValue()))
             self.solver().printPath()
-            print("=== previous conflict path ===")
-            for state in path2:
-                print(state)
-            print("\n")
+
 
             if self.solver().getPath()[-1].gValue() == costLimit:
                 # update new path1
@@ -183,8 +183,9 @@ def main():
     agent2 = [Agent(0, (0, 4), (0, 9)),
               Agent(1, (0, 6), (3, 0)),
               Agent(2, (0, 2), (9, 4)),
-              Agent(3, (13, 6), (4, 2)),
+
               Agent(4, (13, 0), (1, 3)),
+              Agent(3, (13, 6), (4, 2)),
               Agent(5, (6, 9), (12, 7))
               ]
     # agent2 = agent2[::-1]

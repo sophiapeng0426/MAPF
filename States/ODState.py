@@ -139,6 +139,11 @@ class ODState(MultiAgentState):
             return False
         return super(ODState, self).goalTest(problemInstance)
 
+    def generateNextGoal(self, problemInstance):
+        # TODO: increase timestep by 1, predecessor is goalNode, prevState is goalNode
+        newAgents = [s.goalSingleAgent(problemInstance) for s in self._singleAgents]
+        return ODState(self, newAgents, problemInstance, 0, self)
+
     """ ============  auxillary ==========
     """
     def isStandard(self):
