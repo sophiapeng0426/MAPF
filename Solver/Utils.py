@@ -73,7 +73,7 @@ class Util(object):
         paths = filter(lambda x: x is not None, pathList)
         longestLength = self.getLongestPath(paths)
         mergedList = [[] for i in range(longestLength)]
-
+        usedElectrode = set([])
         for t in range(longestLength):
             for path in paths:
                 if t < len(path):
@@ -82,7 +82,13 @@ class Util(object):
                     state = path[-1]
                 for singleAgent in state.getSingleAgents():
                     mergedList[t].append(singleAgent)
-        return mergedList
+                    usedElectrode.add(singleAgent.getCoord().getNode().getPosition())
+        totalCost = 0
+        for path in pathList:
+            if path is not None:
+                state = path[-1]
+                totalCost += state.gValue()
+        return totalCost, len(usedElectrode), mergedList
 
     def getLongestPath(self, pathList):
         r = 0
@@ -90,6 +96,10 @@ class Util(object):
             if path is not None and len(path) > r:
                 r = len(path)
         return r
+    #
+    # def solution(self, pathList):
+    #     """return totalcost, used electrode for solution"""
+    #     return []
 
     # def countPins(self, pathList):
     #     res = []
@@ -97,8 +107,6 @@ class Util(object):
     #     for path in paths:
     #         res.append(path[-1].extraPins())
     #     return res
-
-
 
 
 def main():

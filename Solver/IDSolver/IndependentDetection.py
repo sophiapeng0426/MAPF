@@ -88,7 +88,8 @@ class IDSolver(ConstraintSolver):
 
     def getPath(self):
         """ get list of states as path"""
-        return Util().mergePaths(self._pathList)
+        _, _, finalPath = Util().mergePaths(self._pathList)
+        return finalPath
 
 
     # def countPins(self):

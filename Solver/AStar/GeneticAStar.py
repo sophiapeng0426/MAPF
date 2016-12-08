@@ -87,7 +87,6 @@ class GeneticAStar(ConstraintSolver):
                         #     s.setUsedElectrode(self._usedTabl
                         self._openList.put(s)
                         self._closeList.add(s)
-        print("failed to find path.\n")
         return False
 
     def init(self, problemInstance):
