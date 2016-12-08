@@ -159,6 +159,7 @@ class ConflictAvoidanceTable(object):
     def clear(self):
         self._groupOccupantTable.clear()
         self._agentDestination.clear()
+        self._initial = False
 
 
 def main():

@@ -4,43 +4,73 @@ from SingleAgent.Solver.Utils import Util
 
 
 class EnhandcedID(IDSolver):
-    def __init__(self, solver, maxGroupSize):
+    def __init__(self, solver, maxGroupSize, shuffleNum):
         super(EnhandcedID, self).__init__(solver)
         self._conflictInPast = []
         self._mgs = maxGroupSize
+        self._shuffleNum = shuffleNum
+        self._bestCost = [10000, 10000]
+        self._solutions = []
 
     def solve(self, problemInstance):
-        # TODO: add permutation to the problemInstance
         self._initialProblem = problemInstance
-        self._permutationProblem()
 
-        if not self.populatePath(self._initialProblem):
+        for ith in range(self._shuffleNum):
+            print("=== ITERATION {0}... ===".format(ith))
+
+            if self.populatePath(ith):
+                for i in range(len(self.paths())):
+                    self.solver().getCAT().addPath(self.paths()[i], i)
+                    self.solver().getUsedTable().addPath(self.paths()[i], i)
+
+                index = 0
+                solved = True
+                while index < len(self._pathList):
+                    conflict = Util().conflict(index, 0, self._pathList)
+                    if conflict is None:
+                        index += 1
+                    else:
+                        if not self.resolveConflict(conflict.getGroup1(), conflict.getGroup2()):
+                            print("Iteration {0} fail to find solution. \n".format(ith))
+                            solved = False
+                            break
+                if solved:
+                    totalCost, usedElectrode, finalPath = Util().mergePaths(self._pathList)
+                    if totalCost < self._bestCost[0]:
+                        self._bestCost[0] = totalCost
+                        self._solutions.append(finalPath)
+                    elif usedElectrode < self._bestCost[1]:
+                        self._bestCost[1] = usedElectrode
+                        self._solutions.append(finalPath)
+                    print("Iteration {0} solution, total cost: {1}, used electrode: {2} \n".
+                          format(ith, totalCost,usedElectrode))
+
+        if len(self._solutions) > 0:
+            return True
+        else:
             return False
 
-        for i in range(len(self.paths())):
-            self.solver().getCAT().addPath(self.paths()[i], i)
-            self.solver().getUsedTable().addPath(self.paths()[i], i)
+    def populatePath(self, ith):
+        """
+        clear solver() tables
+        populate problemList, pathList
+        :param ith:
+        :return:
+        """
+        from random import shuffle
+        # clear solver() tables
+        self.clearSolver()
 
-        index = 0
-        while index < len(self._pathList):
-            conflict = Util().conflict(index, 0, self._pathList)
-            if conflict is None:
-                index += 1
-            else:
-                if not self.resolveConflict(conflict.getGroup1(), conflict.getGroup2()):
-                    print("fail to find new path")
-                    return False
-        return True
-
-    def _permutationProblem(self):
-        return
-    # TODO: add permuation problem.
-
-    def populatePath(self, problemInstance):
-        for agent in problemInstance.getAgents():
-            # problemInstance requires _singleAgents a list!!
-            self._problemList.append(ProblemInstance(problemInstance.getGraph(), [agent]))
-
+        self._problemList[:] = []
+        for agent in self._initialProblem.getAgents():
+            # problemInstance requires _singleAgents a list!
+            self._problemList.append(ProblemInstance(self._initialProblem.getGraph(), [agent]))
+        if ith > 0:
+            shuffle(self._problemList)
+        print("Initial problem: {0} ".format([[x.getId() for x in problem.getAgents()]
+                                              for problem in self._problemList]))
+        # clear PathList
+        self._pathList[:] = []
         for problem in self._problemList:
             # use solver without initializing cat and used table
             if not self.solver().solve(problem):
@@ -178,6 +208,11 @@ class EnhandcedID(IDSolver):
         for i in range(len(self._conflictInPast)):
             self._conflictInPast[i][id] = False
 
+    def clearSolver(self):
+        self.solver().getReservation().clear()
+        self.solver().getCAT().clear()
+        self.solver().getUsedTable().clear()
+
 
 def main():
     import time
@@ -242,9 +277,21 @@ def main():
     # print(solver1.solver().solve(solver1.problems()[0]))
     # solver1.solver().printPath()
 
+    # ======== test shuffle problemlist ======
+    # solver1 = EnhandcedID(ODAStar(), 4, 5)
+    # solver1.populatePath(testProblem1)
+    # problemList = solver1.problems()
+    # print(problemList)
+    # print(solver1.problems())
+    #
+    # from random import shuffle
+    # shuffle(problemList)
+    # print(problemList)
+    # print(solver1.problems())
 
+    # ======  test solver ===========
     startTime = time.time()
-    solver1 = EnhandcedID(ODAStar(), 5)
+    solver1 = EnhandcedID(ODAStar(), 4, 5)
     if solver1.solve(testProblem1):
 
         print("solver time: {0} ".format(time.time() - startTime))

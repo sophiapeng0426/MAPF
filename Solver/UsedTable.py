@@ -83,6 +83,7 @@ class UsedTable(object):
 
     def clear(self):
         self._cellTable.clear()
+        self._initial = False
 
     def __str__(self):
         return 'a cellTable dictionary'
