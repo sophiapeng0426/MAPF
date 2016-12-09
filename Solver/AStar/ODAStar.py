@@ -112,15 +112,16 @@ class ODAStar(GeneticAStar):
         for i in mapContent:
             print(' '.join(i))
 
-
 def main():
     import time
+    import os
     from SingleAgent.Utilities.ProblemInstance import ProblemInstance
     from SingleAgent.Utilities.Agent import Agent
     from SingleAgent.Utilities.Graph import Graph
     from SingleAgent.Utilities.ProblemMap import ProblemMap
     from SingleAgent.Solver.AStar.MultiAgentAStar import MultiAgentAStar
 
+    # ============= old case ===========
     # graph1 = Graph(ProblemMap(16, 16, {(3, 2): 2, (8, 8): 4, (10, 3): 2, (3, 10): 1}))
     # agent1 = [Agent(0, (9, 6), (9, 2)), Agent(1, (9, 2), (9, 6)), Agent(2, (4, 4), (11, 5))]
     # # agent1 = [Agent(0, (9, 6), (9, 2))]
@@ -135,6 +136,22 @@ def main():
     # solver1.printPath()
     # solver1.visualizePath(problem1)
     # problem1.plotProblem()
+
+    # ============= test cases ===========
+    # fileroot = '/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/DMFB'
+    # # filename = 'benchmark_2_minsik'
+    # # filename = 'in-vitro.3'
+    # # filename ='in-vitro_2.3'
+    # # filename = 'protein.9'
+    # filename = 'in-vitro_2.5'
+    # testProblem = generateProblem(os.path.join(fileroot, filename))
+    # testProblem.plotProblem()
+    #
+    # startTime = time.time()
+    # solver = ODAStar()
+    # solver.solve(testProblem)
+    # solver.printPath()
+    # ============== end ===================
 
     graph2 = Graph(ProblemMap(14, {(2, 5): (5, 2),
                                    (0, 10): (5, 16),

@@ -62,7 +62,8 @@ class Util2(object):
                     block[(int(c[2]), int(c[1]))] = (int(c[3]) - int(c[1]) + 1, int(c[4]) - int(c[2]) + 1)
                 elif c[0] == 'nets':
                     agentNum = int(c[1])
-                elif c[0] == 'net':
+                elif c[0] == 'net' or c[0] == 'xet':
+                    print(c)
                     agentList.append([int(c[1]), (int(c[3]), int(c[2])), (int(c[6]), int(c[5]))])
         f.close()
         print(size)
