@@ -205,14 +205,26 @@ class EnhandcedID(IDSolver):
             print("=== find new path, new cost: {0} ===".format(self.solver().getPath()[-1].gValue()))
             self.solver().printPath()
             # ====== confirm newpath is no conflict ===========
+            haveConflict = False
             newpath1 = self.solver().getPath()
             tempPaths = [newpath1, path2]
             tempConflict = Util().conflict(0, 0, tempPaths)
             if tempConflict is not None:
                 print(tempConflict)
-            assert tempConflict is None
+                haveConflict = True
+            assert tempConflict is None or tempConflict.getTimeStep() == 1
             tempConflict = Util().conflict(1, 0, tempPaths)
-            assert tempConflict is None
+            if tempConflict is not None:
+                print(tempConflict)
+                haveConflict = True
+            assert tempConflict is None or tempConflict.getTimeStep() == 1
+            if haveConflict:
+                print("failed to find a path.\n")
+                self.solver().getReservation().clear()
+                self.solver().getCAT().addPath(path1, id1)
+                self.solver().getUsedTable().addPath(path1, id1)
+                return False
+
             # ====== end ==========
             if exceed is False:
                 if self.solver().getPath()[-1].gValue() == costLimit:
