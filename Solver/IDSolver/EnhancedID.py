@@ -47,25 +47,23 @@ class EnhandcedID(IDSolver):
                     strPath = self.strPath(finalPath)
                     print(headline + strPath + '\n')
                     self.toFile(headline + '\n')
-
-                    if totalCost < self._bestCost[0]:
-                        self._bestCost[0] = totalCost
-
-                        self._solutions.append(finalPath)
-                        self.toFile(headline + strPath + '\n')
-                    elif usedElectrode < self._bestCost[1]:
-                        self._bestCost[1] = usedElectrode
-                        self._solutions.append(finalPath)
-                        self.toFile(headline + strPath + '\n')
+                    self.recordResult(totalCost,usedElectrode, finalPath, headline, strPath)
 
         if len(self._solutions) > 0:
             return True
         else:
             return False
 
-    def recordResult(self, cost, electrode, finalPath):
+    def recordResult(self, cost, electrode, finalPath, headline, strPath):
         # TODO: summarize write to file result, delete non-dominated solutions
-        return
+        if cost < self._bestCost[0]:
+            self._bestCost[0] = cost
+            self._solutions.append(finalPath)
+            self.toFile(headline + strPath + '\n')
+        elif electrode < self._bestCost[1]:
+            self._bestCost[1] = electrode
+            self._solutions.append(finalPath)
+            self.toFile(headline + strPath + '\n')
 
     def strPath(self, pathList):
         """print paths"""
@@ -96,6 +94,7 @@ class EnhandcedID(IDSolver):
         :param ith:
         :return:
         """
+        # TODO: iterative find better path for single agent
         from random import shuffle
         # clear solver() tables
         self.clearSolver()
@@ -179,10 +178,110 @@ class EnhandcedID(IDSolver):
             else:
                 return self.resolveConflict(id1, id2)
 
+    def haveConflict(self, newpath1, path2):
+        # ====== confirm newpath is no conflict ===========
+        haveConflict = False
+        tempPaths = [newpath1, path2]
+        tempConflict = Util().conflict(0, 0, tempPaths)
+        if tempConflict is not None:
+            print(tempConflict)
+            haveConflict = True
+        assert tempConflict is None or tempConflict.getTimeStep() == 1
+        tempConflict = Util().conflict(1, 0, tempPaths)
+        if tempConflict is not None:
+            print(tempConflict)
+            haveConflict = True
+        assert tempConflict is None or tempConflict.getTimeStep() == 1
+        return haveConflict
+
     def _findLessViolationPath(self, id1, id2):
-        print("Reserve path {0}, find alternative: {1}".format(id2, id1))
+        print("Reserve path {0}, find less violation alternative: {1}".format(id2, id1))
+        path1 = self.paths()[id1]
+        path2 = self.paths()[id2]
+        costLimit = path1[-1].gValue()
 
+        # update reservation, cat and usedtable
+        self.solver().getReservation().reservePath(path2)
+        print("=== reserved path ===")
+        for state in path2:
+            print(state)
+        self.solver().getCAT().deletePath(path1, id1)
+        self.solver().getUsedTable().deletePath(path1, id1)
 
+        print("original cost: {0}".format(costLimit))
+        # set priority to violations
+        self.solver().setIgnore(True)
+
+        if self.solver().solve(self.problems()[id1]):
+            print("=== find new path, new cost: {0} ===".format(self.solver().getPath()[-1].gValue()))
+            self.solver().printPath()
+            # ====== confirm newpath is no conflict ===========
+            newpath1 = self.solver().getPath()
+            if self.haveConflict(newpath1, path2):
+                print("failed to find a path.\n")
+                self.solver().getReservation().clear()
+                self.solver().getCAT().addPath(path1, id1)
+                self.solver().getUsedTable().addPath(path1, id1)
+                return False
+            # ====== end ==========
+            print("MGS exceed, find alternative path with new cost.")
+            self.paths()[id1] = newpath1
+            # clear reservation, update cat and usedtable
+            self.solver().getReservation().clear()
+            self.solver().getCAT().addPath(newpath1, id1)
+            self.solver().getUsedTable().addPath(newpath1, id1)
+            return True
+        else:
+            print("failed to find a path.\n")
+            self.solver().getReservation().clear()
+            self.solver().getCAT().addPath(path1, id1)
+            self.solver().getUsedTable().addPath(path1, id1)
+            return False
+
+    def _findEqualCostPath(self, id1, id2):
+        print("Reserve path {0}, find equal cost alternative: {1}".format(id2, id1))
+        path1 = self.paths()[id1]
+        path2 = self.paths()[id2]
+        costLimit = path1[-1].gValue()
+
+        # update reservation, cat and usedtable
+        self.solver().getReservation().reservePath(path2)
+        print("=== reserved path ===")
+        for state in path2:
+            print(state)
+        self.solver().getCAT().deletePath(path1, id1)
+        self.solver().getUsedTable().deletePath(path1, id1)
+
+        # solve new constrained problem and find cost
+        print("original cost: {0}".format(costLimit))
+        # set priority to cost
+        self.solver().setIgnore(False)
+
+        if self.solver().solve(self.problems()[id1]):
+            print("=== find new path, new cost: {0} ===".format(self.solver().getPath()[-1].gValue()))
+            self.solver().printPath()
+            # ====== confirm newpath is no conflict ===========
+            newpath1 = self.solver().getPath()
+            if self.haveConflict(newpath1, path2):
+                print("failed to find a path.\n")
+                self.solver().getReservation().clear()
+                self.solver().getCAT().addPath(path1, id1)
+                self.solver().getUsedTable().addPath(path1, id1)
+                return False
+            # ====== end ==========
+            if self.solver().getPath()[-1].gValue() == costLimit:
+                # find optimal solution, update new path1
+                self.paths()[id1] = newpath1
+                # clear reservation, update cat and usedtable
+                self.solver().getReservation().clear()
+                self.solver().getCAT().addPath(newpath1, id1)
+                self.solver().getUsedTable().addPath(newpath1, id1)
+                return True
+        print("failed to find a path.\n")
+        self.solver().getReservation().clear()
+        self.solver().getCAT().addPath(path1, id1)
+        self.solver().getUsedTable().addPath(path1, id1)
+        return False
 
 
     def _findLessCostPath(self, id1, id2, exceed):

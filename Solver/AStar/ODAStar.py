@@ -5,12 +5,19 @@ from SingleAgent.States.SingleAgentState import SingleAgentState
 
 
 class ODAStar(GeneticAStar):
-    def __init__(self, ignore=False):
+    def __init__(self):
         """
         init _openList, _closeList and _goalState
         """
         super(ODAStar, self).__init__()
-        self._ignore = ignore
+        self._ignore = False
+
+    def setIgnore(self, tf):
+        if tf:
+            print("ODSolver set violation free as priority.")
+        else:
+            print("ODSolver set cost as priority.")
+        self._ignore = tf
 
     def createRoot(self, problemInstance):
         assert len(problemInstance.getAgents()) >= 1, "Need agent"
@@ -20,7 +27,7 @@ class ODAStar(GeneticAStar):
         if not self._ignore:
             return ODState.fromProblemIns(problemInstance)
         else:
-            return ODState_2.
+            return ODState_2.fromProblemIns(problemInstance)
 
     # def solve(self, problemInstance):
     #     """
