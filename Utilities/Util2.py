@@ -1,55 +1,5 @@
-from __future__ import print_function
-from sys import getsizeof, stderr
-from itertools import chain
-from collections import deque
-# try:
-#     from reprlib import repr
-# except ImportError:
-#     pass
-
 
 class Util2(object):
-    def total_size(o, handlers={}, verbose=False):
-        """ Returns the approximate memory footprint an object and all of its contents.
-
-        Automatically finds the contents of the following builtin containers and
-        their subclasses:  tuple, list, deque, dict, set and frozenset.
-        To search other containers, add handlers to iterate over their contents:
-
-            handlers = {SomeContainerClass: iter,
-                        OtherContainerClass: OtherContainerClass.get_elements}
-
-        """
-        dict_handler = lambda d: chain.from_iterable(d.items())
-        all_handlers = {tuple: iter,
-                        list: iter,
-                        deque: iter,
-                        dict: dict_handler,
-                        set: iter,
-                        frozenset: iter,
-                        }
-        all_handlers.update(handlers)  # user handlers take precedence
-        seen = set()  # track which object id's have already been seen
-        default_size = getsizeof(0)  # estimate sizeof object without __sizeof__
-
-        def sizeof(o):
-            if id(o) in seen:  # do not double count the same object
-                return 0
-            seen.add(id(o))
-            s = getsizeof(o, default_size)
-
-            if verbose:
-                print(s, type(o), repr(o), file=stderr)
-
-            for typ, handler in all_handlers.items():
-                if isinstance(o, typ):
-                    s += sum(map(sizeof, handler(o)))
-                    break
-            return s
-
-        return sizeof(o)
-
-
     def oppositeDir(self, dir):
         if dir == 0:
             return 2
@@ -91,8 +41,55 @@ class Util2(object):
         y = index % nsize
         return (x,y)
 
-##### Example call #####
+    # ================= Functions IO ================
+    def readTestFile(self, filename):
+        """
+        extract probleminstance parameters from file
+        :param filename:
+        :return: size, block, agentlist
+        """
+        size = 0
+        agentNum = 0
+        block = {}
+        agentList = []
+        f = open(filename, 'r')
+        for line in f:
+            if line[0] != '#':
+                c = line.split(' ')
+                if c[0] == 'grid':
+                    size = int(line[5:7])
+                elif c[0] =='block':
+                    block[(int(c[2]), int(c[1]))] = (int(c[4])- int(c[2]) + 1, int(c[3]) - int(c[1]) + 1)
+                elif c[0] == 'nets':
+                    agentNum = int(c[1])
+                elif c[0] == 'net':
+                    agentList.append([int(c[1]), (int(c[3]), int(c[2])), (int(c[6]), int(c[5]))])
+        f.close()
+        return size, block, agentNum, agentList
+
+
+def main():
+    test1 = Util2()
+    size, block, agentNum, agentList = test1.readTestFile('/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/DMFB/test_12_12_1.in')
+    print(size)
+    print(block)
+    print(agentNum)
+    print(agentList)
+
+
 
 if __name__ == '__main__':
-    d = dict(a=1, b=2, c=3, d=[4,5,6,7], e='a string of chars')
-    print(total_size(d, verbose=True))
+    main()
+
+
+
+
+
+
+
+
+
+
+
+
+

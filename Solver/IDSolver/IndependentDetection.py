@@ -148,7 +148,7 @@ class IDSolver(ConstraintSolver):
                     if Util2().withinDis(agent1.getCoord().getNode(), agent2.getCoord().getNode()):
                         print("=== solution is WRONG ===")
                         return False
-        print("== Solution is CORRECT ==")
+        print("== solution is CORRECT ==")
         return True
 
     def __str__(self):

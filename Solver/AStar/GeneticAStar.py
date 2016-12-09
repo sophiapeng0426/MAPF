@@ -45,7 +45,7 @@ class GeneticAStar(ConstraintSolver):
         self._closeList.add(root)
 
         startPrint = False
-        while not self._openList.empty():
+        while not self._openList.empty() and self._closeList.size() < 1500000:
             currentState = self._openList.get()
 
             if self._openList.qsize() % 20000 == 0 or startPrint is True:
