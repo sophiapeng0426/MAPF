@@ -133,13 +133,16 @@ class EnhandcedID(IDSolver):
             if not self.solver().solve(problem):
                 return False
             self.solver().getCAT().addPath(self.solver().getPath(), ith)
+            self.solver().getUsedTable().addPath(self.solver().getPath(), ith)
             self._pathList.append(self.solver().getPath())
         # second iteration
         for ith, problem in enumerate(self._problemList):
             self.solver().getCAT().deletePath(self._pathList[ith], ith)
+            self.solver().getUsedTable().deletePath(self._pathList[ith], ith)
             if not self.solver().solve(problem):
                 return False
             self.solver().getCAT().addPath(self.solver().getPath(), ith)
+            self.solver().getUsedTable().addPath(self.solver().getPath(), ith)
             self._pathList[ith] = self.solver().getPath()
         return True
 
@@ -368,7 +371,12 @@ def main():
     # testProblem.plotProblem()
     # === alternative ===
     fileroot = '/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/DMFB'
-    filename = 'benchmark_4_minsik'
+    # filename = 'benchmark_2_minsik'
+    # filename = 'in-vitro.3'
+    # filename ='in-vitro_2.3'
+    # filename = 'protein.9'
+    # filename = 'in-vitro_2.5'
+    filename = 'test_12_12_1.in'
     testProblem = generateProblem(os.path.join(fileroot, filename))
     testProblem.plotProblem()
 
