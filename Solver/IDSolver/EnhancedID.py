@@ -115,14 +115,35 @@ class EnhandcedID(IDSolver):
                                               for problem in self._problemList]))
         # clear PathList
         self._pathList[:] = []
-        for problem in self._problemList:
-            # use solver without initializing cat and used table
-            if not self.solver().solve(problem):
-                return False
-            self._pathList.append(self._solver.getPath())
+        self.solveInitialProblem()
+        # for problem in self._problemList:
+        #     # use solver without initializing cat and used table
+        #     if not self.solver().solve(problem):
+        #         return False
+        #     self._pathList.append(self._solver.getPath())
         #  initialize conflictInPast table
         self._conflictInPast = [[False for i in range(len(self.paths()))] for j in range(len(self.paths()))]
         return True
+
+    def solveInitialProblem(self):
+        # first iteration
+        # self.solver().setIgnore(False)
+        for ith, problem in enumerate(self._problemList):
+            if not self.solver().solve(problem):
+                return False
+            self.solver().getCAT().addPath(self.solver().getPath(), ith)
+            self._pathList.append(self.solver().getPath())
+        # second iteration
+        for ith, problem in enumerate(self._problemList):
+            self.solver().getCAT().deletePath(self._pathList[ith], ith)
+            if not self.solver().solve(problem):
+                return False
+            self.solver().getCAT().addPath(self.solver().getPath(), ith)
+            self._pathList[ith] = self.solver().getPath()
+        return True
+
+
+
 
     # def resolveConflict(self, id1, id2):
     #     print("resolve conflict for group: {0}, {1}".format(id1, id2))
@@ -166,9 +187,9 @@ class EnhandcedID(IDSolver):
                 return False
         # not encounter before
         else:
-            alternative = self._findAlternativePath(id1, id2, exceed)
+            alternative = self._findAlternativePath(id2, id1, exceed)
             if not alternative:
-                alternative = self._findAlternativePath(id2, id1, exceed)
+                alternative = self._findAlternativePath(id1, id2, exceed)
             # solved by rerouting
             self._conflictInPast[id1][id2] = True
             self._conflictInPast[id2][id1] = True
