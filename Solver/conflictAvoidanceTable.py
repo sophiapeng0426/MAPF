@@ -12,7 +12,7 @@ class ConflictAvoidanceTable(object):
         # self._earlistConflictWhileAdding = None
 
     def getSize(self):
-        return (len(self._groupOccupantTable), len(self._agentDestination))
+        return len(self._groupOccupantTable), len(self._agentDestination)
 
     def groupOccupantTable(self):
         return self._groupOccupantTable
@@ -26,16 +26,21 @@ class ConflictAvoidanceTable(object):
     def isEmpty(self):
         return len(self._groupOccupantTable) == 0 and len(self._agentDestination) == 0
 
+    # def violation(self, state):
+    #     """ return num of violation in state
+    #     :param state:
+    #     :return:
+    #     """
+    #     conflictGroup = set([])
+    #     for singleAgentState in state.getSingleAgents():
+    #         conflictGroup |= self._violationSingleState(singleAgentState)
+    #     # return conflictGroup, len(conflictGroup)
+    #     return len(conflictGroup)
     def violation(self, state):
-        """ return num of violation in state
-        :param state:
-        :return:
-        """
-        conflictGroup = set([])
         for singleAgentState in state.getSingleAgents():
-            conflictGroup |= self._violationSingleState(singleAgentState)
-        # return conflictGroup, len(conflictGroup)
-        return len(conflictGroup)
+            if self._violationSingleState(singleAgentState):
+                return True
+        return False
 
     def _violationSingleState(self, singleAgentState):
         """
@@ -43,19 +48,31 @@ class ConflictAvoidanceTable(object):
         :param singleAgentState:
         :return:
         """
+        # coord = singleAgentState.getCoord()
+        # # violation in groupOccupantTable
+        # conflictGroup = set([])
+        # if coord in self._groupOccupantTable:
+        #     conflictGroup |= self._groupOccupantTable[coord]
+        # # violation in destination
+        # pos = coord.getNode().getPosition()
+        # if pos in self._agentDestination:
+        #     preDic = self._agentDestination[pos]
+        #     for id, t in preDic.items():
+        #         if coord.getTimeStep() >= t:
+        #             conflictGroup |= set([id])
+        # return conflictGroup
         coord = singleAgentState.getCoord()
         # violation in groupOccupantTable
-        conflictGroup = set([])
         if coord in self._groupOccupantTable:
-            conflictGroup |= self._groupOccupantTable[coord]
+            return True
         # violation in destination
         pos = coord.getNode().getPosition()
         if pos in self._agentDestination:
             preDic = self._agentDestination[pos]
             for id, t in preDic.items():
                 if coord.getTimeStep() >= t:
-                    conflictGroup |= set([id])
-        return conflictGroup
+                    return True
+        return False
 
     def addPath(self, path, id):
         """
