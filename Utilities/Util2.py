@@ -59,12 +59,16 @@ class Util2(object):
                 if c[0] == 'grid':
                     size = int(line[5:7])
                 elif c[0] =='block':
-                    block[(int(c[2]), int(c[1]))] = (int(c[4])- int(c[2]) + 1, int(c[3]) - int(c[1]) + 1)
+                    block[(int(c[2]), int(c[1]))] = (int(c[3]) - int(c[1]) + 1, int(c[4]) - int(c[2]) + 1)
                 elif c[0] == 'nets':
                     agentNum = int(c[1])
                 elif c[0] == 'net':
                     agentList.append([int(c[1]), (int(c[3]), int(c[2])), (int(c[6]), int(c[5]))])
         f.close()
+        print(size)
+        print(block)
+        print(agentNum)
+        print(agentList)
         return size, block, agentNum, agentList
 
 
