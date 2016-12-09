@@ -30,7 +30,7 @@ class ProblemMap(object):
                 for j in range(size[0]):
                     x = pos[0] + i
                     y = pos[1] + j
-                    if self._existCell(pos) and not self.__outOfBorder((x,y)):
+                    if self._existCell(pos) and not self.__outOfBorder((x, y)):
                         res[y][x] = Symbols.BLOCK
         self.__content = res
 

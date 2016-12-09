@@ -65,14 +65,17 @@ class GeneticAStar(ConstraintSolver):
                     self._goalState = currentState
                     return True
                 else:
-                    startPrint = True
                     print("%%% put goal state back: {0}, \ntimestep: {1} %%%".format(currentState, currentState.timeStep()))
                     nextgoal = currentState.generateNextGoal(problemInstance)
-                    print("put back {0}, \ntimestep: {1} ".format(nextgoal, nextgoal.timeStep()))
+                    if self.getReservation().isValid(nextgoal):
+                        print("put back {0}, \ntimestep: {1} ".format(nextgoal, nextgoal.timeStep()))
+                        self.setHeuristic(nextgoal, 'trueDistance', self._heuristic)
+                        self._setTables(nextgoal, problemInstance)
+                        self._openList.put(nextgoal)
+                    else:
+                        print("Conflict with reservation, do not put back.")
 
-                    self.setHeuristic(nextgoal, 'trueDistance', self._heuristic)
-                    self._setTables(nextgoal, problemInstance)
-                    self._openList.put(nextgoal)
+
 
             # not reach goal state
             else:

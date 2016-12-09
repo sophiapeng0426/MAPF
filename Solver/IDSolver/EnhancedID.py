@@ -335,12 +335,12 @@ def main():
     # testProblem.plotProblem()
     # === alternative ===
     fileroot = '/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/DMFB'
-    filename = 'test_12_12_1.in'
+    filename = 'benchmark_4_minsik'
     testProblem = generateProblem(os.path.join(fileroot, filename))
     testProblem.plotProblem()
 
     startTime = time.time()
-    solver1 = EnhandcedID(ODAStar(), 4, 10, 'test_12_12_1')
+    solver1 = EnhandcedID(ODAStar(), 4, 10, filename)
     if solver1.solve(testProblem):
         print("solver time: {0} ".format(time.time() - startTime))
 
