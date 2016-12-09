@@ -1,21 +1,26 @@
 from GeneticAStar import GeneticAStar
 from SingleAgent.States.ODState import ODState
+from SingleAgent.States.ODState_2 import ODState_2
 from SingleAgent.States.SingleAgentState import SingleAgentState
 
 
 class ODAStar(GeneticAStar):
-    def __init__(self):
+    def __init__(self, ignore=False):
         """
         init _openList, _closeList and _goalState
         """
         super(ODAStar, self).__init__()
+        self._ignore = ignore
 
     def createRoot(self, problemInstance):
         assert len(problemInstance.getAgents()) >= 1, "Need agent"
         # if len(problemInstance.getAgents()) == 1:
         #     return SingleAgentState.fromProblemIns(problemInstance.getAgents()[0].getId(), problemInstance)
         # else:
-        return ODState.fromProblemIns(problemInstance)
+        if not self._ignore:
+            return ODState.fromProblemIns(problemInstance)
+        else:
+            return ODState_2.
 
     # def solve(self, problemInstance):
     #     """

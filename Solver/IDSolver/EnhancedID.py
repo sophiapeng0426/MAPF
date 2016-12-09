@@ -153,7 +153,7 @@ class EnhandcedID(IDSolver):
     #     return True
 
     def resolveConflict(self, id1, id2):
-        print("\n==== Resovle Conflict {0} {1} ====".format(id1, id2))
+        print("\n==== Resolve Conflict {0} {1} ====".format(id1, id2))
         totalSize = len(self._problemList[id1].getAgents()) + len(self._problemList[id2].getAgents())
         exceed = totalSize > self._mgs
         # resolved before
@@ -179,7 +179,13 @@ class EnhandcedID(IDSolver):
             else:
                 return self.resolveConflict(id1, id2)
 
-    def _findAlternativePath(self, id1, id2, exceed):
+    def _findLessViolationPath(self, id1, id2):
+        print("Reserve path {0}, find alternative: {1}".format(id2, id1))
+
+
+
+
+    def _findLessCostPath(self, id1, id2, exceed):
         """
         find alternative path for problem[id1], while reserving id2
         :param id1:
