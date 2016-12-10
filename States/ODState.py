@@ -7,6 +7,7 @@ from SingleAgent.Utilities.ProblemMap import ProblemMap
 from SingleAgent.Utilities.Util2 import Util2
 
 
+
 class ODState(MultiAgentState):
     def __init__(self, backPointer, singleAgents, problemInstance, moveNext, preState):
         """
@@ -22,13 +23,10 @@ class ODState(MultiAgentState):
         super(ODState, self).__init__(backPointer, singleAgents, problemInstance)
         self._moveNext = moveNext
         self._preState = preState
-        self._direction = None
 
         # no restriction by previous
         self._restrictDir = [[] for i in range(0, len(self._singleAgents))]
         self._updateRestrictDir()
-        self._updatedDir()
-        # self._updateNewPosition(problemInstance)
 
     @classmethod
     def fromProblemIns(cls, problemInstance):
@@ -52,19 +50,19 @@ class ODState(MultiAgentState):
                 if (nextNode is not None) and (not set(nextNode.get_neighbor()).isdisjoint(restrict)):
                     self._restrictDir[i].append(direction)
 
-    def _updatedDir(self):
-        """ update _direction for last moved agent
-        :return: direction
-        """
-        if self.isStandard():
-            self._direction = [None for i in range(len(self._singleAgents))]
-            return
-        self._direction = self.getPreState().getDir()[:]
-        updatedIndex = self._moveNext - 1
-        preNode = self.getPreState().getSingleAgents()[updatedIndex].getCoord().getNode()
-        currentNode = self._singleAgents[updatedIndex].getCoord().getNode()
-        direction = Util2().moveDir(preNode, currentNode)
-        self._direction[updatedIndex] = direction
+    # def _updatedDir(self):
+    #     """ update _direction for last moved agent
+    #     :return: direction
+    #     """
+    #     if self.isStandard():
+    #         self._direction = [None for i in range(len(self._singleAgents))]
+    #         return
+    #     self._direction = self.getPreState().getDir()[:]
+    #     updatedIndex = self._moveNext - 1
+    #     preNode = self.getPreState().getSingleAgents()[updatedIndex].getCoord().getNode()
+    #     currentNode = self._singleAgents[updatedIndex].getCoord().getNode()
+    #     direction = Util2().moveDir(preNode, currentNode)
+    #     self._direction[updatedIndex] = direction
 
     # def _updateNewPosition(self, problemInstance):
     #     for singleAgent in self._singleAgents:
@@ -157,9 +155,6 @@ class ODState(MultiAgentState):
     def getPreState(self):
         return self._preState
 
-    def getDir(self):
-        return self._direction
-
     def getRestricDir(self):
         return self._restrictDir
 
@@ -205,26 +200,6 @@ class ODState(MultiAgentState):
             return False
         if self._moveNext != other.getMoveNext():
             return False
-        # if other is not None and super(ODState, self).__eq__(other) and \
-        #                 self._moveNext == other.getMoveNext() and self._extraPins != other.extraPins():
-        #     return False
-
-        if self._moveNext == 0:
-            return True
-        # if self._direction != other.getDir():
-        #     return False
-
-        # check if possible moves for rest agents are the same
-        # selfAgents = self.predecessor().getSingleAgents()[0: self._moveNext]
-        # RestrictSelf = [x.getCoord().getNode() for x in selfAgents]
-        # otherAgents = other.predecessor().getSingleAgents()[0: self._moveNext]
-        # RestrictOther = [x.getCoord().getNode() for x in otherAgents]
-        #
-        # for i in range(self._moveNext, len(self._singleAgents)):
-        #     agentNode = self._singleAgents[i].getCoord().getNode()
-        #     if not self._isSamePostMove(agentNode, RestrictSelf, RestrictOther):
-        #         return False
-        # return True
         return str(self._restrictDir) == str(other.getRestricDir())
 
     def __hash__(self):
@@ -263,6 +238,7 @@ class ODState(MultiAgentState):
     #     else:
     #         return dif < 0
     #         # return dif < 0
+
 
 def main():
     import sys
