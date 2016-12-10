@@ -52,7 +52,10 @@ class MultiAgentState(State):
             self._hValue += singleState.hValue()
 
     def updateCATViolations(self, cat):
-        newViolation = cat.violation(self)
+        if cat.violation(self):
+            newViolation = 1
+        else:
+            newViolation = 0
         if self.predecessor() is None:
             self._conflictViolations = newViolation
         else:
