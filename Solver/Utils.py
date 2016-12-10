@@ -96,17 +96,6 @@ class Util(object):
             if path is not None and len(path) > r:
                 r = len(path)
         return r
-    #
-    # def solution(self, pathList):
-    #     """return totalcost, used electrode for solution"""
-    #     return []
-
-    # def countPins(self, pathList):
-    #     res = []
-    #     paths = filter(lambda x: x is not None, pathList)
-    #     for path in paths:
-    #         res.append(path[-1].extraPins())
-    #     return res
 
 
 def main():
