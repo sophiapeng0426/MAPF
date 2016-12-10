@@ -94,7 +94,6 @@ class EnhandcedID(IDSolver):
         :param ith:
         :return:
         """
-        # TODO: iterative find better path for single agent
         from random import shuffle
         # clear solver() tables
         self.clearSolver()
@@ -115,7 +114,8 @@ class EnhandcedID(IDSolver):
                                               for problem in self._problemList]))
         # clear PathList
         self._pathList[:] = []
-        self.solveInitialProblem()
+        if not self.solveInitialProblem():
+            return False
         # for problem in self._problemList:
         #     # use solver without initializing cat and used table
         #     if not self.solver().solve(problem):
@@ -144,9 +144,6 @@ class EnhandcedID(IDSolver):
             self.solver().getUsedTable().addPath(self.solver().getPath(), ith)
             self._pathList[ith] = self.solver().getPath()
         return True
-
-
-
 
     # def resolveConflict(self, id1, id2):
     #     print("resolve conflict for group: {0}, {1}".format(id1, id2))
