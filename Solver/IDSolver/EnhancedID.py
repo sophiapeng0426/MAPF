@@ -485,7 +485,7 @@ def main():
     # testProblem.plotProblem()
 
     startTime = time.time()
-    solver1 = EnhandcedID(ODAStar(), 3, 5, 'test_12_12_1')
+    solver1 = EnhandcedID(ODAStar(), 3, 1, 'test_12_12_1')
     if solver1.solve(testProblem):
         print("solver time: {0} ".format(time.time() - startTime))
 

@@ -1,0 +1,74 @@
+Iteration 0 solution, total cost: 58, used electrode: 56 
+
+Iteration 0 solution, total cost: 58, used electrode: 56 
+TimeStep: 0; 1: (13, 9); 0: (13, 4); 2: (4, 0); 3: (8, 2); 4: (2, 4); gValue: 0; hValue: 58 
+ TimeStep: 1; 1: (12, 9); 0: (13, 3); 2: (5, 0); 3: (8, 3); 4: (3, 4); gValue: 5; hValue: 53 
+ TimeStep: 2; 1: (11, 9); 0: (13, 2); 2: (5, 1); 3: (8, 4); 4: (3, 5); gValue: 10; hValue: 48 
+ TimeStep: 3; 1: (10, 9); 0: (13, 1); 2: (5, 2); 3: (8, 5); 4: (4, 5); gValue: 15; hValue: 43 
+ TimeStep: 4; 1: (10, 8); 0: (13, 0); 2: (5, 3); 3: (8, 6); 4: (4, 6); gValue: 20; hValue: 38 
+ TimeStep: 5; 1: (10, 7); 0: (12, 0); 2: (5, 4); 3: (8, 7); 4: (4, 7); gValue: 25; hValue: 33 
+ TimeStep: 6; 1: (10, 6); 0: (11, 0); 2: (5, 5); 3: (8, 8); 4: (4, 8); gValue: 30; hValue: 28 
+ TimeStep: 7; 1: (9, 6); 0: (10, 0); 2: (5, 6); 3: (8, 9); 4: (5, 8); gValue: 35; hValue: 23 
+ TimeStep: 8; 1: (8, 6); 0: (9, 0); 2: (5, 6); 3: (8, 10); 4: (6, 8); gValue: 39; hValue: 19 
+ TimeStep: 9; 1: (8, 5); 0: (8, 0); 2: (5, 6); 3: (8, 11); 4: (7, 8); gValue: 43; hValue: 15 
+ TimeStep: 10; 1: (8, 4); 0: (7, 0); 2: (5, 6); 3: (7, 11); 4: (8, 8); gValue: 47; hValue: 11 
+ TimeStep: 11; 1: (7, 4); 0: (7, 1); 2: (5, 6); 3: (6, 11); 4: (8, 9); gValue: 51; hValue: 7 
+ TimeStep: 12; 1: (6, 4); 0: (6, 1); 2: (5, 6); 3: (5, 11); 4: (9, 9); gValue: 55; hValue: 3 
+ TimeStep: 13; 1: (6, 4); 0: (6, 1); 2: (5, 6); 3: (5, 11); 4: (10, 9); gValue: 56; hValue: 2 
+ TimeStep: 14; 1: (6, 4); 0: (6, 1); 2: (5, 6); 3: (5, 11); 4: (11, 9); gValue: 57; hValue: 1 
+ TimeStep: 15; 1: (6, 4); 0: (6, 1); 2: (5, 6); 3: (5, 11); 4: (11, 10); gValue: 58; hValue: 0 
+ 
+Iteration 1 solution, total cost: 58, used electrode: 58 
+
+Iteration 1 solution, total cost: 58, used electrode: 58 
+TimeStep: 0; 1: (13, 9); 2: (4, 0); 4: (2, 4); 0: (13, 4); 3: (8, 2); gValue: 0; hValue: 58 
+ TimeStep: 1; 1: (13, 8); 2: (5, 0); 4: (3, 4); 0: (13, 3); 3: (8, 3); gValue: 5; hValue: 53 
+ TimeStep: 2; 1: (13, 7); 2: (5, 1); 4: (3, 5); 0: (13, 2); 3: (8, 4); gValue: 10; hValue: 48 
+ TimeStep: 3; 1: (13, 6); 2: (5, 2); 4: (4, 5); 0: (13, 1); 3: (8, 5); gValue: 15; hValue: 43 
+ TimeStep: 4; 1: (13, 5); 2: (5, 3); 4: (4, 6); 0: (13, 0); 3: (8, 6); gValue: 20; hValue: 38 
+ TimeStep: 5; 1: (12, 5); 2: (5, 4); 4: (4, 7); 0: (12, 0); 3: (8, 7); gValue: 25; hValue: 33 
+ TimeStep: 6; 1: (11, 5); 2: (5, 5); 4: (4, 8); 0: (11, 0); 3: (8, 8); gValue: 30; hValue: 28 
+ TimeStep: 7; 1: (10, 5); 2: (5, 6); 4: (5, 8); 0: (10, 0); 3: (8, 9); gValue: 35; hValue: 23 
+ TimeStep: 8; 1: (9, 5); 2: (5, 6); 4: (6, 8); 0: (9, 0); 3: (8, 10); gValue: 39; hValue: 19 
+ TimeStep: 9; 1: (8, 5); 2: (5, 6); 4: (7, 8); 0: (8, 0); 3: (8, 11); gValue: 43; hValue: 15 
+ TimeStep: 10; 1: (8, 4); 2: (5, 6); 4: (8, 8); 0: (8, 1); 3: (7, 11); gValue: 47; hValue: 11 
+ TimeStep: 11; 1: (7, 4); 2: (5, 6); 4: (8, 9); 0: (7, 1); 3: (6, 11); gValue: 51; hValue: 7 
+ TimeStep: 12; 1: (6, 4); 2: (5, 6); 4: (8, 10); 0: (6, 1); 3: (5, 11); gValue: 55; hValue: 3 
+ TimeStep: 13; 1: (6, 4); 2: (5, 6); 4: (9, 10); 0: (6, 1); 3: (5, 11); gValue: 56; hValue: 2 
+ TimeStep: 14; 1: (6, 4); 2: (5, 6); 4: (10, 10); 0: (6, 1); 3: (5, 11); gValue: 57; hValue: 1 
+ TimeStep: 15; 1: (6, 4); 2: (5, 6); 4: (11, 10); 0: (6, 1); 3: (5, 11); gValue: 58; hValue: 0 
+ 
+Iteration 2 solution, total cost: 58, used electrode: 58 
+
+Iteration 3 solution, total cost: 58, used electrode: 58 
+
+Iteration 4 solution, total cost: 58, used electrode: 58 
+
+Iteration 5 solution, total cost: 58, used electrode: 58 
+
+Iteration 6 solution, total cost: 58, used electrode: 56 
+
+Iteration 6 solution, total cost: 58, used electrode: 56 
+TimeStep: 0; 2: (4, 0); 4: (2, 4); 1: (13, 9); 0: (13, 4); 3: (8, 2); gValue: 0; hValue: 58 
+ TimeStep: 1; 2: (5, 0); 4: (3, 4); 1: (12, 9); 0: (13, 3); 3: (8, 3); gValue: 5; hValue: 53 
+ TimeStep: 2; 2: (5, 1); 4: (3, 5); 1: (11, 9); 0: (13, 2); 3: (8, 4); gValue: 10; hValue: 48 
+ TimeStep: 3; 2: (5, 2); 4: (4, 5); 1: (10, 9); 0: (13, 1); 3: (8, 5); gValue: 15; hValue: 43 
+ TimeStep: 4; 2: (5, 3); 4: (4, 6); 1: (10, 8); 0: (13, 0); 3: (8, 6); gValue: 20; hValue: 38 
+ TimeStep: 5; 2: (5, 4); 4: (4, 7); 1: (10, 7); 0: (12, 0); 3: (8, 7); gValue: 25; hValue: 33 
+ TimeStep: 6; 2: (5, 5); 4: (4, 8); 1: (10, 6); 0: (11, 0); 3: (8, 8); gValue: 30; hValue: 28 
+ TimeStep: 7; 2: (5, 6); 4: (5, 8); 1: (9, 6); 0: (10, 0); 3: (8, 9); gValue: 35; hValue: 23 
+ TimeStep: 8; 2: (5, 6); 4: (6, 8); 1: (8, 6); 0: (9, 0); 3: (8, 10); gValue: 39; hValue: 19 
+ TimeStep: 9; 2: (5, 6); 4: (7, 8); 1: (8, 5); 0: (8, 0); 3: (8, 11); gValue: 43; hValue: 15 
+ TimeStep: 10; 2: (5, 6); 4: (8, 8); 1: (8, 4); 0: (7, 0); 3: (7, 11); gValue: 47; hValue: 11 
+ TimeStep: 11; 2: (5, 6); 4: (8, 9); 1: (7, 4); 0: (7, 1); 3: (6, 11); gValue: 51; hValue: 7 
+ TimeStep: 12; 2: (5, 6); 4: (9, 9); 1: (6, 4); 0: (6, 1); 3: (5, 11); gValue: 55; hValue: 3 
+ TimeStep: 13; 2: (5, 6); 4: (10, 9); 1: (6, 4); 0: (6, 1); 3: (5, 11); gValue: 56; hValue: 2 
+ TimeStep: 14; 2: (5, 6); 4: (11, 9); 1: (6, 4); 0: (6, 1); 3: (5, 11); gValue: 57; hValue: 1 
+ TimeStep: 15; 2: (5, 6); 4: (11, 10); 1: (6, 4); 0: (6, 1); 3: (5, 11); gValue: 58; hValue: 0 
+ 
+Iteration 7 solution, total cost: 58, used electrode: 56 
+
+Iteration 8 solution, total cost: 58, used electrode: 57 
+
+Iteration 9 solution, total cost: 58, used electrode: 58 
+
