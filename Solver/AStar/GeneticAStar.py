@@ -35,61 +35,55 @@ class GeneticAStar(ConstraintSolver):
         self.init(problemInstance)
 
         root = self.createRoot(problemInstance)
-        # self.setHeuristic(root, 'manhatten', problemInstance)
         self.setHeuristic(root, 'trueDistance', self._heuristic)
         self._setTables(root, problemInstance)
-
-        # if pathList is not None:
-        #     root.setUsedElectrode(self.getUsedTable())
         self._openList.put(root)
-        self._closeList.add(root)
 
-        startPrint = False
         while not self._openList.empty() and self._closeList.size() < 1500000:
             currentState = self._openList.get()
+            self._closeList.add(currentState)
 
-            if self._openList.qsize() % 20000 == 0 or startPrint is True:
+            if self._openList.qsize() % 20000 == 0:
                 print("OpenList size: {0};  closedList size ~: {1}".format(self._openList.qsize(),
                                      self.closeList().size()))
             #     print(currentState)
             #     print(currentState.timeStep())
-                # print("pop state: {0}".format(currentState))
-
-            # self._closeList.add(currentState)
+            #     print("pop state: {0}".format(currentState))
 
             # reach goal state
             if self.isGoal(currentState, problemInstance):
                 if currentState.timeStep() >= self.getReservation().getLastTimeStep():
-                    print("%% current time: {0}, lts: {1}".format(currentState.timeStep(),
-                                                                  self.getReservation().getLastTimeStep()))
+                    # print("%% current time: {0}, lts: {1}".format(currentState.timeStep(),
+                    #                                               self.getReservation().getLastTimeStep()))
                     self._goalState = currentState
                     return True
                 else:
-                    print("%%% put goal state back: {0}, \ntimestep: {1} %%%".format(currentState, currentState.timeStep()))
+                    # print("%%% put goal state back: {0}, \ntimestep: {1} %%%".format(currentState,
+                    # currentState.timeStep()))
                     nextgoal = currentState.generateNextGoal(problemInstance)
                     if self.getReservation().isValid(nextgoal):
-                        print("put back {0}, \ntimestep: {1} ".format(nextgoal, nextgoal.timeStep()))
+                        # print("put back {0}, \ntimestep: {1} ".format(nextgoal, nextgoal.timeStep()))
                         self.setHeuristic(nextgoal, 'trueDistance', self._heuristic)
                         self._setTables(nextgoal, problemInstance)
                         self._openList.put(nextgoal)
-                    else:
-                        print("Conflict with reservation, do not put back.")
-
-
-
+                    # else:
+                    #     print("Conflict with reservation, do not put back.")
             # not reach goal state
             else:
                 potentialStates = currentState.expand(problemInstance)
                 for s in potentialStates:
-                    if self.getReservation().isValid(s) and not self._closeList.contains(s):
-                        # self.setHeuristic(s, 'manhatten', problemInstance)
-                        self.setHeuristic(s, 'trueDistance', self._heuristic)
-                        self._setTables(s, problemInstance)
-
-                        # if pathList is not None:
-                        #     s.setUsedElectrode(self._usedTabl
-                        self._openList.put(s)
-                        self._closeList.add(s)
+                    if self.getReservation().isValid(s):
+                        if s.isStay(currentState):
+                        #     everything stays
+                            self.setHeuristic(s, 'trueDistance', self._heuristic)
+                            self._setTables(s, problemInstance)
+                            self._openList.put(s)
+                            self._closeList.add(s)
+                        elif not self._closeList.contains(s):
+                            self.setHeuristic(s, 'trueDistance', self._heuristic)
+                            self._setTables(s, problemInstance)
+                            self._openList.put(s)
+                            self._closeList.add(s)
         return False
 
     def init(self, problemInstance):
@@ -105,16 +99,6 @@ class GeneticAStar(ConstraintSolver):
         self._goalState = None
         # init TDHeuristic
         self._heuristic = TDHeuristic(problemInstance)
-        # print("usedtable size: {0}".format(self.getUsedTable().getSize()))
-        # print("cat size: {0}".format(self.getCAT().getSize()))
-
-        # initialize electrode used table/ heuristic
-        # if pathList is not None:
-        #     usedTable = UsedTable()
-        #     usedTable.fillTable(pathList)
-        #     self.setUsedTable(usedTable)
-
-        # initialize reservation, cat
 
     def getHeuristicTable(self):
         return self._heuristic

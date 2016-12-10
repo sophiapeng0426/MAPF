@@ -7,7 +7,6 @@ from SingleAgent.Utilities.ProblemMap import ProblemMap
 from SingleAgent.Utilities.Util2 import Util2
 
 
-
 class ODState(MultiAgentState):
     def __init__(self, backPointer, singleAgents, problemInstance, moveNext, preState):
         """
@@ -25,13 +24,10 @@ class ODState(MultiAgentState):
         self._preState = preState
         self._direction = None
 
-        # self._newPosition = []
-
         # no restriction by previous
         self._restrictDir = [[] for i in range(0, len(self._singleAgents))]
         self._updateRestrictDir()
         self._updatedDir()
-
         # self._updateNewPosition(problemInstance)
 
     @classmethod
@@ -140,7 +136,6 @@ class ODState(MultiAgentState):
         return super(ODState, self).goalTest(problemInstance)
 
     def generateNextGoal(self, problemInstance):
-        # TODO: increase timestep by 1, predecessor is goalNode, prevState is goalNode
         newAgents = [s.goalSingleAgent(problemInstance) for s in self._singleAgents]
         return ODState(self, newAgents, problemInstance, 0, self)
 
@@ -167,6 +162,14 @@ class ODState(MultiAgentState):
 
     def getRestricDir(self):
         return self._restrictDir
+
+    def isStay(self, compareState):
+        if compareState is None or not isinstance(compareState, ODState):
+            return False
+        if not super(ODState, self).__eq__(compareState):
+            return False
+        return True
+
 
     # def getNewPosition(self):
     #     return self._newPosition
@@ -270,7 +273,7 @@ def main():
 
     print("=== test constructor ===")
     s1 = ODState.fromProblemIns(problem1)
-    s1.setHeuristic(problem1)
+    # s1.setHeuristic(problem1)
     print(s1)
     assert s1.predecessor() is None
     assert s1.getPreState() is None
