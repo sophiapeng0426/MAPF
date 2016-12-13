@@ -41,6 +41,8 @@ class TDHeuristic(object):
         index = Util2().posToIndex(pos, self._nsize)
         return self._lookupTable[self._idTable[agentId]][index]
 
+    def nAgent(self):
+        return len(self._lookupTable)
 
 def main():
     from SingleAgent.Utilities.Graph import Graph

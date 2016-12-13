@@ -23,6 +23,7 @@ class EnhandcedID(IDSolver):
             print("=== ITERATION {0}... ===".format(ith))
 
             if self.populatePath(ith):
+
                 # for i in range(len(self.paths())):
                 #     self.solver().getCAT().addPath(self.paths()[i], i)
                 #     self.solver().getUsedTable().addPath(self.paths()[i], i)
@@ -47,7 +48,6 @@ class EnhandcedID(IDSolver):
                     print(headline + strPath + '\n')
                     self.toFile(headline + '\n')
                     self.recordResult(totalCost,usedElectrode, finalPath, headline, strPath)
-
         if len(self._solutions) > 0:
             return True
         else:
@@ -139,9 +139,14 @@ class EnhandcedID(IDSolver):
             self.solver().getUsedTable().deletePath(self._pathList[ith], ith)
             if not self.solver().solve(problem):
                 return False
+
             self.solver().getCAT().addPath(self.solver().getPath(), ith)
             self.solver().getUsedTable().addPath(self.solver().getPath(), ith)
             self._pathList[ith] = self.solver().getPath()
+            # ==== for fix bug ===
+            self.solver().visualizePath(problem)
+            print("total Conflict: {0}".format(self.solver().getPath()[-1].conflictViolations()))
+            # ==== end  ===
         return True
 
     # def resolveConflict(self, id1, id2):
@@ -174,8 +179,13 @@ class EnhandcedID(IDSolver):
         exceed = totalSize > self._mgs
         if exceed:
             if self._conflictInPast[id1][id2] is True:
-                print("Exceed MGS, fail to find path. ")
-                return False
+                if totalSize <= self._mgs + 2:
+                    self.solver().setIgnore(True)
+                    self.updateConflictPast(id1)
+                    return super(EnhandcedID, self).resolveConflict(id1, id2)
+                else:
+                    print("Exceed MGS, fail to find path. ")
+                    return False
             else:
                 alternative = self._findLessViolationPath(id1, id2)
                 if not alternative:
@@ -188,6 +198,7 @@ class EnhandcedID(IDSolver):
                     self.solver().setIgnore(True)
                 else:
                     self.solver().setIgnore(False)
+                    self.updateConflictPast(id1)
                 return super(EnhandcedID, self).resolveConflict(id1, id2)
             else:
                 alternative = self._findEqualCostPath(id1, id2)
@@ -241,7 +252,7 @@ class EnhandcedID(IDSolver):
             # ====== confirm newpath is no conflict ===========
             newpath1 = self.solver().getPath()
             if self.haveConflict(newpath1, path2):
-                print("failed conflict check.\n")
+                print("failed conflict check.")
                 self.solver().getReservation().clear()
                 self.solver().getCAT().addPath(path1, id1)
                 self.solver().getUsedTable().addPath(path1, id1)
@@ -255,7 +266,7 @@ class EnhandcedID(IDSolver):
             self.solver().getUsedTable().addPath(newpath1, id1)
             return True
         else:
-            print("failed to find a path.\n")
+            print("failed to find a path.")
             self.solver().getReservation().clear()
             self.solver().getCAT().addPath(path1, id1)
             self.solver().getUsedTable().addPath(path1, id1)
@@ -286,7 +297,7 @@ class EnhandcedID(IDSolver):
             # ====== confirm newpath is no conflict ===========
             newpath1 = self.solver().getPath()
             if self.haveConflict(newpath1, path2):
-                print("failed conflict check.\n")
+                print("failed conflict check.")
                 self.solver().getReservation().clear()
                 self.solver().getCAT().addPath(path1, id1)
                 self.solver().getUsedTable().addPath(path1, id1)
@@ -300,7 +311,7 @@ class EnhandcedID(IDSolver):
                 self.solver().getCAT().addPath(newpath1, id1)
                 self.solver().getUsedTable().addPath(newpath1, id1)
                 return True
-        print("failed to find a path.\n")
+        print("failed to find a path.")
         self.solver().getReservation().clear()
         self.solver().getCAT().addPath(path1, id1)
         self.solver().getUsedTable().addPath(path1, id1)
@@ -484,35 +495,48 @@ def main():
     # testProblem = generateProblem(os.path.join(fileroot, filename))
     # testProblem.plotProblem()
 
-    startTime = time.time()
-    solver1 = EnhandcedID(ODAStar(), 3, 1, 'test_12_12_1')
-    if solver1.solve(testProblem):
-        print("solver time: {0} ".format(time.time() - startTime))
+    # startTime = time.time()
+    # solver1 = EnhandcedID(ODAStar(), 2, 1, 'test_12_12_1')
+    # if solver1.solve(testProblem):
+    #     print("solver time: {0} ".format(time.time() - startTime))
 
-    # solver1 = EnhandcedID(ODAStar())
-    # solver1.populatePath(testProblem1)
-    # solver1.visualizePath(testProblem1)
+
+    # === test conflict as priority =======
+    solver1 = EnhandcedID(ODAStar(), 3, 1, 'test_12_12_1')
+    solver1._initialProblem = testProblem
+    solver1.populatePath(0)
+
+    solver1.solver().getCAT().deletePath(solver1._pathList[0], 0)
+    solver1.solver().getUsedTable().deletePath(solver1._pathList[0], 0)
+    solver1.solver().getCAT().deletePath(solver1._pathList[2], 2)
+    solver1.solver().getUsedTable().deletePath(solver1._pathList[2], 2)
+    solver1._problemList[0].join(solver1._problemList[2])
+
+    solver1.solver().setIgnore(True)
+    solver1.solver().getReservation().reservePath(solver1._pathList[5])
+    solver1.solver().solve(solver1._problemList[0])
+    solver1.solver().printPath()
+    solver1.solver().visualizePath(solver1._problemList[0])
+
+    # verify
+    verifyList = []
+    verifyList.append(solver1.solver().getPath())
+    verifyList.append(solver1._pathList[5])
+    _, _, finalPath = Util().mergePaths(verifyList)
+
+    assert solver1.correctcheck(finalPath), 'correct check not pass.'
+    # solver1.solver().getCAT().deletePath(solver1._pathList[5], 5)
+    # solver1.solver().getUsedTable().deletePath(solver1._pathList[5], 5)
+    # solver1.solver().solve(solver1._problemList[5])
     #
-    # for i in range(len(solver1.paths())):
-    #     solver1.solver().getCAT().addPath(solver1.paths()[i], i)
-    # cat = solver1.solver().getCAT()
-    # for key, value in cat.groupOccupantTable().items():
-    #     print("{0}, {1}".format(key, value))
-    #
-    # print("orignal gvalue: {0}".format(solver1.paths()[0][-1].gValue()))
-    # solver1.solver().getReservation().reservePath(solver1.paths()[1])
-    # solver1.solver().getCAT().deletePath(solver1.paths()[0], 0)
-    #
-    # cat = solver1.solver().getCAT()
-    # for key, value in cat.groupOccupantTable().items():
-    #     print("{0}, {1}".format(key, value))
-    #
-    # print(solver1.solver().solve(solver1.problems()[0]))
     # solver1.solver().printPath()
+    # solver1.solver().visualizePath(solver1._problemList[5])
     #
-    # solver1.solver().getReservation().clear()
-    # print(solver1.solver().solve(solver1.problems()[0]))
-    # solver1.solver().printPath()
+    #
+
+
+
+
 
     # ======== test shuffle problemlist ======
     # solver1 = EnhandcedID(ODAStar(), 4, 5)

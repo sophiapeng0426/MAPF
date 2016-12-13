@@ -10,21 +10,13 @@ class ODAStar(GeneticAStar):
         init _openList, _closeList and _goalState
         """
         super(ODAStar, self).__init__()
-        self._ignore = False
-
-    def setIgnore(self, tf):
-        if tf:
-            print("ODSolver set violation free as priority.")
-        else:
-            print("ODSolver set cost as priority.")
-        self._ignore = tf
 
     def createRoot(self, problemInstance):
         assert len(problemInstance.getAgents()) >= 1, "Need agent"
         # if len(problemInstance.getAgents()) == 1:
         #     return SingleAgentState.fromProblemIns(problemInstance.getAgents()[0].getId(), problemInstance)
         # else:
-        if not self._ignore:
+        if not self._ignoreCost:
             return ODState.fromProblemIns(problemInstance)
         else:
             return ODState_2.fromProblemIns(problemInstance)
@@ -77,19 +69,6 @@ class ODAStar(GeneticAStar):
     #         #         self._closeList.add(s)
     #         # self._closeList.add(currentState)
 
-    # def init(self, problemInstance):
-    #     """ get cleaned queue and closeList
-    #     :param problemInstance:
-    #     :return:
-    #     """
-    #     """
-    #     TODO: implement initialization for reservation and heuristics
-    #     """
-    #     while not self._openList.empty():
-    #         self._openList.get()
-    #     self._closeList.clear()
-    #     self._goalState = None
-
     def visualizePath(self, problemInstance):
         """ print path in map
         :param problemInstance:
@@ -111,6 +90,7 @@ class ODAStar(GeneticAStar):
                 mapContent[y][x] = str(state.getAgentId())
         for i in mapContent:
             print(' '.join(i))
+
 
 def main():
     import time

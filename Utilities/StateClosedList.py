@@ -15,19 +15,21 @@ class StateClosedList(ICLosedList):
         assert isinstance(state, State), "ClosedList contains requires state class"
         if state not in self._closeSet:
             return False
-
         preState = self._closeSet[state]
-        if state.gValue() < preState.gValue():
+        if state < preState:
             del self._closeSet[preState]
             return False
-        elif state.gValue == preState.gValue():
-            if state.conflictViolations() < preState.conflictViolations():
-                del self._closeSet[preState]
-                return False
-            elif state.conflictViolations() == preState.conflictViolations():
-                if state.usedElectrode() < preState.usedElectrode():
-                    del self._closeSet[preState]
-                    return False
+        # if state.gValue() < preState.gValue():
+        #     del self._closeSet[preState]
+        #     return False
+        # elif state.gValue == preState.gValue():
+        #     if state.conflictViolations() < preState.conflictViolations():
+        #         del self._closeSet[preState]
+        #         return False
+        #     elif state.conflictViolations() == preState.conflictViolations():
+        #         if state.usedElectrode() < preState.usedElectrode():
+        #             del self._closeSet[preState]
+        #             return False
         return True
 
     def add(self, state):

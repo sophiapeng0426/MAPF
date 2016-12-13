@@ -7,8 +7,11 @@ class MultiAgentAStar(GeneticAStar):
         super(MultiAgentAStar, self).__init__()
 
     def createRoot(self, problemInstance):
-        assert len(problemInstance.getAgents()) >= 1, "Need agent"
-        return MultiAgentState.fromProblemIns(problemInstance)
+        if not self._ignoreCost:
+            assert len(problemInstance.getAgents()) >= 1, "Need agent"
+            return MultiAgentState.fromProblemIns(problemInstance)
+        else:
+            assert False, 'Not implement violation first.'
 
     def visualizePath(self, problemInstance):
         """

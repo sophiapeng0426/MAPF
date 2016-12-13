@@ -139,9 +139,8 @@ class State(object):
             ; and _conflictViolations (CAT)
         """
         assert other is not None, "State can not compare with None type"
-        if other.hValue() is None or self.hValue() is None:
-            print("set Heuristic Value first")
-            return None
+        assert not other.hValue() is None or self.hValue() is None, 'set hvalue first.'
+
         dif = self.gValue() - other.gValue() + self.hValue() - other.hValue()
         # breaking tie considering hValue
         if dif == 0:

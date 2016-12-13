@@ -11,15 +11,12 @@ class GeneticAStar(ConstraintSolver):
         _closeList: stateCloseList
         _goalState: result goal state (used for reconstruct path)
         """
-        """TODO:
-        reservation table
-        cat table
-        """
         super(GeneticAStar, self).__init__()
         self._openList = PriorityQueue()
         self._closeList = StateClosedList()
         self._goalState = None
         self._heuristic = None
+        self._ignoreCost = False
 
     def solve(self, problemInstance):
         """ solver for singleAgent and multiAgent
@@ -27,12 +24,13 @@ class GeneticAStar(ConstraintSolver):
         :return:
         """
         """
-        TODO: more efficient data structure for openList
         Do not setUsedElectrode/cat if not initialized
         Do not setcat if isEmpty
         """
         assert isinstance(problemInstance, ProblemInstance), "Initialize solve function require problemInstance"
         self.init(problemInstance)
+        maxgValue = problemInstance.getGraph().getSize() ** 2
+        maxgValue = maxgValue * self._heuristic.nAgent()
 
         root = self.createRoot(problemInstance)
         self.setHeuristic(root, 'trueDistance', self._heuristic)
@@ -41,25 +39,36 @@ class GeneticAStar(ConstraintSolver):
 
         while not self._openList.empty() and self._closeList.size() < 1500000:
             currentState = self._openList.get()
-            self._closeList.add(currentState)
 
-            if self._openList.qsize() % 20000 == 0:
+            if self._openList.qsize() % 100 == 0:
+                toPrint = True
+            else:
+                toPrint = False
+            if toPrint:
                 print("OpenList size: {0};  closedList size ~: {1}".format(self._openList.qsize(),
-                                     self.closeList().size()))
-            #     print(currentState)
-            #     print(currentState.timeStep())
-            #     print("pop state: {0}".format(currentState))
+                                                                           self.closeList().size()))
+                print("timeStep: {0}, pop state: {1}".format(currentState.timeStep(), currentState))
+            # ==== test get minimum from OpenList =====
+            # rescue = []
+            # while not self._openList.empty():
+            #     more = self._openList.get()
+            #     assert not currentState > more
+            #     rescue.append(more)
+            # for m in rescue:
+            #     self._openList.put(m)
+            # if toPrint:
+            #     if currentState.conflictViolations() == 1:
+            #         return self._openList
+            # ===== end =====
+
+            # self._closeList.add(currentState)
 
             # reach goal state
             if self.isGoal(currentState, problemInstance):
                 if currentState.timeStep() >= self.getReservation().getLastTimeStep():
-                    # print("%% current time: {0}, lts: {1}".format(currentState.timeStep(),
-                    #                                               self.getReservation().getLastTimeStep()))
                     self._goalState = currentState
                     return True
                 else:
-                    # print("%%% put goal state back: {0}, \ntimestep: {1} %%%".format(currentState,
-                    # currentState.timeStep()))
                     nextgoal = currentState.generateNextGoal(problemInstance)
                     if self.getReservation().isValid(nextgoal):
                         # print("put back {0}, \ntimestep: {1} ".format(nextgoal, nextgoal.timeStep()))
@@ -72,18 +81,21 @@ class GeneticAStar(ConstraintSolver):
             else:
                 potentialStates = currentState.expand(problemInstance)
                 for s in potentialStates:
-                    if self.getReservation().isValid(s):
-                        if s.isStay(currentState):
-                        #     everything stays
-                            self.setHeuristic(s, 'trueDistance', self._heuristic)
-                            self._setTables(s, problemInstance)
+                    self.setHeuristic(s, 'trueDistance', self._heuristic)
+                    self._setTables(s, problemInstance)
+                    if self.getReservation().isValid(s) and s.gValue() + s.hValue() < maxgValue:
+                        # agents stays
+                        if not self._closeList.contains(s):
                             self._openList.put(s)
                             self._closeList.add(s)
-                        elif not self._closeList.contains(s):
-                            self.setHeuristic(s, 'trueDistance', self._heuristic)
-                            self._setTables(s, problemInstance)
+                            if toPrint:
+                                print("add to openlist/closelist: {0}".format(s))
+
+                        elif s.isStay(currentState):
                             self._openList.put(s)
-                            self._closeList.add(s)
+                            if toPrint:
+                                print("add to openlist: {0}".format(s))
+
         return False
 
     def init(self, problemInstance):
@@ -93,12 +105,21 @@ class GeneticAStar(ConstraintSolver):
         :return:
         """
         from TDHeuristic import TDHeuristic
-        while not self._openList.empty():
-            self._openList.get()
+        # while not self._openList.empty():
+        #     self._openList.get()
+        self._openList = PriorityQueue()
+
         self._closeList.clear()
         self._goalState = None
         # init TDHeuristic
         self._heuristic = TDHeuristic(problemInstance)
+
+    def setIgnore(self, tf):
+        if tf:
+            print("AStarSolver set violation free as priority.")
+        else:
+            print("AStarSolver set cost as priority.")
+        self._ignoreCost = tf
 
     def getHeuristicTable(self):
         return self._heuristic
@@ -113,9 +134,9 @@ class GeneticAStar(ConstraintSolver):
         :return:
         """
         nsize = problemInstance.getGraph().getSize()
-        if self.getUsedTable().isInitialized() is True:
-            s.updateUsedElectrode(self.getUsedTable(), nsize)
-        if self.getCAT().isInitialized() is True and self.getCAT().isEmpty() is False:
+        # if self.getUsedTable().isInitialized() is True:
+        s.updateUsedElectrode(self.getUsedTable(), nsize)
+        if self.getCAT().isEmpty() is False: # self.getCAT().isInitialized() is True and
             s.updateCATViolations(self.getCAT())
 
     def isGoal(self, s, problemInstance):

@@ -6,6 +6,9 @@ class BreadthFirstSearch(GeneticAStar):
         super(BreadthFirstSearch, self).__init__()
 
     def simpleInit(self):
+        if self._ignoreCost:
+            self.setIgnore(False)
+
         while not self._openList.empty():
             self._openList.get()
         self._closeList.clear()
@@ -32,8 +35,8 @@ class BreadthFirstSearch(GeneticAStar):
 
             potentialStates = currentState.expand(problemInstance)
             for s in potentialStates:
+                self.setConsHeuristic(s, 0)
                 if not self._closeList.contains(s):
-                    self.setConsHeuristic(s, 0)
                     self._openList.put(s)
                     self._closeList.add(s)
         return True

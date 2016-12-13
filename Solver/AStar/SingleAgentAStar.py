@@ -7,10 +7,12 @@ class SingleAgentAStar(GeneticAStar):
         super(SingleAgentAStar, self).__init__()
 
     def createRoot(self, problemInstance):
-        assert len(problemInstance.getAgents()) == 1, "Not a singleAgent problemInstance"
-        return SingleAgentState.fromProblemIns(0, problemInstance)
+        if not self._ignoreCost:
+            assert len(problemInstance.getAgents()) == 1, "Not a singleAgent problemInstance"
+            return SingleAgentState.fromProblemIns(0, problemInstance)
+        else:
+            assert False, 'Not implement violation first.'
 
-    # def visualizePath(self, problemInstance)
 
 def main():
     from SingleAgent.Utilities.ProblemInstance import ProblemInstance

@@ -4,7 +4,7 @@ from SingleAgent.Utilities.ProblemInstance import ProblemInstance
 from SingleAgent.Utilities.Agent import Agent
 from SingleAgent.Utilities.Graph import Graph
 from SingleAgent.Utilities.ProblemMap import ProblemMap
-from SingleAgent.Utilities.Util2 import Util2
+# from SingleAgent.Utilities.Util2 import Util2
 
 
 
@@ -165,6 +165,9 @@ class ODState(MultiAgentState):
             return False
         return True
 
+    # def sethvalue(self, num):
+    #     self._hValue = num
+
 
     # def getNewPosition(self):
     #     return self._newPosition
@@ -238,6 +241,12 @@ class ODState(MultiAgentState):
     #     else:
     #         return dif < 0
     #         # return dif < 0
+    """============== File IO =============
+    """
+    def serialize(self):
+        return
+
+
 
 
 def main():
