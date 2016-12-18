@@ -30,7 +30,7 @@ class GeneticAStar(ConstraintSolver):
         assert isinstance(problemInstance, ProblemInstance), "Initialize solve function require problemInstance"
         self.init(problemInstance)
 
-        maxgValue = problemInstance.getGraph().getSize() * 3
+        maxgValue = problemInstance.getGraph().getSize() * 4
         maxgValue = maxgValue * self._heuristic.nAgent()
 
         root = self.createRoot(problemInstance)
@@ -49,18 +49,6 @@ class GeneticAStar(ConstraintSolver):
                 print("OpenList size: {0};  closedList size ~: {1}".format(self._openList.qsize(),
                                                                            self.closeList().size()))
                 print("timeStep: {0}, pop: {1}".format(currentState.timeStep(), currentState))
-            # ==== test get minimum from OpenList =====
-            # rescue = []
-            # while not self._openList.empty():
-            #     more = self._openList.get()
-            #     assert not currentState > more
-            #     rescue.append(more)
-            # for m in rescue:
-            #     self._openList.put(m)
-            # if toPrint:
-            #     if currentState.conflictViolations() == 1:
-            #         return self._openList
-            # ===== end =====
 
             # self._closeList.add(currentState)
 
@@ -109,10 +97,9 @@ class GeneticAStar(ConstraintSolver):
         :return:
         """
         from TDHeuristic import TDHeuristic
-        # while not self._openList.empty():
-        #     self._openList.get()
-        self._openList = PriorityQueue()
-
+        while not self._openList.empty():
+            self._openList.get()
+        # self._openList = PriorityQueue()
         self._closeList.clear()
         self._goalState = None
         # init TDHeuristic

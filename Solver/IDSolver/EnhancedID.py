@@ -34,16 +34,16 @@ class EnhandcedID(IDSolver):
                     if conflict is None:
                         index += 1
                     else:
-                        # pblist = self._problemList[:]
-                        # problemBefore = len(filter(lambda x: x is not None, pblist))
+                        pblist = self._problemList[:]
+                        problemBefore = len(filter(lambda x: x is not None, pblist))
                         if not self.resolveConflict(conflict.getGroup1(), conflict.getGroup2()):
                             print("Iteration {0} fail to find solution. \n".format(ith))
                             solved = False
                             break
-                        # pblist = self._problemList[:]
-                        # problemAfter = len(filter(lambda x: x is not None, pblist))
-                        # if problemBefore > problemAfter:
-                        #     index = min(conflict.getGroup1(), conflict.getGroup2())
+                        pblist = self._problemList[:]
+                        problemAfter = len(filter(lambda x: x is not None, pblist))
+                        if problemBefore == problemAfter:
+                            index = min(conflict.getGroup1(), conflict.getGroup2())
 
                 if solved:
                     totalCost, usedElectrode, finalPath = Util().mergePaths(self._pathList)
