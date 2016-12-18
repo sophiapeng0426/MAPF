@@ -188,6 +188,8 @@ class MultiAgentState(State):
 
 
 def main():
+    import sys
+
     graph1 = Graph(ProblemMap(16, {(3, 2): (2, 2), (8, 8): (4, 4), (10, 3): (2, 2), (3, 10): (1, 1)}))
     agent1 = [Agent(0, (9, 4), (12, 12)), Agent(1, (13, 13), (9, 2))]
     problem1 = ProblemInstance(graph1, agent1)
@@ -228,7 +230,27 @@ def main():
     problem3.plotProblem()
     s2 = MultiAgentState.fromProblemIns(problem3)
 
+    print("=== test pickle ====")
+    import pickle
+    sys.setrecursionlimit(10000)
 
+    # with open('/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/SingleAgent/Result/{0}.pickle'.format('testMultiple'),
+    #           'wb') as f:
+    #     pickle.dump([s1, expand1], f)
+
+
+    with open('/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/SingleAgent/Result/{0}.pickle'.format('testMultiple'),
+              'rb') as f:
+        x = pickle.load(f)
+        s1_copy = x[0]
+        expand1_copy = x[1]
+
+    assert s1 == s1_copy
+    print(s1)
+    print(s1_copy)
+    assert expand1 == expand1_copy
+    print(expand1)
+    print(expand1_copy)
 
 
 

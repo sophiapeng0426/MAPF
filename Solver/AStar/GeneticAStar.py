@@ -29,7 +29,8 @@ class GeneticAStar(ConstraintSolver):
         """
         assert isinstance(problemInstance, ProblemInstance), "Initialize solve function require problemInstance"
         self.init(problemInstance)
-        maxgValue = problemInstance.getGraph().getSize() ** 2
+
+        maxgValue = problemInstance.getGraph().getSize() * 3
         maxgValue = maxgValue * self._heuristic.nAgent()
 
         root = self.createRoot(problemInstance)
@@ -40,14 +41,14 @@ class GeneticAStar(ConstraintSolver):
         while not self._openList.empty() and self._closeList.size() < 1500000:
             currentState = self._openList.get()
 
-            if self._openList.qsize() % 100 == 0:
+            if self._closeList.size() % 5000 == 0:
                 toPrint = True
             else:
                 toPrint = False
             if toPrint:
                 print("OpenList size: {0};  closedList size ~: {1}".format(self._openList.qsize(),
                                                                            self.closeList().size()))
-                print("timeStep: {0}, pop state: {1}".format(currentState.timeStep(), currentState))
+                print("timeStep: {0}, pop: {1}".format(currentState.timeStep(), currentState))
             # ==== test get minimum from OpenList =====
             # rescue = []
             # while not self._openList.empty():
@@ -84,6 +85,9 @@ class GeneticAStar(ConstraintSolver):
                     self.setHeuristic(s, 'trueDistance', self._heuristic)
                     self._setTables(s, problemInstance)
                     if self.getReservation().isValid(s) and s.gValue() + s.hValue() < maxgValue:
+                        # unlimited openlist pop and put into
+                        if toPrint:
+                            print(s)
                         # agents stays
                         if not self._closeList.contains(s):
                             self._openList.put(s)

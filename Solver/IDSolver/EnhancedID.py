@@ -16,7 +16,7 @@ class EnhandcedID(IDSolver):
         self._solutions = []
         self._visitedOrder = set([])
 
-    def solve(self, problemInstance):
+    def solve(self, problemInstance, fileDir):
         self._initialProblem = problemInstance
 
         for ith in range(self._shuffleNum):
@@ -34,10 +34,17 @@ class EnhandcedID(IDSolver):
                     if conflict is None:
                         index += 1
                     else:
+                        # pblist = self._problemList[:]
+                        # problemBefore = len(filter(lambda x: x is not None, pblist))
                         if not self.resolveConflict(conflict.getGroup1(), conflict.getGroup2()):
                             print("Iteration {0} fail to find solution. \n".format(ith))
                             solved = False
                             break
+                        # pblist = self._problemList[:]
+                        # problemAfter = len(filter(lambda x: x is not None, pblist))
+                        # if problemBefore > problemAfter:
+                        #     index = min(conflict.getGroup1(), conflict.getGroup2())
+
                 if solved:
                     totalCost, usedElectrode, finalPath = Util().mergePaths(self._pathList)
                     assert self.correctcheck(finalPath), 'Iteration {0} has wrong answer! '.format(ith)
@@ -187,9 +194,9 @@ class EnhandcedID(IDSolver):
                     print("Exceed MGS, fail to find path. ")
                     return False
             else:
-                alternative = self._findLessViolationPath(id1, id2)
+                alternative = self._findLessViolationPath(id2, id1)
                 if not alternative:
-                    alternative = self._findLessViolationPath(id2, id1)
+                    alternative = self._findLessViolationPath(id1, id2)
                 self._conflictInPast[id1][id2] = True
                 self._conflictInPast[id2][id1] = True
         else:
@@ -201,9 +208,9 @@ class EnhandcedID(IDSolver):
                     self.updateConflictPast(id1)
                 return super(EnhandcedID, self).resolveConflict(id1, id2)
             else:
-                alternative = self._findEqualCostPath(id1, id2)
+                alternative = self._findEqualCostPath(id2, id1)
                 if not alternative:
-                    alternative = self._findEqualCostPath(id2, id1)
+                    alternative = self._findEqualCostPath(id1, id2)
                 self._conflictInPast[id1][id2] = True
                 self._conflictInPast[id2][id1] = True
         if alternative:
@@ -419,6 +426,7 @@ def generateProblem(filename):
     problem = ProblemInstance(graph, agent)
     return problem
 
+
 def main():
     import time
     import os
@@ -464,74 +472,73 @@ def main():
     #     print("solver time: {0} ".format(time.time() - startTime))
 
     print("============== test_12_12_1 ================")
-    graph = Graph(ProblemMap(12, {(7, 1): (3, 3),
-                    (3, 8): (2, 2),
-                    (1, 3): (2, 3),
-                    (9, 8): (2, 2)
-                    }))
-    agent = [Agent(3, (0, 2), (10, 4)),
-             Agent(7, (3, 11), (10, 2)),
-             Agent(0, (0, 0), (5, 9)),
-             Agent(10, (11, 10), (8, 0)),
-             Agent(2, (11, 2), (5, 6)),
-             Agent(8, (0, 9), (10, 0)),
-             Agent(9, (6, 11), (4, 2)),
-             Agent(6, (0, 7), (6, 4)),
-             Agent(1, (11, 0), (2, 2)),
-             Agent(11, (9, 11), (6, 1)),
-             Agent(4, (11, 4), (7, 8)),
-             Agent(5, (11, 7), (8, 4)),
-             ]
-    testProblem = ProblemInstance(graph, agent)
-    testProblem.plotProblem()
+    # graph = Graph(ProblemMap(12, {(7, 1): (3, 3),
+    #                 (3, 8): (2, 2),
+    #                 (1, 3): (2, 3),
+    #                 (9, 8): (2, 2)
+    #                 }))
+    # agent = [Agent(3, (0, 2), (10, 4)),
+    #          Agent(7, (3, 11), (10, 2)),
+    #          Agent(0, (0, 0), (5, 9)),
+    #          Agent(10, (11, 10), (8, 0)),
+    #          Agent(2, (11, 2), (5, 6)),
+    #          Agent(8, (0, 9), (10, 0)),
+    #          Agent(9, (6, 11), (4, 2)),
+    #          Agent(6, (0, 7), (6, 4)),
+    #          Agent(1, (11, 0), (2, 2)),
+    #          Agent(11, (9, 11), (6, 1)),
+    #          Agent(4, (11, 4), (7, 8)),
+    #          Agent(5, (11, 7), (8, 4)),
+    #          ]
+    # testProblem = ProblemInstance(graph, agent)
+    # testProblem.plotProblem()
     # === alternative ===
-    # fileroot = '/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/DMFB'
+    fileroot = '/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/DMFB'
     # # filename = 'benchmark_2_minsik'
     # # filename = 'in-vitro.3'
     # # filename ='in-vitro_2.3'
     # # filename = 'protein.9'
     # # filename = 'in-vitro_2.5'
-    # filename = 'test_12_12_1.in'
-    # testProblem = generateProblem(os.path.join(fileroot, filename))
-    # testProblem.plotProblem()
+    filename = 'test_12_12_1.in'
+    # filename = 'test_24_24_1.in'
+    testProblem = generateProblem(os.path.join(fileroot, filename))
+    testProblem.plotProblem()
 
-    # startTime = time.time()
-    # solver1 = EnhandcedID(ODAStar(), 2, 1, 'test_12_12_1')
-    # if solver1.solve(testProblem):
-    #     print("solver time: {0} ".format(time.time() - startTime))
+    startTime = time.time()
+    solver1 = EnhandcedID(ODAStar(), 1, 1, 'test_12_12_1')
+    if solver1.solve(testProblem, ''):
+        print("solver time: {0} ".format(time.time() - startTime))
 
 
-    # === test conflict as priority =======
-    solver1 = EnhandcedID(ODAStar(), 3, 1, 'test_12_12_1')
-    solver1._initialProblem = testProblem
-    solver1.populatePath(0)
-
-    solver1.solver().getCAT().deletePath(solver1._pathList[0], 0)
-    solver1.solver().getUsedTable().deletePath(solver1._pathList[0], 0)
-    solver1.solver().getCAT().deletePath(solver1._pathList[2], 2)
-    solver1.solver().getUsedTable().deletePath(solver1._pathList[2], 2)
-    solver1._problemList[0].join(solver1._problemList[2])
-
-    solver1.solver().setIgnore(True)
-    solver1.solver().getReservation().reservePath(solver1._pathList[5])
-    solver1.solver().solve(solver1._problemList[0])
-    solver1.solver().printPath()
-    solver1.solver().visualizePath(solver1._problemList[0])
-
-    # verify
-    verifyList = []
-    verifyList.append(solver1.solver().getPath())
-    verifyList.append(solver1._pathList[5])
-    _, _, finalPath = Util().mergePaths(verifyList)
-
-    assert solver1.correctcheck(finalPath), 'correct check not pass.'
+        # === test conflict as priority =======
+    # solver1 = EnhandcedID(ODAStar(), 3, 1, 'test_12_12_1')
+    # solver1._initialProblem = testProblem
+    # solver1.populatePath(0)
+    #
+    # solver1.solver().getCAT().deletePath(solver1._pathList[0], 0)
+    # solver1.solver().getUsedTable().deletePath(solver1._pathList[0], 0)
+    # solver1.solver().getCAT().deletePath(solver1._pathList[2], 2)
+    # solver1.solver().getUsedTable().deletePath(solver1._pathList[2], 2)
     # solver1.solver().getCAT().deletePath(solver1._pathList[5], 5)
     # solver1.solver().getUsedTable().deletePath(solver1._pathList[5], 5)
-    # solver1.solver().solve(solver1._problemList[5])
     #
+    # solver1._problemList[0].join(solver1._problemList[2])
+    # solver1._problemList[0].join(solver1._problemList[5])
+    #
+    # solver1.solver().setIgnore(True)
+    # # solver1.solver().getReservation().reservePath(solver1._pathList[5])
+    # solver1.solver().solve(solver1._problemList[0])
     # solver1.solver().printPath()
-    # solver1.solver().visualizePath(solver1._problemList[5])
+    # solver1.solver().visualizePath(solver1._problemList[0])
+
+    # verify
+    # verifyList = []
+    # verifyList.append(solver1.solver().getPath())
+    # verifyList.append(solver1._pathList[5])
+    # _, _, finalPath = Util().mergePaths(verifyList)
     #
+    # assert solver1.correctcheck(finalPath), 'correct check not pass.'
+
     #
 
 

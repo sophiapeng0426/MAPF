@@ -116,5 +116,17 @@ def main():
     print(problem2.getGoals())
     problem2.plotProblem()
 
+#  ======= test pickle ==========
+    import pickle
+    # with open('/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/SingleAgent/Result/{0}.pickle'.format('testProblem'),
+    #           'wb') as f:
+    #     pickle.dump(problem2, f)
+
+
+    with open('/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/SingleAgent/Result/{0}.pickle'.format('testProblem'),
+              'rb') as f:
+        newproblem = pickle.load(f)
+    newproblem.plotProblem()
+
 if __name__ == '__main__':
     main()

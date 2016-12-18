@@ -37,10 +37,16 @@ class ODState_2(ODState):
         validStates = filter(lambda x: self.isValid(x), newODStates)
         return validStates
 
+    def generateNextGoal(self, problemInstance):
+        newAgents = [s.goalSingleAgent(problemInstance) for s in self._singleAgents]
+        return ODState_2(self, newAgents, problemInstance, 0, self)
+
     def setConflict(self, num):
+        """helper function to debug"""
         self._conflictViolations = num
 
     def setgvalue(self, num):
+        """helper function to debug"""
         self._gValue = num
 
     def __lt__(self, other):
@@ -54,7 +60,7 @@ class ODState_2(ODState):
             ; and _conflictViolations (CAT)
         """
         assert other is not None, "State can not compare with None type"
-        assert isinstance(other, ODState_2)
+        assert isinstance(other, ODState_2), 'type of other state: {0}'.format(type(other))
         if other.hValue() is None or self.hValue() is None:
             print("set Heuristic Value first")
             return None

@@ -44,8 +44,15 @@ class Node(object):
     def __str__(self):
         return "Pos: {0}".format(self.__position)
 
+    def __getstate__(self):
+        return self.__dict__
+
+    def __setstate__(self, d):
+        self.__dict__ = d
+
 
 def main():
+    import pickle
     node1 = Node((1, 1))
     node2 = Node((0, 0))
     assert node1 != node2
@@ -59,6 +66,19 @@ def main():
     print(node1.get_Four())
 
     assert node1 != node1.get_Four()[1]
+    print(node1.__dict__)
+
+    # ======== test pickle =============
+
+    # with open('/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/SingleAgent/Result/{0}.pickle'.format('testNode'),
+    #           'wb') as f:
+    #     pickle.dump(node1, f)
+
+    with open('/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/SingleAgent/Result/{0}.pickle'.format('testNode'),
+              'rb') as f:
+        newnode = pickle.load(f)
+    print (newnode)
+
 
 if __name__ == '__main__':
     main()

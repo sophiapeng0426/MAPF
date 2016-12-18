@@ -76,15 +76,6 @@ class Reservation(object):
         for node in coord.getNode().get_neighbor():
             if node is not None:
                 self._agentDestinations.add(node.getPosition())
-    # def _addDestination(self, coord):
-    #     thisPos = coord.getNode().getPosition()
-    #     self._lastTimeStep = coord.getTimeStep()
-    #     thisTimeStep = coord.getTimeStep()
-    #     if thisPos in self._agentDestinations:
-    #         if self._agentDestinations[thisPos] > thisTimeStep:
-    #             self._agentDestinations[thisPos] = thisTimeStep
-    #     else:
-    #         self._agentDestinations[thisPos] = thisTimeStep
 
     def isValid(self, state):
         """

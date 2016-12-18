@@ -277,6 +277,22 @@ def main():
     s4 = SingleAgentState(0, Node((9, 4)), s1_pi, problem1)
     assert s1_pi == s4, "eq test3 fail"
 
+    print("==== test pickle =====")
+    import pickle
+    sys.setrecursionlimit(20000)
+
+    # with open('/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/SingleAgent/Result/{0}.pickle'.format('testSingle'),
+    #           'wb') as f:
+    #     pickle.dump(s1_pi, f)
+        # pickle.dump(s1_pi, f)
+
+
+    with open('/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/SingleAgent/Result/{0}.pickle'.format('testSingle'),
+              'rb') as f:
+        s1_pi_2 = pickle.load(f)
+    print(s1_pi_2)
+    assert s1_pi == s1_pi_2
+
 if __name__ == '__main__':
     main()
 

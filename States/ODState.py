@@ -208,6 +208,11 @@ class ODState(MultiAgentState):
     def __hash__(self):
         return super(ODState, self).__hash__() + 23 * hash(self._moveNext) + hash(str(self._restrictDir))
 
+    def __str__(self):
+        res = super(ODState, self).__str__()
+        res += '; moveNext: {0}.'.format(self._moveNext)
+        return res
+
     # def __str__(self):
     #     res = "gValue: {0}, hValue: {1}, violations: {2}, electrode: {3}, ".format(self._gValue, self._hValue,
     #                                                                                self._conflictViolations,
@@ -247,14 +252,14 @@ class ODState(MultiAgentState):
         return
 
 
-
-
 def main():
     import sys
+
     graph1 = Graph(ProblemMap(16, {(3, 2): (2, 2), (8, 8): (4, 4), (10, 3): (2, 2), (3, 10): (1, 1)}))
     # agent1 = [Agent(0, (9, 6), (9, 2)), Agent(1, (9, 2), (9, 6)), Agent(2, (4, 4), (11, 5))]
     agent1 = [Agent(0, (9, 6), (9, 3)), Agent(1, (9, 3), (9, 6))]
     problem1 = ProblemInstance(graph1, agent1)
+
 
     print("=== test constructor ===")
     s1 = ODState.fromProblemIns(problem1)
@@ -275,19 +280,19 @@ def main():
 
     print("====  test expand function ====")
     expandStates = s1.expand(problem1)
-    map(lambda x: x.setHeuristic(problem1), expandStates)
+    # map(lambda x: x.setHeuristic(problem1), expandStates)
     # for s in expandStates:
     #     print (s)
     # print()
     print("memory: {0}".format(sys.getsizeof(expandStates[0])))
     expandStates2 = expandStates[0].expand(problem1)
-    map(lambda x: x.setHeuristic(problem1), expandStates2)
+    # map(lambda x: x.setHeuristic(problem1), expandStates2)
     # for s in expandStates2:
     #     print (s)
 
     print("=== test predecessor ===")
     assert expandStates[1].predecessor() == s1
-
+    #
     print("=== test lt ===")
     # assert s1 < expandStates[0] and expandStates[1] < expandStates[0], "lt test fail"
 
@@ -326,7 +331,24 @@ def main():
 
     print("=== test isValid ===")
 
-    print("=== test agentNode.getFour ====")
+    print("=== test pickle ====")
+    print("=== test pickle ====")
+    import pickle
+    sys.setrecursionlimit(10000)
+
+    # with open('/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/SingleAgent/Result/{0}.pickle'.format('testOD'),
+    #           'wb') as f:
+    #     pickle.dump(s1, f)
+
+
+    with open('/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/SingleAgent/Result/{0}.pickle'.format('testOD'),
+              'rb') as f:
+        x = pickle.load(f)
+    print(x)
+    assert x == s1
+    #     s1_copy = x[0]
+    #     expand1_copy = x[1]
+
 
 if __name__ == '__main__':
     main()

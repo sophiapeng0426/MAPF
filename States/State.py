@@ -28,6 +28,12 @@ class State(object):
     def hValue(self):
         return self._hValue
 
+    # def setVariable(self, g, h, c, u):
+    #     self._gValue = g
+    #     self._hValue = h
+    #     self._conflictViolations = c
+    #     self._usedElectrode = u
+
     def usedElectrode(self):
         return self._usedElectrode
 

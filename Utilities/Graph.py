@@ -73,6 +73,9 @@ class Graph:
 
 
 def main():
+    import sys
+    sys.setrecursionlimit(5000)
+
     testMap = ProblemMap(16, {(3, 2): (2, 2), (8, 8): (4, 4), (10, 3): (2, 2), (3, 10): (1, 1)})
     graph1 = Graph(testMap)
 
@@ -86,6 +89,19 @@ def main():
     print(node4.get_Eight())
 
     graph1.plotGraph()
+
+#     ==== test graph pickle ====
+    import pickle
+    # with open('/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/SingleAgent/Result/{0}.pickle'.format('testGraph'),
+    #           'wb') as f:
+    #     pickle.dump(graph1, f)
+
+#     print(graph1.__dict__)
+
+    with open('/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/SingleAgent/Result/{0}.pickle'.format('testGraph'),
+              'rb') as f:
+        newgraph = pickle.load(f)
+    newgraph.plotGraph()
 
 
 if __name__ == '__main__':
