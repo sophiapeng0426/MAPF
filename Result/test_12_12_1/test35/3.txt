@@ -1,0 +1,1443 @@
+max cost: 48
+
+OpenList size: 0;  closedList size ~: 0
+timeStep: 0, pop: gValue: 0, hValue: 12, violations: 0, electrode: 87, 3: (0, 2); ; moveNext: 0.
+gValue: 1, hValue: 12, violations: 0, electrode: 87, 3: (0, 2); ; moveNext: 0.
+add to openlist
+gValue: 1, hValue: 13, violations: 1, electrode: 87, 3: (0, 1); ; moveNext: 0.
+add to openlist/closelist
+gValue: 1, hValue: 11, violations: 0, electrode: 88, 3: (1, 2); ; moveNext: 0.
+add to openlist/closelist
+gValue: 1, hValue: 13, violations: 0, electrode: 87, 3: (0, 3); ; moveNext: 0.
+add to openlist/closelist
+
+OpenList size: 3;  closedList size ~: 4
+timeStep: 1, pop: gValue: 1, hValue: 11, violations: 0, electrode: 88, 3: (1, 2); ; moveNext: 0.
+gValue: 2, hValue: 11, violations: 1, electrode: 88, 3: (1, 2); ; moveNext: 0.
+add to openlist
+gValue: 2, hValue: 12, violations: 1, electrode: 89, 3: (1, 1); ; moveNext: 0.
+add to openlist/closelist
+gValue: 2, hValue: 10, violations: 0, electrode: 88, 3: (2, 2); ; moveNext: 0.
+add to openlist/closelist
+gValue: 2, hValue: 12, violations: 1, electrode: 88, 3: (0, 2); ; moveNext: 0.
+
+OpenList size: 5;  closedList size ~: 6
+timeStep: 2, pop: gValue: 2, hValue: 10, violations: 0, electrode: 88, 3: (2, 2); ; moveNext: 0.
+gValue: 3, hValue: 10, violations: 0, electrode: 88, 3: (2, 2); ; moveNext: 0.
+add to openlist
+gValue: 3, hValue: 11, violations: 0, electrode: 89, 3: (2, 1); ; moveNext: 0.
+add to openlist/closelist
+gValue: 3, hValue: 9, violations: 0, electrode: 88, 3: (3, 2); ; moveNext: 0.
+add to openlist/closelist
+gValue: 3, hValue: 11, violations: 1, electrode: 88, 3: (1, 2); ; moveNext: 0.
+
+OpenList size: 7;  closedList size ~: 8
+timeStep: 3, pop: gValue: 3, hValue: 9, violations: 0, electrode: 88, 3: (3, 2); ; moveNext: 0.
+gValue: 4, hValue: 9, violations: 0, electrode: 88, 3: (3, 2); ; moveNext: 0.
+add to openlist
+gValue: 4, hValue: 10, violations: 0, electrode: 88, 3: (3, 1); ; moveNext: 0.
+add to openlist/closelist
+gValue: 4, hValue: 8, violations: 0, electrode: 88, 3: (4, 2); ; moveNext: 0.
+add to openlist/closelist
+gValue: 4, hValue: 10, violations: 0, electrode: 88, 3: (2, 2); ; moveNext: 0.
+
+OpenList size: 9;  closedList size ~: 10
+timeStep: 4, pop: gValue: 4, hValue: 8, violations: 0, electrode: 88, 3: (4, 2); ; moveNext: 0.
+gValue: 5, hValue: 8, violations: 0, electrode: 88, 3: (4, 2); ; moveNext: 0.
+add to openlist
+gValue: 5, hValue: 9, violations: 1, electrode: 89, 3: (4, 1); ; moveNext: 0.
+add to openlist/closelist
+gValue: 5, hValue: 7, violations: 0, electrode: 89, 3: (5, 2); ; moveNext: 0.
+add to openlist/closelist
+gValue: 5, hValue: 7, violations: 0, electrode: 88, 3: (4, 3); ; moveNext: 0.
+add to openlist/closelist
+gValue: 5, hValue: 9, violations: 0, electrode: 88, 3: (3, 2); ; moveNext: 0.
+
+OpenList size: 12;  closedList size ~: 13
+timeStep: 5, pop: gValue: 5, hValue: 7, violations: 0, electrode: 88, 3: (4, 3); ; moveNext: 0.
+gValue: 6, hValue: 7, violations: 1, electrode: 88, 3: (4, 3); ; moveNext: 0.
+add to openlist
+gValue: 6, hValue: 8, violations: 0, electrode: 88, 3: (4, 2); ; moveNext: 0.
+gValue: 6, hValue: 6, violations: 1, electrode: 89, 3: (5, 3); ; moveNext: 0.
+add to openlist/closelist
+gValue: 6, hValue: 6, violations: 1, electrode: 88, 3: (4, 4); ; moveNext: 0.
+add to openlist/closelist
+
+OpenList size: 14;  closedList size ~: 15
+timeStep: 5, pop: gValue: 5, hValue: 7, violations: 0, electrode: 89, 3: (5, 2); ; moveNext: 0.
+gValue: 6, hValue: 7, violations: 0, electrode: 89, 3: (5, 2); ; moveNext: 0.
+add to openlist
+gValue: 6, hValue: 8, violations: 1, electrode: 90, 3: (5, 1); ; moveNext: 0.
+add to openlist/closelist
+gValue: 6, hValue: 6, violations: 0, electrode: 89, 3: (6, 2); ; moveNext: 0.
+add to openlist/closelist
+gValue: 6, hValue: 6, violations: 1, electrode: 90, 3: (5, 3); ; moveNext: 0.
+gValue: 6, hValue: 8, violations: 0, electrode: 89, 3: (4, 2); ; moveNext: 0.
+
+OpenList size: 16;  closedList size ~: 17
+timeStep: 6, pop: gValue: 6, hValue: 6, violations: 0, electrode: 89, 3: (6, 2); ; moveNext: 0.
+gValue: 7, hValue: 6, violations: 0, electrode: 89, 3: (6, 2); ; moveNext: 0.
+add to openlist
+gValue: 7, hValue: 7, violations: 1, electrode: 89, 3: (6, 1); ; moveNext: 0.
+add to openlist/closelist
+gValue: 7, hValue: 5, violations: 1, electrode: 89, 3: (6, 3); ; moveNext: 0.
+add to openlist/closelist
+gValue: 7, hValue: 7, violations: 0, electrode: 89, 3: (5, 2); ; moveNext: 0.
+
+OpenList size: 18;  closedList size ~: 19
+timeStep: 1, pop: gValue: 1, hValue: 12, violations: 0, electrode: 87, 3: (0, 2); ; moveNext: 0.
+gValue: 2, hValue: 12, violations: 1, electrode: 87, 3: (0, 2); ; moveNext: 0.
+add to openlist
+gValue: 2, hValue: 13, violations: 1, electrode: 87, 3: (0, 1); ; moveNext: 0.
+gValue: 2, hValue: 11, violations: 1, electrode: 88, 3: (1, 2); ; moveNext: 0.
+gValue: 2, hValue: 13, violations: 0, electrode: 87, 3: (0, 3); ; moveNext: 0.
+
+OpenList size: 18;  closedList size ~: 19
+timeStep: 3, pop: gValue: 3, hValue: 10, violations: 0, electrode: 88, 3: (2, 2); ; moveNext: 0.
+gValue: 4, hValue: 10, violations: 0, electrode: 88, 3: (2, 2); ; moveNext: 0.
+add to openlist
+gValue: 4, hValue: 11, violations: 0, electrode: 89, 3: (2, 1); ; moveNext: 0.
+gValue: 4, hValue: 9, violations: 0, electrode: 88, 3: (3, 2); ; moveNext: 0.
+gValue: 4, hValue: 11, violations: 1, electrode: 88, 3: (1, 2); ; moveNext: 0.
+
+OpenList size: 18;  closedList size ~: 19
+timeStep: 5, pop: gValue: 5, hValue: 8, violations: 0, electrode: 88, 3: (4, 2); ; moveNext: 0.
+gValue: 6, hValue: 8, violations: 0, electrode: 88, 3: (4, 2); ; moveNext: 0.
+add to openlist
+gValue: 6, hValue: 9, violations: 1, electrode: 89, 3: (4, 1); ; moveNext: 0.
+gValue: 6, hValue: 7, violations: 0, electrode: 89, 3: (5, 2); ; moveNext: 0.
+gValue: 6, hValue: 7, violations: 1, electrode: 88, 3: (4, 3); ; moveNext: 0.
+gValue: 6, hValue: 9, violations: 0, electrode: 88, 3: (3, 2); ; moveNext: 0.
+
+OpenList size: 18;  closedList size ~: 19
+timeStep: 4, pop: gValue: 4, hValue: 9, violations: 0, electrode: 88, 3: (3, 2); ; moveNext: 0.
+gValue: 5, hValue: 9, violations: 0, electrode: 88, 3: (3, 2); ; moveNext: 0.
+add to openlist
+gValue: 5, hValue: 10, violations: 0, electrode: 88, 3: (3, 1); ; moveNext: 0.
+gValue: 5, hValue: 8, violations: 0, electrode: 88, 3: (4, 2); ; moveNext: 0.
+gValue: 5, hValue: 10, violations: 0, electrode: 88, 3: (2, 2); ; moveNext: 0.
+
+OpenList size: 18;  closedList size ~: 19
+timeStep: 6, pop: gValue: 6, hValue: 7, violations: 0, electrode: 89, 3: (5, 2); ; moveNext: 0.
+gValue: 7, hValue: 7, violations: 0, electrode: 89, 3: (5, 2); ; moveNext: 0.
+add to openlist
+gValue: 7, hValue: 8, violations: 1, electrode: 90, 3: (5, 1); ; moveNext: 0.
+gValue: 7, hValue: 6, violations: 0, electrode: 89, 3: (6, 2); ; moveNext: 0.
+gValue: 7, hValue: 6, violations: 1, electrode: 90, 3: (5, 3); ; moveNext: 0.
+gValue: 7, hValue: 8, violations: 0, electrode: 89, 3: (4, 2); ; moveNext: 0.
+
+OpenList size: 18;  closedList size ~: 19
+timeStep: 7, pop: gValue: 7, hValue: 6, violations: 0, electrode: 89, 3: (6, 2); ; moveNext: 0.
+gValue: 8, hValue: 6, violations: 0, electrode: 89, 3: (6, 2); ; moveNext: 0.
+add to openlist
+gValue: 8, hValue: 7, violations: 1, electrode: 89, 3: (6, 1); ; moveNext: 0.
+gValue: 8, hValue: 5, violations: 1, electrode: 89, 3: (6, 3); ; moveNext: 0.
+gValue: 8, hValue: 7, violations: 0, electrode: 89, 3: (5, 2); ; moveNext: 0.
+
+OpenList size: 18;  closedList size ~: 19
+timeStep: 1, pop: gValue: 1, hValue: 13, violations: 0, electrode: 87, 3: (0, 3); ; moveNext: 0.
+gValue: 2, hValue: 13, violations: 0, electrode: 87, 3: (0, 3); ; moveNext: 0.
+add to openlist
+gValue: 2, hValue: 12, violations: 1, electrode: 87, 3: (0, 2); ; moveNext: 0.
+gValue: 2, hValue: 12, violations: 0, electrode: 87, 3: (0, 4); ; moveNext: 0.
+add to openlist/closelist
+
+OpenList size: 19;  closedList size ~: 20
+timeStep: 2, pop: gValue: 2, hValue: 12, violations: 0, electrode: 87, 3: (0, 4); ; moveNext: 0.
+gValue: 3, hValue: 12, violations: 0, electrode: 87, 3: (0, 4); ; moveNext: 0.
+add to openlist
+gValue: 3, hValue: 13, violations: 1, electrode: 87, 3: (0, 3); ; moveNext: 0.
+gValue: 3, hValue: 11, violations: 0, electrode: 87, 3: (0, 5); ; moveNext: 0.
+add to openlist/closelist
+
+OpenList size: 20;  closedList size ~: 21
+timeStep: 3, pop: gValue: 3, hValue: 11, violations: 0, electrode: 87, 3: (0, 5); ; moveNext: 0.
+gValue: 4, hValue: 11, violations: 0, electrode: 87, 3: (0, 5); ; moveNext: 0.
+add to openlist
+gValue: 4, hValue: 12, violations: 1, electrode: 87, 3: (0, 4); ; moveNext: 0.
+gValue: 4, hValue: 10, violations: 0, electrode: 88, 3: (1, 5); ; moveNext: 0.
+add to openlist/closelist
+gValue: 4, hValue: 12, violations: 0, electrode: 87, 3: (0, 6); ; moveNext: 0.
+add to openlist/closelist
+
+OpenList size: 22;  closedList size ~: 23
+timeStep: 6, pop: gValue: 6, hValue: 8, violations: 0, electrode: 88, 3: (4, 2); ; moveNext: 0.
+gValue: 7, hValue: 8, violations: 0, electrode: 88, 3: (4, 2); ; moveNext: 0.
+add to openlist
+gValue: 7, hValue: 9, violations: 1, electrode: 89, 3: (4, 1); ; moveNext: 0.
+gValue: 7, hValue: 7, violations: 0, electrode: 89, 3: (5, 2); ; moveNext: 0.
+gValue: 7, hValue: 7, violations: 1, electrode: 88, 3: (4, 3); ; moveNext: 0.
+gValue: 7, hValue: 9, violations: 0, electrode: 88, 3: (3, 2); ; moveNext: 0.
+
+OpenList size: 22;  closedList size ~: 23
+timeStep: 4, pop: gValue: 4, hValue: 10, violations: 0, electrode: 88, 3: (3, 1); ; moveNext: 0.
+gValue: 5, hValue: 10, violations: 0, electrode: 88, 3: (3, 1); ; moveNext: 0.
+add to openlist
+gValue: 5, hValue: 11, violations: 0, electrode: 88, 3: (3, 0); ; moveNext: 0.
+add to openlist/closelist
+gValue: 5, hValue: 9, violations: 1, electrode: 89, 3: (4, 1); ; moveNext: 0.
+gValue: 5, hValue: 9, violations: 0, electrode: 88, 3: (3, 2); ; moveNext: 0.
+gValue: 5, hValue: 11, violations: 0, electrode: 89, 3: (2, 1); ; moveNext: 0.
+
+OpenList size: 23;  closedList size ~: 24
+timeStep: 4, pop: gValue: 4, hValue: 10, violations: 0, electrode: 88, 3: (1, 5); ; moveNext: 0.
+gValue: 5, hValue: 10, violations: 1, electrode: 88, 3: (1, 5); ; moveNext: 0.
+add to openlist
+gValue: 5, hValue: 9, violations: 0, electrode: 89, 3: (2, 5); ; moveNext: 0.
+add to openlist/closelist
+gValue: 5, hValue: 11, violations: 0, electrode: 88, 3: (1, 6); ; moveNext: 0.
+add to openlist/closelist
+gValue: 5, hValue: 11, violations: 1, electrode: 88, 3: (0, 5); ; moveNext: 0.
+
+OpenList size: 25;  closedList size ~: 26
+timeStep: 5, pop: gValue: 5, hValue: 9, violations: 0, electrode: 88, 3: (3, 2); ; moveNext: 0.
+gValue: 6, hValue: 9, violations: 0, electrode: 88, 3: (3, 2); ; moveNext: 0.
+add to openlist
+gValue: 6, hValue: 10, violations: 1, electrode: 88, 3: (3, 1); ; moveNext: 0.
+gValue: 6, hValue: 8, violations: 0, electrode: 88, 3: (4, 2); ; moveNext: 0.
+gValue: 6, hValue: 10, violations: 0, electrode: 88, 3: (2, 2); ; moveNext: 0.
+
+OpenList size: 25;  closedList size ~: 26
+timeStep: 4, pop: gValue: 4, hValue: 10, violations: 0, electrode: 88, 3: (2, 2); ; moveNext: 0.
+gValue: 5, hValue: 10, violations: 0, electrode: 88, 3: (2, 2); ; moveNext: 0.
+add to openlist
+gValue: 5, hValue: 11, violations: 0, electrode: 89, 3: (2, 1); ; moveNext: 0.
+gValue: 5, hValue: 9, violations: 0, electrode: 88, 3: (3, 2); ; moveNext: 0.
+gValue: 5, hValue: 11, violations: 1, electrode: 88, 3: (1, 2); ; moveNext: 0.
+
+OpenList size: 25;  closedList size ~: 26
+timeStep: 3, pop: gValue: 3, hValue: 11, violations: 0, electrode: 89, 3: (2, 1); ; moveNext: 0.
+gValue: 4, hValue: 11, violations: 0, electrode: 89, 3: (2, 1); ; moveNext: 0.
+add to openlist
+gValue: 4, hValue: 12, violations: 0, electrode: 89, 3: (2, 0); ; moveNext: 0.
+add to openlist/closelist
+gValue: 4, hValue: 10, violations: 0, electrode: 89, 3: (3, 1); ; moveNext: 0.
+gValue: 4, hValue: 10, violations: 0, electrode: 89, 3: (2, 2); ; moveNext: 0.
+gValue: 4, hValue: 12, violations: 1, electrode: 90, 3: (1, 1); ; moveNext: 0.
+
+OpenList size: 26;  closedList size ~: 27
+timeStep: 8, pop: gValue: 8, hValue: 6, violations: 0, electrode: 89, 3: (6, 2); ; moveNext: 0.
+gValue: 9, hValue: 6, violations: 0, electrode: 89, 3: (6, 2); ; moveNext: 0.
+add to openlist
+gValue: 9, hValue: 7, violations: 1, electrode: 89, 3: (6, 1); ; moveNext: 0.
+gValue: 9, hValue: 5, violations: 1, electrode: 89, 3: (6, 3); ; moveNext: 0.
+gValue: 9, hValue: 7, violations: 0, electrode: 89, 3: (5, 2); ; moveNext: 0.
+
+OpenList size: 26;  closedList size ~: 27
+timeStep: 5, pop: gValue: 5, hValue: 9, violations: 0, electrode: 89, 3: (2, 5); ; moveNext: 0.
+gValue: 6, hValue: 9, violations: 0, electrode: 89, 3: (2, 5); ; moveNext: 0.
+add to openlist
+gValue: 6, hValue: 8, violations: 1, electrode: 90, 3: (3, 5); ; moveNext: 0.
+add to openlist/closelist
+gValue: 6, hValue: 10, violations: 0, electrode: 89, 3: (2, 6); ; moveNext: 0.
+add to openlist/closelist
+gValue: 6, hValue: 10, violations: 1, electrode: 89, 3: (1, 5); ; moveNext: 0.
+
+OpenList size: 28;  closedList size ~: 29
+timeStep: 7, pop: gValue: 7, hValue: 7, violations: 0, electrode: 89, 3: (5, 2); ; moveNext: 0.
+gValue: 8, hValue: 7, violations: 0, electrode: 89, 3: (5, 2); ; moveNext: 0.
+add to openlist
+gValue: 8, hValue: 8, violations: 1, electrode: 90, 3: (5, 1); ; moveNext: 0.
+gValue: 8, hValue: 6, violations: 0, electrode: 89, 3: (6, 2); ; moveNext: 0.
+gValue: 8, hValue: 6, violations: 1, electrode: 90, 3: (5, 3); ; moveNext: 0.
+gValue: 8, hValue: 8, violations: 1, electrode: 89, 3: (4, 2); ; moveNext: 0.
+
+OpenList size: 28;  closedList size ~: 29
+timeStep: 3, pop: gValue: 3, hValue: 12, violations: 0, electrode: 87, 3: (0, 4); ; moveNext: 0.
+gValue: 4, hValue: 12, violations: 1, electrode: 87, 3: (0, 4); ; moveNext: 0.
+add to openlist
+gValue: 4, hValue: 13, violations: 1, electrode: 87, 3: (0, 3); ; moveNext: 0.
+gValue: 4, hValue: 11, violations: 0, electrode: 87, 3: (0, 5); ; moveNext: 0.
+
+OpenList size: 28;  closedList size ~: 29
+timeStep: 4, pop: gValue: 4, hValue: 11, violations: 0, electrode: 87, 3: (0, 5); ; moveNext: 0.
+gValue: 5, hValue: 11, violations: 1, electrode: 87, 3: (0, 5); ; moveNext: 0.
+add to openlist
+gValue: 5, hValue: 12, violations: 1, electrode: 87, 3: (0, 4); ; moveNext: 0.
+gValue: 5, hValue: 10, violations: 1, electrode: 88, 3: (1, 5); ; moveNext: 0.
+gValue: 5, hValue: 12, violations: 0, electrode: 87, 3: (0, 6); ; moveNext: 0.
+
+OpenList size: 28;  closedList size ~: 29
+timeStep: 2, pop: gValue: 2, hValue: 13, violations: 0, electrode: 87, 3: (0, 3); ; moveNext: 0.
+gValue: 3, hValue: 13, violations: 1, electrode: 87, 3: (0, 3); ; moveNext: 0.
+add to openlist
+gValue: 3, hValue: 12, violations: 1, electrode: 87, 3: (0, 2); ; moveNext: 0.
+gValue: 3, hValue: 12, violations: 0, electrode: 87, 3: (0, 4); ; moveNext: 0.
+
+OpenList size: 28;  closedList size ~: 29
+timeStep: 6, pop: gValue: 6, hValue: 9, violations: 0, electrode: 88, 3: (3, 2); ; moveNext: 0.
+gValue: 7, hValue: 9, violations: 0, electrode: 88, 3: (3, 2); ; moveNext: 0.
+add to openlist
+gValue: 7, hValue: 10, violations: 1, electrode: 88, 3: (3, 1); ; moveNext: 0.
+gValue: 7, hValue: 8, violations: 0, electrode: 88, 3: (4, 2); ; moveNext: 0.
+gValue: 7, hValue: 10, violations: 0, electrode: 88, 3: (2, 2); ; moveNext: 0.
+
+OpenList size: 28;  closedList size ~: 29
+timeStep: 5, pop: gValue: 5, hValue: 10, violations: 0, electrode: 88, 3: (2, 2); ; moveNext: 0.
+gValue: 6, hValue: 10, violations: 0, electrode: 88, 3: (2, 2); ; moveNext: 0.
+add to openlist
+gValue: 6, hValue: 11, violations: 0, electrode: 89, 3: (2, 1); ; moveNext: 0.
+gValue: 6, hValue: 9, violations: 0, electrode: 88, 3: (3, 2); ; moveNext: 0.
+gValue: 6, hValue: 11, violations: 1, electrode: 88, 3: (1, 2); ; moveNext: 0.
+
+OpenList size: 28;  closedList size ~: 29
+timeStep: 7, pop: gValue: 7, hValue: 8, violations: 0, electrode: 88, 3: (4, 2); ; moveNext: 0.
+gValue: 8, hValue: 8, violations: 1, electrode: 88, 3: (4, 2); ; moveNext: 0.
+add to openlist
+gValue: 8, hValue: 9, violations: 1, electrode: 89, 3: (4, 1); ; moveNext: 0.
+gValue: 8, hValue: 7, violations: 0, electrode: 89, 3: (5, 2); ; moveNext: 0.
+gValue: 8, hValue: 7, violations: 1, electrode: 88, 3: (4, 3); ; moveNext: 0.
+gValue: 8, hValue: 9, violations: 1, electrode: 88, 3: (3, 2); ; moveNext: 0.
+
+OpenList size: 28;  closedList size ~: 29
+timeStep: 5, pop: gValue: 5, hValue: 10, violations: 0, electrode: 88, 3: (3, 1); ; moveNext: 0.
+gValue: 6, hValue: 10, violations: 1, electrode: 88, 3: (3, 1); ; moveNext: 0.
+add to openlist
+gValue: 6, hValue: 11, violations: 1, electrode: 88, 3: (3, 0); ; moveNext: 0.
+gValue: 6, hValue: 9, violations: 1, electrode: 89, 3: (4, 1); ; moveNext: 0.
+gValue: 6, hValue: 9, violations: 0, electrode: 88, 3: (3, 2); ; moveNext: 0.
+gValue: 6, hValue: 11, violations: 0, electrode: 89, 3: (2, 1); ; moveNext: 0.
+
+OpenList size: 28;  closedList size ~: 29
+timeStep: 8, pop: gValue: 8, hValue: 7, violations: 0, electrode: 89, 3: (5, 2); ; moveNext: 0.
+gValue: 9, hValue: 7, violations: 0, electrode: 89, 3: (5, 2); ; moveNext: 0.
+add to openlist
+gValue: 9, hValue: 8, violations: 1, electrode: 90, 3: (5, 1); ; moveNext: 0.
+gValue: 9, hValue: 6, violations: 0, electrode: 89, 3: (6, 2); ; moveNext: 0.
+gValue: 9, hValue: 6, violations: 1, electrode: 90, 3: (5, 3); ; moveNext: 0.
+gValue: 9, hValue: 8, violations: 1, electrode: 89, 3: (4, 2); ; moveNext: 0.
+
+OpenList size: 28;  closedList size ~: 29
+timeStep: 4, pop: gValue: 4, hValue: 11, violations: 0, electrode: 89, 3: (2, 1); ; moveNext: 0.
+gValue: 5, hValue: 11, violations: 0, electrode: 89, 3: (2, 1); ; moveNext: 0.
+add to openlist
+gValue: 5, hValue: 12, violations: 0, electrode: 89, 3: (2, 0); ; moveNext: 0.
+gValue: 5, hValue: 10, violations: 0, electrode: 89, 3: (3, 1); ; moveNext: 0.
+gValue: 5, hValue: 10, violations: 0, electrode: 89, 3: (2, 2); ; moveNext: 0.
+gValue: 5, hValue: 12, violations: 1, electrode: 90, 3: (1, 1); ; moveNext: 0.
+
+OpenList size: 28;  closedList size ~: 29
+timeStep: 6, pop: gValue: 6, hValue: 9, violations: 0, electrode: 89, 3: (2, 5); ; moveNext: 0.
+gValue: 7, hValue: 9, violations: 0, electrode: 89, 3: (2, 5); ; moveNext: 0.
+add to openlist
+gValue: 7, hValue: 8, violations: 1, electrode: 90, 3: (3, 5); ; moveNext: 0.
+gValue: 7, hValue: 10, violations: 0, electrode: 89, 3: (2, 6); ; moveNext: 0.
+gValue: 7, hValue: 10, violations: 1, electrode: 89, 3: (1, 5); ; moveNext: 0.
+
+OpenList size: 28;  closedList size ~: 29
+timeStep: 9, pop: gValue: 9, hValue: 6, violations: 0, electrode: 89, 3: (6, 2); ; moveNext: 0.
+gValue: 10, hValue: 6, violations: 1, electrode: 89, 3: (6, 2); ; moveNext: 0.
+add to openlist
+gValue: 10, hValue: 7, violations: 1, electrode: 89, 3: (6, 1); ; moveNext: 0.
+gValue: 10, hValue: 5, violations: 1, electrode: 89, 3: (6, 3); ; moveNext: 0.
+gValue: 10, hValue: 7, violations: 1, electrode: 89, 3: (5, 2); ; moveNext: 0.
+
+OpenList size: 28;  closedList size ~: 29
+timeStep: 4, pop: gValue: 4, hValue: 12, violations: 0, electrode: 87, 3: (0, 6); ; moveNext: 0.
+gValue: 5, hValue: 12, violations: 0, electrode: 87, 3: (0, 6); ; moveNext: 0.
+add to openlist
+gValue: 5, hValue: 11, violations: 1, electrode: 87, 3: (0, 5); ; moveNext: 0.
+gValue: 5, hValue: 11, violations: 0, electrode: 87, 3: (1, 6); ; moveNext: 0.
+add to openlist/closelist
+gValue: 5, hValue: 13, violations: 0, electrode: 87, 3: (0, 7); ; moveNext: 0.
+add to openlist/closelist
+
+OpenList size: 30;  closedList size ~: 30
+timeStep: 5, pop: gValue: 5, hValue: 11, violations: 0, electrode: 87, 3: (1, 6); ; moveNext: 0.
+gValue: 6, hValue: 11, violations: 1, electrode: 87, 3: (1, 6); ; moveNext: 0.
+add to openlist
+gValue: 6, hValue: 10, violations: 1, electrode: 88, 3: (1, 5); ; moveNext: 0.
+gValue: 6, hValue: 10, violations: 0, electrode: 87, 3: (2, 6); ; moveNext: 0.
+add to openlist/closelist
+gValue: 6, hValue: 12, violations: 0, electrode: 87, 3: (1, 7); ; moveNext: 0.
+add to openlist/closelist
+gValue: 6, hValue: 12, violations: 1, electrode: 87, 3: (0, 6); ; moveNext: 0.
+
+OpenList size: 32;  closedList size ~: 31
+timeStep: 6, pop: gValue: 6, hValue: 10, violations: 0, electrode: 87, 3: (2, 6); ; moveNext: 0.
+gValue: 7, hValue: 10, violations: 0, electrode: 87, 3: (2, 6); ; moveNext: 0.
+add to openlist
+gValue: 7, hValue: 9, violations: 0, electrode: 88, 3: (2, 5); ; moveNext: 0.
+gValue: 7, hValue: 9, violations: 1, electrode: 87, 3: (3, 6); ; moveNext: 0.
+add to openlist/closelist
+gValue: 7, hValue: 11, violations: 0, electrode: 87, 3: (2, 7); ; moveNext: 0.
+add to openlist/closelist
+gValue: 7, hValue: 11, violations: 1, electrode: 87, 3: (1, 6); ; moveNext: 0.
+
+OpenList size: 34;  closedList size ~: 33
+timeStep: 7, pop: gValue: 7, hValue: 9, violations: 0, electrode: 88, 3: (3, 2); ; moveNext: 0.
+gValue: 8, hValue: 9, violations: 1, electrode: 88, 3: (3, 2); ; moveNext: 0.
+add to openlist
+gValue: 8, hValue: 10, violations: 1, electrode: 88, 3: (3, 1); ; moveNext: 0.
+gValue: 8, hValue: 8, violations: 1, electrode: 88, 3: (4, 2); ; moveNext: 0.
+gValue: 8, hValue: 10, violations: 1, electrode: 88, 3: (2, 2); ; moveNext: 0.
+
+OpenList size: 34;  closedList size ~: 33
+timeStep: 5, pop: gValue: 5, hValue: 11, violations: 0, electrode: 88, 3: (3, 0); ; moveNext: 0.
+gValue: 6, hValue: 11, violations: 1, electrode: 88, 3: (3, 0); ; moveNext: 0.
+add to openlist
+gValue: 6, hValue: 10, violations: 1, electrode: 88, 3: (4, 0); ; moveNext: 0.
+add to openlist/closelist
+gValue: 6, hValue: 10, violations: 1, electrode: 88, 3: (3, 1); ; moveNext: 0.
+gValue: 6, hValue: 12, violations: 0, electrode: 88, 3: (2, 0); ; moveNext: 0.
+
+OpenList size: 35;  closedList size ~: 34
+timeStep: 5, pop: gValue: 5, hValue: 11, violations: 0, electrode: 88, 3: (1, 6); ; moveNext: 0.
+gValue: 6, hValue: 11, violations: 1, electrode: 88, 3: (1, 6); ; moveNext: 0.
+add to openlist
+gValue: 6, hValue: 10, violations: 1, electrode: 88, 3: (1, 5); ; moveNext: 0.
+gValue: 6, hValue: 10, violations: 0, electrode: 88, 3: (2, 6); ; moveNext: 0.
+gValue: 6, hValue: 12, violations: 0, electrode: 88, 3: (1, 7); ; moveNext: 0.
+gValue: 6, hValue: 12, violations: 1, electrode: 88, 3: (0, 6); ; moveNext: 0.
+
+OpenList size: 35;  closedList size ~: 34
+timeStep: 6, pop: gValue: 6, hValue: 10, violations: 0, electrode: 88, 3: (2, 2); ; moveNext: 0.
+gValue: 7, hValue: 10, violations: 0, electrode: 88, 3: (2, 2); ; moveNext: 0.
+add to openlist
+gValue: 7, hValue: 11, violations: 1, electrode: 89, 3: (2, 1); ; moveNext: 0.
+gValue: 7, hValue: 9, violations: 0, electrode: 88, 3: (3, 2); ; moveNext: 0.
+gValue: 7, hValue: 11, violations: 0, electrode: 88, 3: (1, 2); ; moveNext: 0.
+
+OpenList size: 35;  closedList size ~: 34
+timeStep: 9, pop: gValue: 9, hValue: 7, violations: 0, electrode: 89, 3: (5, 2); ; moveNext: 0.
+gValue: 10, hValue: 7, violations: 1, electrode: 89, 3: (5, 2); ; moveNext: 0.
+add to openlist
+gValue: 10, hValue: 8, violations: 1, electrode: 90, 3: (5, 1); ; moveNext: 0.
+gValue: 10, hValue: 6, violations: 1, electrode: 89, 3: (6, 2); ; moveNext: 0.
+gValue: 10, hValue: 6, violations: 1, electrode: 90, 3: (5, 3); ; moveNext: 0.
+gValue: 10, hValue: 8, violations: 1, electrode: 89, 3: (4, 2); ; moveNext: 0.
+
+OpenList size: 35;  closedList size ~: 34
+timeStep: 4, pop: gValue: 4, hValue: 12, violations: 0, electrode: 89, 3: (2, 0); ; moveNext: 0.
+gValue: 5, hValue: 12, violations: 0, electrode: 89, 3: (2, 0); ; moveNext: 0.
+add to openlist
+gValue: 5, hValue: 11, violations: 0, electrode: 89, 3: (3, 0); ; moveNext: 0.
+gValue: 5, hValue: 11, violations: 0, electrode: 89, 3: (2, 1); ; moveNext: 0.
+gValue: 5, hValue: 13, violations: 0, electrode: 89, 3: (1, 0); ; moveNext: 0.
+add to openlist/closelist
+
+OpenList size: 36;  closedList size ~: 35
+timeStep: 7, pop: gValue: 7, hValue: 9, violations: 0, electrode: 89, 3: (2, 5); ; moveNext: 0.
+gValue: 8, hValue: 9, violations: 1, electrode: 89, 3: (2, 5); ; moveNext: 0.
+add to openlist
+gValue: 8, hValue: 8, violations: 1, electrode: 90, 3: (3, 5); ; moveNext: 0.
+gValue: 8, hValue: 10, violations: 1, electrode: 89, 3: (2, 6); ; moveNext: 0.
+gValue: 8, hValue: 10, violations: 1, electrode: 89, 3: (1, 5); ; moveNext: 0.
+
+OpenList size: 36;  closedList size ~: 35
+timeStep: 6, pop: gValue: 6, hValue: 10, violations: 0, electrode: 89, 3: (2, 6); ; moveNext: 0.
+gValue: 7, hValue: 10, violations: 0, electrode: 89, 3: (2, 6); ; moveNext: 0.
+add to openlist
+gValue: 7, hValue: 9, violations: 0, electrode: 89, 3: (2, 5); ; moveNext: 0.
+gValue: 7, hValue: 9, violations: 1, electrode: 89, 3: (3, 6); ; moveNext: 0.
+gValue: 7, hValue: 11, violations: 0, electrode: 89, 3: (2, 7); ; moveNext: 0.
+gValue: 7, hValue: 11, violations: 1, electrode: 89, 3: (1, 6); ; moveNext: 0.
+
+OpenList size: 36;  closedList size ~: 35
+timeStep: 5, pop: gValue: 5, hValue: 11, violations: 0, electrode: 89, 3: (2, 1); ; moveNext: 0.
+gValue: 6, hValue: 11, violations: 0, electrode: 89, 3: (2, 1); ; moveNext: 0.
+add to openlist
+gValue: 6, hValue: 12, violations: 0, electrode: 89, 3: (2, 0); ; moveNext: 0.
+gValue: 6, hValue: 10, violations: 1, electrode: 89, 3: (3, 1); ; moveNext: 0.
+gValue: 6, hValue: 10, violations: 0, electrode: 89, 3: (2, 2); ; moveNext: 0.
+gValue: 6, hValue: 12, violations: 0, electrode: 90, 3: (1, 1); ; moveNext: 0.
+add to openlist/closelist
+
+OpenList size: 37;  closedList size ~: 35
+timeStep: 5, pop: gValue: 5, hValue: 12, violations: 0, electrode: 87, 3: (0, 6); ; moveNext: 0.
+gValue: 6, hValue: 12, violations: 1, electrode: 87, 3: (0, 6); ; moveNext: 0.
+add to openlist
+gValue: 6, hValue: 11, violations: 1, electrode: 87, 3: (0, 5); ; moveNext: 0.
+gValue: 6, hValue: 11, violations: 1, electrode: 87, 3: (1, 6); ; moveNext: 0.
+gValue: 6, hValue: 13, violations: 0, electrode: 87, 3: (0, 7); ; moveNext: 0.
+
+OpenList size: 37;  closedList size ~: 35
+timeStep: 7, pop: gValue: 7, hValue: 10, violations: 0, electrode: 87, 3: (2, 6); ; moveNext: 0.
+gValue: 8, hValue: 10, violations: 1, electrode: 87, 3: (2, 6); ; moveNext: 0.
+add to openlist
+gValue: 8, hValue: 9, violations: 1, electrode: 88, 3: (2, 5); ; moveNext: 0.
+gValue: 8, hValue: 9, violations: 0, electrode: 87, 3: (3, 6); ; moveNext: 0.
+add to openlist/closelist
+gValue: 8, hValue: 11, violations: 1, electrode: 87, 3: (2, 7); ; moveNext: 0.
+gValue: 8, hValue: 11, violations: 1, electrode: 87, 3: (1, 6); ; moveNext: 0.
+
+OpenList size: 38;  closedList size ~: 35
+timeStep: 8, pop: gValue: 8, hValue: 9, violations: 0, electrode: 87, 3: (3, 6); ; moveNext: 0.
+gValue: 9, hValue: 9, violations: 1, electrode: 87, 3: (3, 6); ; moveNext: 0.
+add to openlist
+gValue: 9, hValue: 8, violations: 1, electrode: 88, 3: (3, 5); ; moveNext: 0.
+gValue: 9, hValue: 8, violations: 0, electrode: 87, 3: (4, 6); ; moveNext: 0.
+add to openlist/closelist
+gValue: 9, hValue: 10, violations: 1, electrode: 87, 3: (3, 7); ; moveNext: 0.
+add to openlist/closelist
+gValue: 9, hValue: 10, violations: 1, electrode: 87, 3: (2, 6); ; moveNext: 0.
+
+OpenList size: 40;  closedList size ~: 37
+timeStep: 9, pop: gValue: 9, hValue: 8, violations: 0, electrode: 87, 3: (4, 6); ; moveNext: 0.
+gValue: 10, hValue: 8, violations: 1, electrode: 87, 3: (4, 6); ; moveNext: 0.
+add to openlist
+gValue: 10, hValue: 7, violations: 1, electrode: 87, 3: (4, 5); ; moveNext: 0.
+add to openlist/closelist
+gValue: 10, hValue: 7, violations: 1, electrode: 87, 3: (5, 6); ; moveNext: 0.
+add to openlist/closelist
+gValue: 10, hValue: 9, violations: 1, electrode: 87, 3: (4, 7); ; moveNext: 0.
+add to openlist/closelist
+gValue: 10, hValue: 9, violations: 1, electrode: 87, 3: (3, 6); ; moveNext: 0.
+
+OpenList size: 43;  closedList size ~: 40
+timeStep: 7, pop: gValue: 7, hValue: 10, violations: 0, electrode: 88, 3: (2, 2); ; moveNext: 0.
+gValue: 8, hValue: 10, violations: 1, electrode: 88, 3: (2, 2); ; moveNext: 0.
+add to openlist
+gValue: 8, hValue: 11, violations: 1, electrode: 89, 3: (2, 1); ; moveNext: 0.
+gValue: 8, hValue: 9, violations: 1, electrode: 88, 3: (3, 2); ; moveNext: 0.
+gValue: 8, hValue: 11, violations: 0, electrode: 88, 3: (1, 2); ; moveNext: 0.
+
+OpenList size: 43;  closedList size ~: 40
+timeStep: 5, pop: gValue: 5, hValue: 12, violations: 0, electrode: 89, 3: (2, 0); ; moveNext: 0.
+gValue: 6, hValue: 12, violations: 0, electrode: 89, 3: (2, 0); ; moveNext: 0.
+add to openlist
+gValue: 6, hValue: 11, violations: 1, electrode: 89, 3: (3, 0); ; moveNext: 0.
+gValue: 6, hValue: 11, violations: 0, electrode: 89, 3: (2, 1); ; moveNext: 0.
+gValue: 6, hValue: 13, violations: 0, electrode: 89, 3: (1, 0); ; moveNext: 0.
+
+OpenList size: 43;  closedList size ~: 40
+timeStep: 7, pop: gValue: 7, hValue: 10, violations: 0, electrode: 89, 3: (2, 6); ; moveNext: 0.
+gValue: 8, hValue: 10, violations: 1, electrode: 89, 3: (2, 6); ; moveNext: 0.
+add to openlist
+gValue: 8, hValue: 9, violations: 1, electrode: 89, 3: (2, 5); ; moveNext: 0.
+gValue: 8, hValue: 9, violations: 0, electrode: 89, 3: (3, 6); ; moveNext: 0.
+gValue: 8, hValue: 11, violations: 1, electrode: 89, 3: (2, 7); ; moveNext: 0.
+gValue: 8, hValue: 11, violations: 1, electrode: 89, 3: (1, 6); ; moveNext: 0.
+
+OpenList size: 43;  closedList size ~: 40
+timeStep: 6, pop: gValue: 6, hValue: 11, violations: 0, electrode: 89, 3: (2, 1); ; moveNext: 0.
+gValue: 7, hValue: 11, violations: 1, electrode: 89, 3: (2, 1); ; moveNext: 0.
+add to openlist
+gValue: 7, hValue: 12, violations: 1, electrode: 89, 3: (2, 0); ; moveNext: 0.
+gValue: 7, hValue: 10, violations: 1, electrode: 89, 3: (3, 1); ; moveNext: 0.
+gValue: 7, hValue: 10, violations: 0, electrode: 89, 3: (2, 2); ; moveNext: 0.
+gValue: 7, hValue: 12, violations: 0, electrode: 90, 3: (1, 1); ; moveNext: 0.
+
+OpenList size: 43;  closedList size ~: 40
+timeStep: 5, pop: gValue: 5, hValue: 13, violations: 0, electrode: 87, 3: (0, 7); ; moveNext: 0.
+gValue: 6, hValue: 13, violations: 0, electrode: 87, 3: (0, 7); ; moveNext: 0.
+add to openlist
+gValue: 6, hValue: 12, violations: 1, electrode: 87, 3: (0, 6); ; moveNext: 0.
+gValue: 6, hValue: 12, violations: 0, electrode: 87, 3: (1, 7); ; moveNext: 0.
+gValue: 6, hValue: 14, violations: 0, electrode: 88, 3: (0, 8); ; moveNext: 0.
+add to openlist/closelist
+
+OpenList size: 44;  closedList size ~: 41
+timeStep: 6, pop: gValue: 6, hValue: 12, violations: 0, electrode: 87, 3: (1, 7); ; moveNext: 0.
+gValue: 7, hValue: 12, violations: 1, electrode: 87, 3: (1, 7); ; moveNext: 0.
+add to openlist
+gValue: 7, hValue: 11, violations: 1, electrode: 87, 3: (1, 6); ; moveNext: 0.
+gValue: 7, hValue: 11, violations: 0, electrode: 87, 3: (2, 7); ; moveNext: 0.
+gValue: 7, hValue: 13, violations: 0, electrode: 88, 3: (1, 8); ; moveNext: 0.
+add to openlist/closelist
+gValue: 7, hValue: 13, violations: 1, electrode: 87, 3: (0, 7); ; moveNext: 0.
+
+OpenList size: 45;  closedList size ~: 42
+timeStep: 7, pop: gValue: 7, hValue: 11, violations: 0, electrode: 87, 3: (2, 7); ; moveNext: 0.
+gValue: 8, hValue: 11, violations: 1, electrode: 87, 3: (2, 7); ; moveNext: 0.
+add to openlist
+gValue: 8, hValue: 10, violations: 1, electrode: 87, 3: (2, 6); ; moveNext: 0.
+gValue: 8, hValue: 10, violations: 0, electrode: 87, 3: (3, 7); ; moveNext: 0.
+add to openlist/closelist
+gValue: 8, hValue: 12, violations: 0, electrode: 88, 3: (2, 8); ; moveNext: 0.
+add to openlist/closelist
+gValue: 8, hValue: 12, violations: 1, electrode: 87, 3: (1, 7); ; moveNext: 0.
+
+OpenList size: 47;  closedList size ~: 43
+timeStep: 8, pop: gValue: 8, hValue: 10, violations: 0, electrode: 87, 3: (3, 7); ; moveNext: 0.
+gValue: 9, hValue: 10, violations: 1, electrode: 87, 3: (3, 7); ; moveNext: 0.
+add to openlist
+gValue: 9, hValue: 9, violations: 1, electrode: 87, 3: (3, 6); ; moveNext: 0.
+gValue: 9, hValue: 9, violations: 0, electrode: 87, 3: (4, 7); ; moveNext: 0.
+add to openlist/closelist
+gValue: 9, hValue: 11, violations: 1, electrode: 87, 3: (2, 7); ; moveNext: 0.
+
+OpenList size: 48;  closedList size ~: 43
+timeStep: 9, pop: gValue: 9, hValue: 9, violations: 0, electrode: 87, 3: (4, 7); ; moveNext: 0.
+gValue: 10, hValue: 9, violations: 1, electrode: 87, 3: (4, 7); ; moveNext: 0.
+add to openlist
+gValue: 10, hValue: 8, violations: 1, electrode: 87, 3: (4, 6); ; moveNext: 0.
+gValue: 10, hValue: 8, violations: 0, electrode: 87, 3: (5, 7); ; moveNext: 0.
+add to openlist/closelist
+gValue: 10, hValue: 10, violations: 1, electrode: 87, 3: (3, 7); ; moveNext: 0.
+
+OpenList size: 49;  closedList size ~: 44
+timeStep: 10, pop: gValue: 10, hValue: 8, violations: 0, electrode: 87, 3: (5, 7); ; moveNext: 0.
+gValue: 11, hValue: 8, violations: 1, electrode: 87, 3: (5, 7); ; moveNext: 0.
+add to openlist
+gValue: 11, hValue: 7, violations: 1, electrode: 87, 3: (5, 6); ; moveNext: 0.
+gValue: 11, hValue: 7, violations: 1, electrode: 87, 3: (6, 7); ; moveNext: 0.
+add to openlist/closelist
+gValue: 11, hValue: 9, violations: 0, electrode: 87, 3: (5, 8); ; moveNext: 0.
+add to openlist/closelist
+gValue: 11, hValue: 9, violations: 1, electrode: 87, 3: (4, 7); ; moveNext: 0.
+
+OpenList size: 51;  closedList size ~: 46
+timeStep: 6, pop: gValue: 6, hValue: 12, violations: 0, electrode: 89, 3: (2, 0); ; moveNext: 0.
+gValue: 7, hValue: 12, violations: 1, electrode: 89, 3: (2, 0); ; moveNext: 0.
+add to openlist
+gValue: 7, hValue: 11, violations: 1, electrode: 89, 3: (3, 0); ; moveNext: 0.
+gValue: 7, hValue: 11, violations: 1, electrode: 89, 3: (2, 1); ; moveNext: 0.
+gValue: 7, hValue: 13, violations: 0, electrode: 89, 3: (1, 0); ; moveNext: 0.
+
+OpenList size: 51;  closedList size ~: 46
+timeStep: 5, pop: gValue: 5, hValue: 13, violations: 0, electrode: 89, 3: (1, 0); ; moveNext: 0.
+gValue: 6, hValue: 13, violations: 0, electrode: 89, 3: (1, 0); ; moveNext: 0.
+add to openlist
+gValue: 6, hValue: 12, violations: 0, electrode: 89, 3: (2, 0); ; moveNext: 0.
+gValue: 6, hValue: 12, violations: 0, electrode: 90, 3: (1, 1); ; moveNext: 0.
+gValue: 6, hValue: 14, violations: 0, electrode: 89, 3: (0, 0); ; moveNext: 0.
+add to openlist/closelist
+
+OpenList size: 52;  closedList size ~: 47
+timeStep: 6, pop: gValue: 6, hValue: 12, violations: 0, electrode: 90, 3: (1, 1); ; moveNext: 0.
+gValue: 7, hValue: 12, violations: 0, electrode: 90, 3: (1, 1); ; moveNext: 0.
+add to openlist
+gValue: 7, hValue: 13, violations: 0, electrode: 90, 3: (1, 0); ; moveNext: 0.
+gValue: 7, hValue: 11, violations: 1, electrode: 90, 3: (2, 1); ; moveNext: 0.
+gValue: 7, hValue: 11, violations: 0, electrode: 90, 3: (1, 2); ; moveNext: 0.
+gValue: 7, hValue: 13, violations: 0, electrode: 90, 3: (0, 1); ; moveNext: 0.
+add to openlist/closelist
+
+OpenList size: 53;  closedList size ~: 47
+timeStep: 6, pop: gValue: 6, hValue: 13, violations: 0, electrode: 87, 3: (0, 7); ; moveNext: 0.
+gValue: 7, hValue: 13, violations: 1, electrode: 87, 3: (0, 7); ; moveNext: 0.
+add to openlist
+gValue: 7, hValue: 12, violations: 1, electrode: 87, 3: (0, 6); ; moveNext: 0.
+gValue: 7, hValue: 12, violations: 1, electrode: 87, 3: (1, 7); ; moveNext: 0.
+gValue: 7, hValue: 14, violations: 0, electrode: 88, 3: (0, 8); ; moveNext: 0.
+
+OpenList size: 53;  closedList size ~: 47
+timeStep: 6, pop: gValue: 6, hValue: 13, violations: 0, electrode: 89, 3: (1, 0); ; moveNext: 0.
+gValue: 7, hValue: 13, violations: 0, electrode: 89, 3: (1, 0); ; moveNext: 0.
+add to openlist
+gValue: 7, hValue: 12, violations: 1, electrode: 89, 3: (2, 0); ; moveNext: 0.
+gValue: 7, hValue: 12, violations: 0, electrode: 90, 3: (1, 1); ; moveNext: 0.
+gValue: 7, hValue: 14, violations: 0, electrode: 89, 3: (0, 0); ; moveNext: 0.
+
+OpenList size: 53;  closedList size ~: 47
+timeStep: 7, pop: gValue: 7, hValue: 12, violations: 0, electrode: 90, 3: (1, 1); ; moveNext: 0.
+gValue: 8, hValue: 12, violations: 0, electrode: 90, 3: (1, 1); ; moveNext: 0.
+add to openlist
+gValue: 8, hValue: 13, violations: 0, electrode: 90, 3: (1, 0); ; moveNext: 0.
+gValue: 8, hValue: 11, violations: 1, electrode: 90, 3: (2, 1); ; moveNext: 0.
+gValue: 8, hValue: 11, violations: 0, electrode: 90, 3: (1, 2); ; moveNext: 0.
+gValue: 8, hValue: 13, violations: 0, electrode: 90, 3: (0, 1); ; moveNext: 0.
+
+OpenList size: 53;  closedList size ~: 47
+timeStep: 11, pop: gValue: 11, hValue: 9, violations: 0, electrode: 87, 3: (5, 8); ; moveNext: 0.
+gValue: 12, hValue: 9, violations: 0, electrode: 87, 3: (5, 8); ; moveNext: 0.
+add to openlist
+gValue: 12, hValue: 8, violations: 1, electrode: 87, 3: (5, 7); ; moveNext: 0.
+gValue: 12, hValue: 8, violations: 1, electrode: 87, 3: (6, 8); ; moveNext: 0.
+add to openlist/closelist
+gValue: 12, hValue: 10, violations: 0, electrode: 87, 3: (5, 9); ; moveNext: 0.
+add to openlist/closelist
+
+OpenList size: 55;  closedList size ~: 49
+timeStep: 8, pop: gValue: 8, hValue: 12, violations: 0, electrode: 88, 3: (2, 8); ; moveNext: 0.
+gValue: 9, hValue: 12, violations: 0, electrode: 88, 3: (2, 8); ; moveNext: 0.
+add to openlist
+gValue: 9, hValue: 11, violations: 1, electrode: 88, 3: (2, 7); ; moveNext: 0.
+gValue: 9, hValue: 13, violations: 0, electrode: 88, 3: (2, 9); ; moveNext: 0.
+add to openlist/closelist
+gValue: 9, hValue: 13, violations: 0, electrode: 89, 3: (1, 8); ; moveNext: 0.
+
+OpenList size: 56;  closedList size ~: 50
+timeStep: 6, pop: gValue: 6, hValue: 14, violations: 0, electrode: 88, 3: (0, 8); ; moveNext: 0.
+gValue: 7, hValue: 14, violations: 0, electrode: 88, 3: (0, 8); ; moveNext: 0.
+add to openlist
+gValue: 7, hValue: 13, violations: 1, electrode: 88, 3: (0, 7); ; moveNext: 0.
+gValue: 7, hValue: 13, violations: 0, electrode: 89, 3: (1, 8); ; moveNext: 0.
+gValue: 7, hValue: 15, violations: 0, electrode: 88, 3: (0, 9); ; moveNext: 0.
+add to openlist/closelist
+
+OpenList size: 57;  closedList size ~: 51
+timeStep: 7, pop: gValue: 7, hValue: 13, violations: 0, electrode: 88, 3: (1, 8); ; moveNext: 0.
+gValue: 8, hValue: 13, violations: 0, electrode: 88, 3: (1, 8); ; moveNext: 0.
+add to openlist
+gValue: 8, hValue: 12, violations: 1, electrode: 88, 3: (1, 7); ; moveNext: 0.
+gValue: 8, hValue: 12, violations: 0, electrode: 89, 3: (2, 8); ; moveNext: 0.
+gValue: 8, hValue: 14, violations: 0, electrode: 88, 3: (1, 9); ; moveNext: 0.
+add to openlist/closelist
+gValue: 8, hValue: 14, violations: 0, electrode: 89, 3: (0, 8); ; moveNext: 0.
+
+OpenList size: 58;  closedList size ~: 52
+timeStep: 6, pop: gValue: 6, hValue: 14, violations: 0, electrode: 89, 3: (0, 0); ; moveNext: 0.
+gValue: 7, hValue: 14, violations: 0, electrode: 89, 3: (0, 0); ; moveNext: 0.
+add to openlist
+gValue: 7, hValue: 13, violations: 0, electrode: 89, 3: (1, 0); ; moveNext: 0.
+gValue: 7, hValue: 13, violations: 0, electrode: 89, 3: (0, 1); ; moveNext: 0.
+add to openlist/closelist
+
+OpenList size: 59;  closedList size ~: 52
+timeStep: 7, pop: gValue: 7, hValue: 13, violations: 0, electrode: 89, 3: (1, 0); ; moveNext: 0.
+gValue: 8, hValue: 13, violations: 0, electrode: 89, 3: (1, 0); ; moveNext: 0.
+add to openlist
+gValue: 8, hValue: 12, violations: 1, electrode: 89, 3: (2, 0); ; moveNext: 0.
+gValue: 8, hValue: 12, violations: 0, electrode: 90, 3: (1, 1); ; moveNext: 0.
+gValue: 8, hValue: 14, violations: 0, electrode: 89, 3: (0, 0); ; moveNext: 0.
+
+OpenList size: 59;  closedList size ~: 52
+timeStep: 7, pop: gValue: 7, hValue: 13, violations: 0, electrode: 89, 3: (0, 1); ; moveNext: 0.
+gValue: 8, hValue: 13, violations: 0, electrode: 89, 3: (0, 1); ; moveNext: 0.
+add to openlist
+gValue: 8, hValue: 14, violations: 0, electrode: 89, 3: (0, 0); ; moveNext: 0.
+gValue: 8, hValue: 12, violations: 0, electrode: 90, 3: (1, 1); ; moveNext: 0.
+gValue: 8, hValue: 12, violations: 0, electrode: 89, 3: (0, 2); ; moveNext: 0.
+
+OpenList size: 59;  closedList size ~: 52
+timeStep: 7, pop: gValue: 7, hValue: 13, violations: 0, electrode: 90, 3: (0, 1); ; moveNext: 0.
+gValue: 8, hValue: 13, violations: 0, electrode: 90, 3: (0, 1); ; moveNext: 0.
+add to openlist
+gValue: 8, hValue: 14, violations: 0, electrode: 90, 3: (0, 0); ; moveNext: 0.
+gValue: 8, hValue: 12, violations: 0, electrode: 90, 3: (1, 1); ; moveNext: 0.
+gValue: 8, hValue: 12, violations: 0, electrode: 90, 3: (0, 2); ; moveNext: 0.
+
+OpenList size: 59;  closedList size ~: 52
+timeStep: 8, pop: gValue: 8, hValue: 12, violations: 0, electrode: 90, 3: (1, 1); ; moveNext: 0.
+gValue: 9, hValue: 12, violations: 0, electrode: 90, 3: (1, 1); ; moveNext: 0.
+add to openlist
+gValue: 9, hValue: 13, violations: 0, electrode: 90, 3: (1, 0); ; moveNext: 0.
+gValue: 9, hValue: 11, violations: 1, electrode: 90, 3: (2, 1); ; moveNext: 0.
+gValue: 9, hValue: 11, violations: 0, electrode: 90, 3: (1, 2); ; moveNext: 0.
+gValue: 9, hValue: 13, violations: 0, electrode: 90, 3: (0, 1); ; moveNext: 0.
+
+OpenList size: 59;  closedList size ~: 52
+timeStep: 12, pop: gValue: 12, hValue: 9, violations: 0, electrode: 87, 3: (5, 8); ; moveNext: 0.
+gValue: 13, hValue: 9, violations: 1, electrode: 87, 3: (5, 8); ; moveNext: 0.
+add to openlist
+gValue: 13, hValue: 8, violations: 1, electrode: 87, 3: (5, 7); ; moveNext: 0.
+gValue: 13, hValue: 8, violations: 1, electrode: 87, 3: (6, 8); ; moveNext: 0.
+gValue: 13, hValue: 10, violations: 0, electrode: 87, 3: (5, 9); ; moveNext: 0.
+
+OpenList size: 59;  closedList size ~: 52
+timeStep: 9, pop: gValue: 9, hValue: 12, violations: 0, electrode: 88, 3: (2, 8); ; moveNext: 0.
+gValue: 10, hValue: 12, violations: 0, electrode: 88, 3: (2, 8); ; moveNext: 0.
+add to openlist
+gValue: 10, hValue: 11, violations: 1, electrode: 88, 3: (2, 7); ; moveNext: 0.
+gValue: 10, hValue: 13, violations: 0, electrode: 88, 3: (2, 9); ; moveNext: 0.
+gValue: 10, hValue: 13, violations: 0, electrode: 89, 3: (1, 8); ; moveNext: 0.
+
+OpenList size: 59;  closedList size ~: 52
+timeStep: 7, pop: gValue: 7, hValue: 14, violations: 0, electrode: 88, 3: (0, 8); ; moveNext: 0.
+gValue: 8, hValue: 14, violations: 0, electrode: 88, 3: (0, 8); ; moveNext: 0.
+add to openlist
+gValue: 8, hValue: 13, violations: 1, electrode: 88, 3: (0, 7); ; moveNext: 0.
+gValue: 8, hValue: 13, violations: 0, electrode: 89, 3: (1, 8); ; moveNext: 0.
+gValue: 8, hValue: 15, violations: 0, electrode: 88, 3: (0, 9); ; moveNext: 0.
+
+OpenList size: 59;  closedList size ~: 52
+timeStep: 8, pop: gValue: 8, hValue: 13, violations: 0, electrode: 88, 3: (1, 8); ; moveNext: 0.
+gValue: 9, hValue: 13, violations: 0, electrode: 88, 3: (1, 8); ; moveNext: 0.
+add to openlist
+gValue: 9, hValue: 12, violations: 1, electrode: 88, 3: (1, 7); ; moveNext: 0.
+gValue: 9, hValue: 12, violations: 0, electrode: 89, 3: (2, 8); ; moveNext: 0.
+gValue: 9, hValue: 14, violations: 0, electrode: 88, 3: (1, 9); ; moveNext: 0.
+gValue: 9, hValue: 14, violations: 0, electrode: 89, 3: (0, 8); ; moveNext: 0.
+
+OpenList size: 59;  closedList size ~: 52
+timeStep: 8, pop: gValue: 8, hValue: 13, violations: 0, electrode: 89, 3: (1, 0); ; moveNext: 0.
+gValue: 9, hValue: 13, violations: 0, electrode: 89, 3: (1, 0); ; moveNext: 0.
+add to openlist
+gValue: 9, hValue: 12, violations: 1, electrode: 89, 3: (2, 0); ; moveNext: 0.
+gValue: 9, hValue: 12, violations: 0, electrode: 90, 3: (1, 1); ; moveNext: 0.
+gValue: 9, hValue: 14, violations: 0, electrode: 89, 3: (0, 0); ; moveNext: 0.
+
+OpenList size: 59;  closedList size ~: 52
+timeStep: 8, pop: gValue: 8, hValue: 13, violations: 0, electrode: 89, 3: (0, 1); ; moveNext: 0.
+gValue: 9, hValue: 13, violations: 0, electrode: 89, 3: (0, 1); ; moveNext: 0.
+add to openlist
+gValue: 9, hValue: 14, violations: 0, electrode: 89, 3: (0, 0); ; moveNext: 0.
+gValue: 9, hValue: 12, violations: 0, electrode: 90, 3: (1, 1); ; moveNext: 0.
+gValue: 9, hValue: 12, violations: 0, electrode: 89, 3: (0, 2); ; moveNext: 0.
+
+OpenList size: 59;  closedList size ~: 52
+timeStep: 7, pop: gValue: 7, hValue: 14, violations: 0, electrode: 89, 3: (0, 0); ; moveNext: 0.
+gValue: 8, hValue: 14, violations: 0, electrode: 89, 3: (0, 0); ; moveNext: 0.
+add to openlist
+gValue: 8, hValue: 13, violations: 0, electrode: 89, 3: (1, 0); ; moveNext: 0.
+gValue: 8, hValue: 13, violations: 0, electrode: 89, 3: (0, 1); ; moveNext: 0.
+
+OpenList size: 59;  closedList size ~: 52
+timeStep: 8, pop: gValue: 8, hValue: 13, violations: 0, electrode: 90, 3: (0, 1); ; moveNext: 0.
+gValue: 9, hValue: 13, violations: 0, electrode: 90, 3: (0, 1); ; moveNext: 0.
+add to openlist
+gValue: 9, hValue: 14, violations: 0, electrode: 90, 3: (0, 0); ; moveNext: 0.
+gValue: 9, hValue: 12, violations: 0, electrode: 90, 3: (1, 1); ; moveNext: 0.
+gValue: 9, hValue: 12, violations: 0, electrode: 90, 3: (0, 2); ; moveNext: 0.
+
+OpenList size: 59;  closedList size ~: 52
+timeStep: 9, pop: gValue: 9, hValue: 12, violations: 0, electrode: 90, 3: (1, 1); ; moveNext: 0.
+gValue: 10, hValue: 12, violations: 1, electrode: 90, 3: (1, 1); ; moveNext: 0.
+add to openlist
+gValue: 10, hValue: 13, violations: 0, electrode: 90, 3: (1, 0); ; moveNext: 0.
+gValue: 10, hValue: 11, violations: 1, electrode: 90, 3: (2, 1); ; moveNext: 0.
+gValue: 10, hValue: 11, violations: 1, electrode: 90, 3: (1, 2); ; moveNext: 0.
+gValue: 10, hValue: 13, violations: 0, electrode: 90, 3: (0, 1); ; moveNext: 0.
+
+OpenList size: 59;  closedList size ~: 52
+timeStep: 12, pop: gValue: 12, hValue: 10, violations: 0, electrode: 87, 3: (5, 9); ; moveNext: 0.
+gValue: 13, hValue: 10, violations: 0, electrode: 87, 3: (5, 9); ; moveNext: 0.
+add to openlist
+gValue: 13, hValue: 9, violations: 1, electrode: 87, 3: (5, 8); ; moveNext: 0.
+gValue: 13, hValue: 9, violations: 1, electrode: 87, 3: (6, 9); ; moveNext: 0.
+add to openlist/closelist
+gValue: 13, hValue: 11, violations: 0, electrode: 87, 3: (5, 10); ; moveNext: 0.
+add to openlist/closelist
+
+OpenList size: 61;  closedList size ~: 54
+timeStep: 10, pop: gValue: 10, hValue: 12, violations: 0, electrode: 88, 3: (2, 8); ; moveNext: 0.
+gValue: 11, hValue: 12, violations: 0, electrode: 88, 3: (2, 8); ; moveNext: 0.
+add to openlist
+gValue: 11, hValue: 11, violations: 1, electrode: 88, 3: (2, 7); ; moveNext: 0.
+gValue: 11, hValue: 13, violations: 0, electrode: 88, 3: (2, 9); ; moveNext: 0.
+gValue: 11, hValue: 13, violations: 0, electrode: 89, 3: (1, 8); ; moveNext: 0.
+
+OpenList size: 61;  closedList size ~: 54
+timeStep: 8, pop: gValue: 8, hValue: 14, violations: 0, electrode: 88, 3: (0, 8); ; moveNext: 0.
+gValue: 9, hValue: 14, violations: 0, electrode: 88, 3: (0, 8); ; moveNext: 0.
+add to openlist
+gValue: 9, hValue: 13, violations: 1, electrode: 88, 3: (0, 7); ; moveNext: 0.
+gValue: 9, hValue: 13, violations: 0, electrode: 89, 3: (1, 8); ; moveNext: 0.
+gValue: 9, hValue: 15, violations: 0, electrode: 88, 3: (0, 9); ; moveNext: 0.
+
+OpenList size: 61;  closedList size ~: 54
+timeStep: 7, pop: gValue: 7, hValue: 15, violations: 0, electrode: 88, 3: (0, 9); ; moveNext: 0.
+gValue: 8, hValue: 15, violations: 0, electrode: 88, 3: (0, 9); ; moveNext: 0.
+add to openlist
+gValue: 8, hValue: 14, violations: 0, electrode: 88, 3: (0, 8); ; moveNext: 0.
+gValue: 8, hValue: 14, violations: 0, electrode: 88, 3: (1, 9); ; moveNext: 0.
+gValue: 8, hValue: 16, violations: 0, electrode: 89, 3: (0, 10); ; moveNext: 0.
+add to openlist/closelist
+
+OpenList size: 62;  closedList size ~: 55
+timeStep: 9, pop: gValue: 9, hValue: 13, violations: 0, electrode: 88, 3: (1, 8); ; moveNext: 0.
+gValue: 10, hValue: 13, violations: 0, electrode: 88, 3: (1, 8); ; moveNext: 0.
+add to openlist
+gValue: 10, hValue: 12, violations: 1, electrode: 88, 3: (1, 7); ; moveNext: 0.
+gValue: 10, hValue: 12, violations: 0, electrode: 89, 3: (2, 8); ; moveNext: 0.
+gValue: 10, hValue: 14, violations: 0, electrode: 88, 3: (1, 9); ; moveNext: 0.
+gValue: 10, hValue: 14, violations: 0, electrode: 89, 3: (0, 8); ; moveNext: 0.
+
+OpenList size: 62;  closedList size ~: 55
+timeStep: 9, pop: gValue: 9, hValue: 13, violations: 0, electrode: 88, 3: (2, 9); ; moveNext: 0.
+gValue: 10, hValue: 13, violations: 0, electrode: 88, 3: (2, 9); ; moveNext: 0.
+add to openlist
+gValue: 10, hValue: 12, violations: 0, electrode: 88, 3: (2, 8); ; moveNext: 0.
+gValue: 10, hValue: 14, violations: 0, electrode: 88, 3: (2, 10); ; moveNext: 0.
+add to openlist/closelist
+gValue: 10, hValue: 14, violations: 0, electrode: 88, 3: (1, 9); ; moveNext: 0.
+
+OpenList size: 63;  closedList size ~: 56
+timeStep: 8, pop: gValue: 8, hValue: 14, violations: 0, electrode: 88, 3: (1, 9); ; moveNext: 0.
+gValue: 9, hValue: 14, violations: 0, electrode: 88, 3: (1, 9); ; moveNext: 0.
+add to openlist
+gValue: 9, hValue: 13, violations: 0, electrode: 88, 3: (1, 8); ; moveNext: 0.
+gValue: 9, hValue: 13, violations: 0, electrode: 88, 3: (2, 9); ; moveNext: 0.
+gValue: 9, hValue: 15, violations: 0, electrode: 89, 3: (1, 10); ; moveNext: 0.
+add to openlist/closelist
+gValue: 9, hValue: 15, violations: 0, electrode: 88, 3: (0, 9); ; moveNext: 0.
+
+OpenList size: 64;  closedList size ~: 57
+timeStep: 8, pop: gValue: 8, hValue: 14, violations: 0, electrode: 89, 3: (0, 0); ; moveNext: 0.
+gValue: 9, hValue: 14, violations: 0, electrode: 89, 3: (0, 0); ; moveNext: 0.
+add to openlist
+gValue: 9, hValue: 13, violations: 0, electrode: 89, 3: (1, 0); ; moveNext: 0.
+gValue: 9, hValue: 13, violations: 0, electrode: 89, 3: (0, 1); ; moveNext: 0.
+
+OpenList size: 64;  closedList size ~: 57
+timeStep: 9, pop: gValue: 9, hValue: 13, violations: 0, electrode: 89, 3: (0, 1); ; moveNext: 0.
+gValue: 10, hValue: 13, violations: 0, electrode: 89, 3: (0, 1); ; moveNext: 0.
+add to openlist
+gValue: 10, hValue: 14, violations: 0, electrode: 89, 3: (0, 0); ; moveNext: 0.
+gValue: 10, hValue: 12, violations: 1, electrode: 90, 3: (1, 1); ; moveNext: 0.
+gValue: 10, hValue: 12, violations: 0, electrode: 89, 3: (0, 2); ; moveNext: 0.
+
+OpenList size: 64;  closedList size ~: 57
+timeStep: 9, pop: gValue: 9, hValue: 13, violations: 0, electrode: 89, 3: (1, 0); ; moveNext: 0.
+gValue: 10, hValue: 13, violations: 0, electrode: 89, 3: (1, 0); ; moveNext: 0.
+add to openlist
+gValue: 10, hValue: 12, violations: 1, electrode: 89, 3: (2, 0); ; moveNext: 0.
+gValue: 10, hValue: 12, violations: 1, electrode: 90, 3: (1, 1); ; moveNext: 0.
+gValue: 10, hValue: 14, violations: 0, electrode: 89, 3: (0, 0); ; moveNext: 0.
+
+OpenList size: 64;  closedList size ~: 57
+timeStep: 9, pop: gValue: 9, hValue: 13, violations: 0, electrode: 90, 3: (0, 1); ; moveNext: 0.
+gValue: 10, hValue: 13, violations: 0, electrode: 90, 3: (0, 1); ; moveNext: 0.
+add to openlist
+gValue: 10, hValue: 14, violations: 0, electrode: 90, 3: (0, 0); ; moveNext: 0.
+gValue: 10, hValue: 12, violations: 1, electrode: 90, 3: (1, 1); ; moveNext: 0.
+gValue: 10, hValue: 12, violations: 0, electrode: 90, 3: (0, 2); ; moveNext: 0.
+
+OpenList size: 64;  closedList size ~: 57
+timeStep: 13, pop: gValue: 13, hValue: 10, violations: 0, electrode: 87, 3: (5, 9); ; moveNext: 0.
+gValue: 14, hValue: 10, violations: 1, electrode: 87, 3: (5, 9); ; moveNext: 0.
+add to openlist
+gValue: 14, hValue: 9, violations: 1, electrode: 87, 3: (5, 8); ; moveNext: 0.
+gValue: 14, hValue: 9, violations: 1, electrode: 87, 3: (6, 9); ; moveNext: 0.
+gValue: 14, hValue: 11, violations: 0, electrode: 87, 3: (5, 10); ; moveNext: 0.
+
+OpenList size: 64;  closedList size ~: 57
+timeStep: 11, pop: gValue: 11, hValue: 12, violations: 0, electrode: 88, 3: (2, 8); ; moveNext: 0.
+gValue: 12, hValue: 12, violations: 0, electrode: 88, 3: (2, 8); ; moveNext: 0.
+add to openlist
+gValue: 12, hValue: 11, violations: 1, electrode: 88, 3: (2, 7); ; moveNext: 0.
+gValue: 12, hValue: 13, violations: 0, electrode: 88, 3: (2, 9); ; moveNext: 0.
+gValue: 12, hValue: 13, violations: 0, electrode: 89, 3: (1, 8); ; moveNext: 0.
+
+OpenList size: 64;  closedList size ~: 57
+timeStep: 10, pop: gValue: 10, hValue: 13, violations: 0, electrode: 88, 3: (2, 9); ; moveNext: 0.
+gValue: 11, hValue: 13, violations: 0, electrode: 88, 3: (2, 9); ; moveNext: 0.
+add to openlist
+gValue: 11, hValue: 12, violations: 0, electrode: 88, 3: (2, 8); ; moveNext: 0.
+gValue: 11, hValue: 14, violations: 0, electrode: 88, 3: (2, 10); ; moveNext: 0.
+gValue: 11, hValue: 14, violations: 0, electrode: 88, 3: (1, 9); ; moveNext: 0.
+
+OpenList size: 64;  closedList size ~: 57
+timeStep: 8, pop: gValue: 8, hValue: 15, violations: 0, electrode: 88, 3: (0, 9); ; moveNext: 0.
+gValue: 9, hValue: 15, violations: 0, electrode: 88, 3: (0, 9); ; moveNext: 0.
+add to openlist
+gValue: 9, hValue: 14, violations: 0, electrode: 88, 3: (0, 8); ; moveNext: 0.
+gValue: 9, hValue: 14, violations: 0, electrode: 88, 3: (1, 9); ; moveNext: 0.
+gValue: 9, hValue: 16, violations: 0, electrode: 89, 3: (0, 10); ; moveNext: 0.
+
+OpenList size: 64;  closedList size ~: 57
+timeStep: 9, pop: gValue: 9, hValue: 14, violations: 0, electrode: 88, 3: (0, 8); ; moveNext: 0.
+gValue: 10, hValue: 14, violations: 0, electrode: 88, 3: (0, 8); ; moveNext: 0.
+add to openlist
+gValue: 10, hValue: 13, violations: 1, electrode: 88, 3: (0, 7); ; moveNext: 0.
+gValue: 10, hValue: 13, violations: 0, electrode: 89, 3: (1, 8); ; moveNext: 0.
+gValue: 10, hValue: 15, violations: 0, electrode: 88, 3: (0, 9); ; moveNext: 0.
+
+OpenList size: 64;  closedList size ~: 57
+timeStep: 10, pop: gValue: 10, hValue: 13, violations: 0, electrode: 88, 3: (1, 8); ; moveNext: 0.
+gValue: 11, hValue: 13, violations: 0, electrode: 88, 3: (1, 8); ; moveNext: 0.
+add to openlist
+gValue: 11, hValue: 12, violations: 1, electrode: 88, 3: (1, 7); ; moveNext: 0.
+gValue: 11, hValue: 12, violations: 0, electrode: 89, 3: (2, 8); ; moveNext: 0.
+gValue: 11, hValue: 14, violations: 0, electrode: 88, 3: (1, 9); ; moveNext: 0.
+gValue: 11, hValue: 14, violations: 0, electrode: 89, 3: (0, 8); ; moveNext: 0.
+
+OpenList size: 64;  closedList size ~: 57
+timeStep: 9, pop: gValue: 9, hValue: 14, violations: 0, electrode: 88, 3: (1, 9); ; moveNext: 0.
+gValue: 10, hValue: 14, violations: 0, electrode: 88, 3: (1, 9); ; moveNext: 0.
+add to openlist
+gValue: 10, hValue: 13, violations: 0, electrode: 88, 3: (1, 8); ; moveNext: 0.
+gValue: 10, hValue: 13, violations: 0, electrode: 88, 3: (2, 9); ; moveNext: 0.
+gValue: 10, hValue: 15, violations: 0, electrode: 89, 3: (1, 10); ; moveNext: 0.
+gValue: 10, hValue: 15, violations: 0, electrode: 88, 3: (0, 9); ; moveNext: 0.
+
+OpenList size: 64;  closedList size ~: 57
+timeStep: 9, pop: gValue: 9, hValue: 14, violations: 0, electrode: 89, 3: (0, 0); ; moveNext: 0.
+gValue: 10, hValue: 14, violations: 0, electrode: 89, 3: (0, 0); ; moveNext: 0.
+add to openlist
+gValue: 10, hValue: 13, violations: 0, electrode: 89, 3: (1, 0); ; moveNext: 0.
+gValue: 10, hValue: 13, violations: 0, electrode: 89, 3: (0, 1); ; moveNext: 0.
+
+OpenList size: 64;  closedList size ~: 57
+timeStep: 10, pop: gValue: 10, hValue: 13, violations: 0, electrode: 89, 3: (0, 1); ; moveNext: 0.
+gValue: 11, hValue: 13, violations: 0, electrode: 89, 3: (0, 1); ; moveNext: 0.
+add to openlist
+gValue: 11, hValue: 14, violations: 0, electrode: 89, 3: (0, 0); ; moveNext: 0.
+gValue: 11, hValue: 12, violations: 1, electrode: 90, 3: (1, 1); ; moveNext: 0.
+gValue: 11, hValue: 12, violations: 0, electrode: 89, 3: (0, 2); ; moveNext: 0.
+
+OpenList size: 64;  closedList size ~: 57
+timeStep: 10, pop: gValue: 10, hValue: 13, violations: 0, electrode: 89, 3: (1, 0); ; moveNext: 0.
+gValue: 11, hValue: 13, violations: 0, electrode: 89, 3: (1, 0); ; moveNext: 0.
+add to openlist
+gValue: 11, hValue: 12, violations: 1, electrode: 89, 3: (2, 0); ; moveNext: 0.
+gValue: 11, hValue: 12, violations: 1, electrode: 90, 3: (1, 1); ; moveNext: 0.
+gValue: 11, hValue: 14, violations: 0, electrode: 89, 3: (0, 0); ; moveNext: 0.
+
+OpenList size: 64;  closedList size ~: 57
+timeStep: 10, pop: gValue: 10, hValue: 13, violations: 0, electrode: 90, 3: (0, 1); ; moveNext: 0.
+gValue: 11, hValue: 13, violations: 0, electrode: 90, 3: (0, 1); ; moveNext: 0.
+add to openlist
+gValue: 11, hValue: 14, violations: 0, electrode: 90, 3: (0, 0); ; moveNext: 0.
+gValue: 11, hValue: 12, violations: 1, electrode: 90, 3: (1, 1); ; moveNext: 0.
+gValue: 11, hValue: 12, violations: 0, electrode: 90, 3: (0, 2); ; moveNext: 0.
+
+OpenList size: 64;  closedList size ~: 57
+timeStep: 13, pop: gValue: 13, hValue: 11, violations: 0, electrode: 87, 3: (5, 10); ; moveNext: 0.
+gValue: 14, hValue: 11, violations: 0, electrode: 87, 3: (5, 10); ; moveNext: 0.
+add to openlist
+gValue: 14, hValue: 10, violations: 1, electrode: 87, 3: (5, 9); ; moveNext: 0.
+gValue: 14, hValue: 10, violations: 0, electrode: 87, 3: (6, 10); ; moveNext: 0.
+add to openlist/closelist
+gValue: 14, hValue: 12, violations: 0, electrode: 87, 3: (5, 11); ; moveNext: 0.
+add to openlist/closelist
+gValue: 14, hValue: 12, violations: 0, electrode: 87, 3: (4, 10); ; moveNext: 0.
+add to openlist/closelist
+
+OpenList size: 67;  closedList size ~: 60
+timeStep: 14, pop: gValue: 14, hValue: 10, violations: 0, electrode: 87, 3: (6, 10); ; moveNext: 0.
+gValue: 15, hValue: 10, violations: 1, electrode: 87, 3: (6, 10); ; moveNext: 0.
+add to openlist
+gValue: 15, hValue: 9, violations: 1, electrode: 87, 3: (6, 9); ; moveNext: 0.
+gValue: 15, hValue: 9, violations: 0, electrode: 87, 3: (7, 10); ; moveNext: 0.
+add to openlist/closelist
+gValue: 15, hValue: 11, violations: 0, electrode: 87, 3: (6, 11); ; moveNext: 0.
+add to openlist/closelist
+gValue: 15, hValue: 11, violations: 1, electrode: 87, 3: (5, 10); ; moveNext: 0.
+
+OpenList size: 69;  closedList size ~: 62
+timeStep: 15, pop: gValue: 15, hValue: 9, violations: 0, electrode: 87, 3: (7, 10); ; moveNext: 0.
+gValue: 16, hValue: 9, violations: 0, electrode: 87, 3: (7, 10); ; moveNext: 0.
+add to openlist
+gValue: 16, hValue: 8, violations: 1, electrode: 88, 3: (7, 9); ; moveNext: 0.
+add to openlist/closelist
+gValue: 16, hValue: 8, violations: 0, electrode: 87, 3: (8, 10); ; moveNext: 0.
+add to openlist/closelist
+gValue: 16, hValue: 10, violations: 0, electrode: 88, 3: (7, 11); ; moveNext: 0.
+add to openlist/closelist
+gValue: 16, hValue: 10, violations: 1, electrode: 87, 3: (6, 10); ; moveNext: 0.
+
+OpenList size: 72;  closedList size ~: 65
+timeStep: 16, pop: gValue: 16, hValue: 8, violations: 0, electrode: 87, 3: (8, 10); ; moveNext: 0.
+gValue: 17, hValue: 8, violations: 0, electrode: 87, 3: (8, 10); ; moveNext: 0.
+add to openlist
+gValue: 17, hValue: 7, violations: 1, electrode: 87, 3: (8, 9); ; moveNext: 0.
+add to openlist/closelist
+gValue: 17, hValue: 9, violations: 0, electrode: 87, 3: (9, 10); ; moveNext: 0.
+add to openlist/closelist
+gValue: 17, hValue: 9, violations: 0, electrode: 88, 3: (8, 11); ; moveNext: 0.
+add to openlist/closelist
+gValue: 17, hValue: 9, violations: 0, electrode: 87, 3: (7, 10); ; moveNext: 0.
+
+OpenList size: 75;  closedList size ~: 68
+timeStep: 11, pop: gValue: 11, hValue: 13, violations: 0, electrode: 88, 3: (2, 9); ; moveNext: 0.
+gValue: 12, hValue: 13, violations: 0, electrode: 88, 3: (2, 9); ; moveNext: 0.
+add to openlist
+gValue: 12, hValue: 12, violations: 0, electrode: 88, 3: (2, 8); ; moveNext: 0.
+gValue: 12, hValue: 14, violations: 0, electrode: 88, 3: (2, 10); ; moveNext: 0.
+gValue: 12, hValue: 14, violations: 0, electrode: 88, 3: (1, 9); ; moveNext: 0.
+
+OpenList size: 75;  closedList size ~: 68
+timeStep: 12, pop: gValue: 12, hValue: 12, violations: 0, electrode: 88, 3: (2, 8); ; moveNext: 0.
+gValue: 13, hValue: 12, violations: 0, electrode: 88, 3: (2, 8); ; moveNext: 0.
+add to openlist
+gValue: 13, hValue: 11, violations: 0, electrode: 88, 3: (2, 7); ; moveNext: 0.
+gValue: 13, hValue: 13, violations: 0, electrode: 88, 3: (2, 9); ; moveNext: 0.
+gValue: 13, hValue: 13, violations: 0, electrode: 89, 3: (1, 8); ; moveNext: 0.
+
+OpenList size: 75;  closedList size ~: 68
+timeStep: 9, pop: gValue: 9, hValue: 15, violations: 0, electrode: 88, 3: (0, 9); ; moveNext: 0.
+gValue: 10, hValue: 15, violations: 0, electrode: 88, 3: (0, 9); ; moveNext: 0.
+add to openlist
+gValue: 10, hValue: 14, violations: 0, electrode: 88, 3: (0, 8); ; moveNext: 0.
+gValue: 10, hValue: 14, violations: 0, electrode: 88, 3: (1, 9); ; moveNext: 0.
+gValue: 10, hValue: 16, violations: 0, electrode: 89, 3: (0, 10); ; moveNext: 0.
+
+OpenList size: 75;  closedList size ~: 68
+timeStep: 10, pop: gValue: 10, hValue: 14, violations: 0, electrode: 88, 3: (2, 10); ; moveNext: 0.
+gValue: 11, hValue: 14, violations: 0, electrode: 88, 3: (2, 10); ; moveNext: 0.
+add to openlist
+gValue: 11, hValue: 13, violations: 0, electrode: 88, 3: (2, 9); ; moveNext: 0.
+gValue: 11, hValue: 13, violations: 0, electrode: 88, 3: (3, 10); ; moveNext: 0.
+add to openlist/closelist
+gValue: 11, hValue: 15, violations: 0, electrode: 89, 3: (2, 11); ; moveNext: 0.
+add to openlist/closelist
+gValue: 11, hValue: 15, violations: 0, electrode: 89, 3: (1, 10); ; moveNext: 0.
+
+OpenList size: 77;  closedList size ~: 70
+timeStep: 10, pop: gValue: 10, hValue: 14, violations: 0, electrode: 88, 3: (0, 8); ; moveNext: 0.
+gValue: 11, hValue: 14, violations: 0, electrode: 88, 3: (0, 8); ; moveNext: 0.
+add to openlist
+gValue: 11, hValue: 13, violations: 0, electrode: 88, 3: (0, 7); ; moveNext: 0.
+gValue: 11, hValue: 13, violations: 0, electrode: 89, 3: (1, 8); ; moveNext: 0.
+gValue: 11, hValue: 15, violations: 0, electrode: 88, 3: (0, 9); ; moveNext: 0.
+
+OpenList size: 77;  closedList size ~: 70
+timeStep: 11, pop: gValue: 11, hValue: 13, violations: 0, electrode: 88, 3: (1, 8); ; moveNext: 0.
+gValue: 12, hValue: 13, violations: 0, electrode: 88, 3: (1, 8); ; moveNext: 0.
+add to openlist
+gValue: 12, hValue: 12, violations: 0, electrode: 88, 3: (1, 7); ; moveNext: 0.
+gValue: 12, hValue: 12, violations: 0, electrode: 89, 3: (2, 8); ; moveNext: 0.
+gValue: 12, hValue: 14, violations: 0, electrode: 88, 3: (1, 9); ; moveNext: 0.
+gValue: 12, hValue: 14, violations: 0, electrode: 89, 3: (0, 8); ; moveNext: 0.
+
+OpenList size: 77;  closedList size ~: 70
+timeStep: 10, pop: gValue: 10, hValue: 14, violations: 0, electrode: 88, 3: (1, 9); ; moveNext: 0.
+gValue: 11, hValue: 14, violations: 0, electrode: 88, 3: (1, 9); ; moveNext: 0.
+add to openlist
+gValue: 11, hValue: 13, violations: 0, electrode: 88, 3: (1, 8); ; moveNext: 0.
+gValue: 11, hValue: 13, violations: 0, electrode: 88, 3: (2, 9); ; moveNext: 0.
+gValue: 11, hValue: 15, violations: 0, electrode: 89, 3: (1, 10); ; moveNext: 0.
+gValue: 11, hValue: 15, violations: 0, electrode: 88, 3: (0, 9); ; moveNext: 0.
+
+OpenList size: 77;  closedList size ~: 70
+timeStep: 11, pop: gValue: 11, hValue: 13, violations: 0, electrode: 88, 3: (3, 10); ; moveNext: 0.
+gValue: 12, hValue: 13, violations: 0, electrode: 88, 3: (3, 10); ; moveNext: 0.
+add to openlist
+gValue: 12, hValue: 12, violations: 0, electrode: 88, 3: (4, 10); ; moveNext: 0.
+add to openlist/closelist
+gValue: 12, hValue: 14, violations: 0, electrode: 88, 3: (3, 11); ; moveNext: 0.
+add to openlist/closelist
+gValue: 12, hValue: 14, violations: 0, electrode: 88, 3: (2, 10); ; moveNext: 0.
+
+OpenList size: 79;  closedList size ~: 71
+timeStep: 12, pop: gValue: 12, hValue: 12, violations: 0, electrode: 88, 3: (4, 10); ; moveNext: 0.
+gValue: 13, hValue: 12, violations: 0, electrode: 88, 3: (4, 10); ; moveNext: 0.
+add to openlist
+gValue: 13, hValue: 11, violations: 0, electrode: 88, 3: (5, 10); ; moveNext: 0.
+gValue: 13, hValue: 13, violations: 0, electrode: 88, 3: (4, 11); ; moveNext: 0.
+add to openlist/closelist
+gValue: 13, hValue: 13, violations: 0, electrode: 88, 3: (3, 10); ; moveNext: 0.
+
+OpenList size: 80;  closedList size ~: 72
+timeStep: 11, pop: gValue: 11, hValue: 13, violations: 0, electrode: 89, 3: (1, 0); ; moveNext: 0.
+gValue: 12, hValue: 13, violations: 1, electrode: 89, 3: (1, 0); ; moveNext: 0.
+add to openlist
+gValue: 12, hValue: 12, violations: 1, electrode: 89, 3: (2, 0); ; moveNext: 0.
+gValue: 12, hValue: 12, violations: 1, electrode: 90, 3: (1, 1); ; moveNext: 0.
+gValue: 12, hValue: 14, violations: 0, electrode: 89, 3: (0, 0); ; moveNext: 0.
+
+OpenList size: 80;  closedList size ~: 72
+timeStep: 8, pop: gValue: 8, hValue: 16, violations: 0, electrode: 89, 3: (0, 10); ; moveNext: 0.
+gValue: 9, hValue: 16, violations: 0, electrode: 89, 3: (0, 10); ; moveNext: 0.
+add to openlist
+gValue: 9, hValue: 15, violations: 0, electrode: 89, 3: (0, 9); ; moveNext: 0.
+gValue: 9, hValue: 15, violations: 0, electrode: 90, 3: (1, 10); ; moveNext: 0.
+gValue: 9, hValue: 17, violations: 0, electrode: 90, 3: (0, 11); ; moveNext: 0.
+add to openlist/closelist
+
+OpenList size: 81;  closedList size ~: 73
+timeStep: 9, pop: gValue: 9, hValue: 15, violations: 0, electrode: 89, 3: (1, 10); ; moveNext: 0.
+gValue: 10, hValue: 15, violations: 0, electrode: 89, 3: (1, 10); ; moveNext: 0.
+add to openlist
+gValue: 10, hValue: 14, violations: 0, electrode: 89, 3: (1, 9); ; moveNext: 0.
+gValue: 10, hValue: 14, violations: 0, electrode: 89, 3: (2, 10); ; moveNext: 0.
+gValue: 10, hValue: 16, violations: 0, electrode: 90, 3: (1, 11); ; moveNext: 0.
+add to openlist/closelist
+gValue: 10, hValue: 16, violations: 0, electrode: 90, 3: (0, 10); ; moveNext: 0.
+
+OpenList size: 82;  closedList size ~: 74
+timeStep: 10, pop: gValue: 10, hValue: 14, violations: 0, electrode: 89, 3: (0, 0); ; moveNext: 0.
+gValue: 11, hValue: 14, violations: 0, electrode: 89, 3: (0, 0); ; moveNext: 0.
+add to openlist
+gValue: 11, hValue: 13, violations: 0, electrode: 89, 3: (1, 0); ; moveNext: 0.
+gValue: 11, hValue: 13, violations: 0, electrode: 89, 3: (0, 1); ; moveNext: 0.
+
+OpenList size: 82;  closedList size ~: 74
+timeStep: 11, pop: gValue: 11, hValue: 13, violations: 0, electrode: 89, 3: (0, 1); ; moveNext: 0.
+gValue: 12, hValue: 13, violations: 0, electrode: 89, 3: (0, 1); ; moveNext: 0.
+add to openlist
+gValue: 12, hValue: 14, violations: 0, electrode: 89, 3: (0, 0); ; moveNext: 0.
+gValue: 12, hValue: 12, violations: 1, electrode: 90, 3: (1, 1); ; moveNext: 0.
+gValue: 12, hValue: 12, violations: 0, electrode: 89, 3: (0, 2); ; moveNext: 0.
+
+OpenList size: 82;  closedList size ~: 74
+timeStep: 11, pop: gValue: 11, hValue: 13, violations: 0, electrode: 90, 3: (0, 1); ; moveNext: 0.
+gValue: 12, hValue: 13, violations: 0, electrode: 90, 3: (0, 1); ; moveNext: 0.
+add to openlist
+gValue: 12, hValue: 14, violations: 0, electrode: 90, 3: (0, 0); ; moveNext: 0.
+gValue: 12, hValue: 12, violations: 1, electrode: 90, 3: (1, 1); ; moveNext: 0.
+gValue: 12, hValue: 12, violations: 0, electrode: 90, 3: (0, 2); ; moveNext: 0.
+
+OpenList size: 82;  closedList size ~: 74
+timeStep: 17, pop: gValue: 17, hValue: 8, violations: 0, electrode: 87, 3: (8, 10); ; moveNext: 0.
+gValue: 18, hValue: 8, violations: 0, electrode: 87, 3: (8, 10); ; moveNext: 0.
+add to openlist
+gValue: 18, hValue: 7, violations: 1, electrode: 87, 3: (8, 9); ; moveNext: 0.
+gValue: 18, hValue: 9, violations: 0, electrode: 87, 3: (9, 10); ; moveNext: 0.
+gValue: 18, hValue: 9, violations: 0, electrode: 88, 3: (8, 11); ; moveNext: 0.
+gValue: 18, hValue: 9, violations: 0, electrode: 87, 3: (7, 10); ; moveNext: 0.
+
+OpenList size: 82;  closedList size ~: 74
+timeStep: 16, pop: gValue: 16, hValue: 9, violations: 0, electrode: 87, 3: (7, 10); ; moveNext: 0.
+gValue: 17, hValue: 9, violations: 0, electrode: 87, 3: (7, 10); ; moveNext: 0.
+add to openlist
+gValue: 17, hValue: 8, violations: 1, electrode: 88, 3: (7, 9); ; moveNext: 0.
+gValue: 17, hValue: 8, violations: 0, electrode: 87, 3: (8, 10); ; moveNext: 0.
+gValue: 17, hValue: 10, violations: 0, electrode: 88, 3: (7, 11); ; moveNext: 0.
+gValue: 17, hValue: 10, violations: 1, electrode: 87, 3: (6, 10); ; moveNext: 0.
+
+OpenList size: 82;  closedList size ~: 74
+timeStep: 14, pop: gValue: 14, hValue: 11, violations: 0, electrode: 87, 3: (5, 10); ; moveNext: 0.
+gValue: 15, hValue: 11, violations: 1, electrode: 87, 3: (5, 10); ; moveNext: 0.
+add to openlist
+gValue: 15, hValue: 10, violations: 1, electrode: 87, 3: (5, 9); ; moveNext: 0.
+gValue: 15, hValue: 10, violations: 1, electrode: 87, 3: (6, 10); ; moveNext: 0.
+gValue: 15, hValue: 12, violations: 0, electrode: 87, 3: (5, 11); ; moveNext: 0.
+gValue: 15, hValue: 12, violations: 1, electrode: 87, 3: (4, 10); ; moveNext: 0.
+
+OpenList size: 82;  closedList size ~: 74
+timeStep: 11, pop: gValue: 11, hValue: 14, violations: 0, electrode: 88, 3: (1, 9); ; moveNext: 0.
+gValue: 12, hValue: 14, violations: 0, electrode: 88, 3: (1, 9); ; moveNext: 0.
+add to openlist
+gValue: 12, hValue: 13, violations: 0, electrode: 88, 3: (1, 8); ; moveNext: 0.
+gValue: 12, hValue: 13, violations: 0, electrode: 88, 3: (2, 9); ; moveNext: 0.
+gValue: 12, hValue: 15, violations: 0, electrode: 89, 3: (1, 10); ; moveNext: 0.
+gValue: 12, hValue: 15, violations: 0, electrode: 88, 3: (0, 9); ; moveNext: 0.
+
+OpenList size: 82;  closedList size ~: 74
+timeStep: 13, pop: gValue: 13, hValue: 12, violations: 0, electrode: 88, 3: (4, 10); ; moveNext: 0.
+gValue: 14, hValue: 12, violations: 0, electrode: 88, 3: (4, 10); ; moveNext: 0.
+add to openlist
+gValue: 14, hValue: 11, violations: 0, electrode: 88, 3: (5, 10); ; moveNext: 0.
+gValue: 14, hValue: 13, violations: 0, electrode: 88, 3: (4, 11); ; moveNext: 0.
+gValue: 14, hValue: 13, violations: 0, electrode: 88, 3: (3, 10); ; moveNext: 0.
+
+OpenList size: 82;  closedList size ~: 74
+timeStep: 12, pop: gValue: 12, hValue: 13, violations: 0, electrode: 88, 3: (2, 9); ; moveNext: 0.
+gValue: 13, hValue: 13, violations: 0, electrode: 88, 3: (2, 9); ; moveNext: 0.
+add to openlist
+gValue: 13, hValue: 12, violations: 0, electrode: 88, 3: (2, 8); ; moveNext: 0.
+gValue: 13, hValue: 14, violations: 0, electrode: 88, 3: (2, 10); ; moveNext: 0.
+gValue: 13, hValue: 14, violations: 0, electrode: 88, 3: (1, 9); ; moveNext: 0.
+
+OpenList size: 82;  closedList size ~: 74
+timeStep: 11, pop: gValue: 11, hValue: 14, violations: 0, electrode: 88, 3: (0, 8); ; moveNext: 0.
+gValue: 12, hValue: 14, violations: 0, electrode: 88, 3: (0, 8); ; moveNext: 0.
+add to openlist
+gValue: 12, hValue: 13, violations: 0, electrode: 88, 3: (0, 7); ; moveNext: 0.
+gValue: 12, hValue: 13, violations: 0, electrode: 89, 3: (1, 8); ; moveNext: 0.
+gValue: 12, hValue: 15, violations: 0, electrode: 88, 3: (0, 9); ; moveNext: 0.
+
+OpenList size: 82;  closedList size ~: 74
+timeStep: 12, pop: gValue: 12, hValue: 13, violations: 0, electrode: 88, 3: (3, 10); ; moveNext: 0.
+gValue: 13, hValue: 13, violations: 0, electrode: 88, 3: (3, 10); ; moveNext: 0.
+add to openlist
+gValue: 13, hValue: 12, violations: 0, electrode: 88, 3: (4, 10); ; moveNext: 0.
+gValue: 13, hValue: 14, violations: 0, electrode: 88, 3: (3, 11); ; moveNext: 0.
+gValue: 13, hValue: 14, violations: 0, electrode: 88, 3: (2, 10); ; moveNext: 0.
+
+OpenList size: 82;  closedList size ~: 74
+timeStep: 13, pop: gValue: 13, hValue: 12, violations: 0, electrode: 88, 3: (2, 8); ; moveNext: 0.
+gValue: 14, hValue: 12, violations: 0, electrode: 88, 3: (2, 8); ; moveNext: 0.
+add to openlist
+gValue: 14, hValue: 11, violations: 0, electrode: 88, 3: (2, 7); ; moveNext: 0.
+gValue: 14, hValue: 13, violations: 0, electrode: 88, 3: (2, 9); ; moveNext: 0.
+gValue: 14, hValue: 13, violations: 0, electrode: 89, 3: (1, 8); ; moveNext: 0.
+
+OpenList size: 82;  closedList size ~: 74
+timeStep: 11, pop: gValue: 11, hValue: 14, violations: 0, electrode: 88, 3: (2, 10); ; moveNext: 0.
+gValue: 12, hValue: 14, violations: 0, electrode: 88, 3: (2, 10); ; moveNext: 0.
+add to openlist
+gValue: 12, hValue: 13, violations: 0, electrode: 88, 3: (2, 9); ; moveNext: 0.
+gValue: 12, hValue: 13, violations: 0, electrode: 88, 3: (3, 10); ; moveNext: 0.
+gValue: 12, hValue: 15, violations: 0, electrode: 89, 3: (2, 11); ; moveNext: 0.
+gValue: 12, hValue: 15, violations: 0, electrode: 89, 3: (1, 10); ; moveNext: 0.
+
+OpenList size: 82;  closedList size ~: 74
+timeStep: 12, pop: gValue: 12, hValue: 13, violations: 0, electrode: 88, 3: (1, 8); ; moveNext: 0.
+gValue: 13, hValue: 13, violations: 0, electrode: 88, 3: (1, 8); ; moveNext: 0.
+add to openlist
+gValue: 13, hValue: 12, violations: 0, electrode: 88, 3: (1, 7); ; moveNext: 0.
+gValue: 13, hValue: 12, violations: 0, electrode: 89, 3: (2, 8); ; moveNext: 0.
+gValue: 13, hValue: 14, violations: 0, electrode: 88, 3: (1, 9); ; moveNext: 0.
+gValue: 13, hValue: 14, violations: 0, electrode: 89, 3: (0, 8); ; moveNext: 0.
+
+OpenList size: 82;  closedList size ~: 74
+timeStep: 10, pop: gValue: 10, hValue: 15, violations: 0, electrode: 88, 3: (0, 9); ; moveNext: 0.
+gValue: 11, hValue: 15, violations: 0, electrode: 88, 3: (0, 9); ; moveNext: 0.
+add to openlist
+gValue: 11, hValue: 14, violations: 0, electrode: 88, 3: (0, 8); ; moveNext: 0.
+gValue: 11, hValue: 14, violations: 0, electrode: 88, 3: (1, 9); ; moveNext: 0.
+gValue: 11, hValue: 16, violations: 0, electrode: 89, 3: (0, 10); ; moveNext: 0.
+
+OpenList size: 82;  closedList size ~: 74
+timeStep: 9, pop: gValue: 9, hValue: 16, violations: 0, electrode: 89, 3: (0, 10); ; moveNext: 0.
+gValue: 10, hValue: 16, violations: 0, electrode: 89, 3: (0, 10); ; moveNext: 0.
+add to openlist
+gValue: 10, hValue: 15, violations: 0, electrode: 89, 3: (0, 9); ; moveNext: 0.
+gValue: 10, hValue: 15, violations: 0, electrode: 90, 3: (1, 10); ; moveNext: 0.
+gValue: 10, hValue: 17, violations: 0, electrode: 90, 3: (0, 11); ; moveNext: 0.
+
+OpenList size: 82;  closedList size ~: 74
+timeStep: 10, pop: gValue: 10, hValue: 15, violations: 0, electrode: 89, 3: (1, 10); ; moveNext: 0.
+gValue: 11, hValue: 15, violations: 0, electrode: 89, 3: (1, 10); ; moveNext: 0.
+add to openlist
+gValue: 11, hValue: 14, violations: 0, electrode: 89, 3: (1, 9); ; moveNext: 0.
+gValue: 11, hValue: 14, violations: 0, electrode: 89, 3: (2, 10); ; moveNext: 0.
+gValue: 11, hValue: 16, violations: 0, electrode: 90, 3: (1, 11); ; moveNext: 0.
+gValue: 11, hValue: 16, violations: 0, electrode: 90, 3: (0, 10); ; moveNext: 0.
+
+OpenList size: 82;  closedList size ~: 74
+timeStep: 11, pop: gValue: 11, hValue: 14, violations: 0, electrode: 89, 3: (0, 0); ; moveNext: 0.
+gValue: 12, hValue: 14, violations: 0, electrode: 89, 3: (0, 0); ; moveNext: 0.
+add to openlist
+gValue: 12, hValue: 13, violations: 1, electrode: 89, 3: (1, 0); ; moveNext: 0.
+gValue: 12, hValue: 13, violations: 0, electrode: 89, 3: (0, 1); ; moveNext: 0.
+
+OpenList size: 82;  closedList size ~: 74
+timeStep: 12, pop: gValue: 12, hValue: 13, violations: 0, electrode: 89, 3: (0, 1); ; moveNext: 0.
+gValue: 13, hValue: 13, violations: 1, electrode: 89, 3: (0, 1); ; moveNext: 0.
+add to openlist
+gValue: 13, hValue: 14, violations: 1, electrode: 89, 3: (0, 0); ; moveNext: 0.
+gValue: 13, hValue: 12, violations: 1, electrode: 90, 3: (1, 1); ; moveNext: 0.
+gValue: 13, hValue: 12, violations: 0, electrode: 89, 3: (0, 2); ; moveNext: 0.
+
+OpenList size: 82;  closedList size ~: 74
+timeStep: 12, pop: gValue: 12, hValue: 13, violations: 0, electrode: 90, 3: (0, 1); ; moveNext: 0.
+gValue: 13, hValue: 13, violations: 1, electrode: 90, 3: (0, 1); ; moveNext: 0.
+add to openlist
+gValue: 13, hValue: 14, violations: 1, electrode: 90, 3: (0, 0); ; moveNext: 0.
+gValue: 13, hValue: 12, violations: 1, electrode: 90, 3: (1, 1); ; moveNext: 0.
+gValue: 13, hValue: 12, violations: 0, electrode: 90, 3: (0, 2); ; moveNext: 0.
+
+OpenList size: 82;  closedList size ~: 74
+timeStep: 17, pop: gValue: 17, hValue: 9, violations: 0, electrode: 87, 3: (7, 10); ; moveNext: 0.
+gValue: 18, hValue: 9, violations: 0, electrode: 87, 3: (7, 10); ; moveNext: 0.
+add to openlist
+gValue: 18, hValue: 8, violations: 1, electrode: 88, 3: (7, 9); ; moveNext: 0.
+gValue: 18, hValue: 8, violations: 0, electrode: 87, 3: (8, 10); ; moveNext: 0.
+gValue: 18, hValue: 10, violations: 0, electrode: 88, 3: (7, 11); ; moveNext: 0.
+gValue: 18, hValue: 10, violations: 1, electrode: 87, 3: (6, 10); ; moveNext: 0.
+
+OpenList size: 82;  closedList size ~: 74
+timeStep: 18, pop: gValue: 18, hValue: 8, violations: 0, electrode: 87, 3: (8, 10); ; moveNext: 0.
+gValue: 19, hValue: 8, violations: 0, electrode: 87, 3: (8, 10); ; moveNext: 0.
+add to openlist
+gValue: 19, hValue: 7, violations: 1, electrode: 87, 3: (8, 9); ; moveNext: 0.
+gValue: 19, hValue: 9, violations: 0, electrode: 87, 3: (9, 10); ; moveNext: 0.
+gValue: 19, hValue: 9, violations: 0, electrode: 88, 3: (8, 11); ; moveNext: 0.
+gValue: 19, hValue: 9, violations: 0, electrode: 87, 3: (7, 10); ; moveNext: 0.
+
+OpenList size: 82;  closedList size ~: 74
+timeStep: 17, pop: gValue: 17, hValue: 9, violations: 0, electrode: 87, 3: (9, 10); ; moveNext: 0.
+gValue: 18, hValue: 9, violations: 0, electrode: 87, 3: (9, 10); ; moveNext: 0.
+add to openlist
+gValue: 18, hValue: 8, violations: 0, electrode: 87, 3: (10, 10); ; moveNext: 0.
+add to openlist/closelist
+gValue: 18, hValue: 10, violations: 0, electrode: 87, 3: (9, 11); ; moveNext: 0.
+add to openlist/closelist
+gValue: 18, hValue: 8, violations: 0, electrode: 87, 3: (8, 10); ; moveNext: 0.
+
+OpenList size: 84;  closedList size ~: 76
+timeStep: 15, pop: gValue: 15, hValue: 11, violations: 0, electrode: 87, 3: (6, 11); ; moveNext: 0.
+gValue: 16, hValue: 11, violations: 0, electrode: 87, 3: (6, 11); ; moveNext: 0.
+add to openlist
+gValue: 16, hValue: 10, violations: 1, electrode: 87, 3: (6, 10); ; moveNext: 0.
+gValue: 16, hValue: 10, violations: 0, electrode: 88, 3: (7, 11); ; moveNext: 0.
+gValue: 16, hValue: 12, violations: 0, electrode: 87, 3: (5, 11); ; moveNext: 0.
+
+OpenList size: 84;  closedList size ~: 76
+timeStep: 14, pop: gValue: 14, hValue: 12, violations: 0, electrode: 87, 3: (4, 10); ; moveNext: 0.
+gValue: 15, hValue: 12, violations: 1, electrode: 87, 3: (4, 10); ; moveNext: 0.
+add to openlist
+gValue: 15, hValue: 11, violations: 1, electrode: 87, 3: (5, 10); ; moveNext: 0.
+gValue: 15, hValue: 13, violations: 0, electrode: 87, 3: (4, 11); ; moveNext: 0.
+gValue: 15, hValue: 13, violations: 0, electrode: 87, 3: (3, 10); ; moveNext: 0.
+
+OpenList size: 84;  closedList size ~: 76
+timeStep: 18, pop: gValue: 18, hValue: 8, violations: 0, electrode: 87, 3: (10, 10); ; moveNext: 0.
+gValue: 19, hValue: 8, violations: 0, electrode: 87, 3: (10, 10); ; moveNext: 0.
+add to openlist
+gValue: 19, hValue: 7, violations: 0, electrode: 87, 3: (11, 10); ; moveNext: 0.
+add to openlist/closelist
+gValue: 19, hValue: 9, violations: 0, electrode: 88, 3: (10, 11); ; moveNext: 0.
+add to openlist/closelist
+gValue: 19, hValue: 9, violations: 0, electrode: 87, 3: (9, 10); ; moveNext: 0.
+
+OpenList size: 86;  closedList size ~: 78
+timeStep: 14, pop: gValue: 14, hValue: 12, violations: 0, electrode: 87, 3: (5, 11); ; moveNext: 0.
+gValue: 15, hValue: 12, violations: 0, electrode: 87, 3: (5, 11); ; moveNext: 0.
+add to openlist
+gValue: 15, hValue: 11, violations: 1, electrode: 87, 3: (5, 10); ; moveNext: 0.
+gValue: 15, hValue: 11, violations: 0, electrode: 87, 3: (6, 11); ; moveNext: 0.
+gValue: 15, hValue: 13, violations: 0, electrode: 87, 3: (4, 11); ; moveNext: 0.
+
+OpenList size: 86;  closedList size ~: 78
+timeStep: 19, pop: gValue: 19, hValue: 7, violations: 0, electrode: 87, 3: (11, 10); ; moveNext: 0.
+gValue: 20, hValue: 7, violations: 0, electrode: 87, 3: (11, 10); ; moveNext: 0.
+add to openlist
+gValue: 20, hValue: 6, violations: 0, electrode: 87, 3: (11, 9); ; moveNext: 0.
+add to openlist/closelist
+gValue: 20, hValue: 8, violations: 0, electrode: 88, 3: (11, 11); ; moveNext: 0.
+add to openlist/closelist
+gValue: 20, hValue: 8, violations: 0, electrode: 87, 3: (10, 10); ; moveNext: 0.
+
+OpenList size: 88;  closedList size ~: 80
+timeStep: 20, pop: gValue: 20, hValue: 6, violations: 0, electrode: 87, 3: (11, 9); ; moveNext: 0.
+gValue: 21, hValue: 6, violations: 0, electrode: 87, 3: (11, 9); ; moveNext: 0.
+add to openlist
+gValue: 21, hValue: 5, violations: 0, electrode: 87, 3: (11, 8); ; moveNext: 0.
+add to openlist/closelist
+gValue: 21, hValue: 7, violations: 0, electrode: 87, 3: (11, 10); ; moveNext: 0.
+
+OpenList size: 89;  closedList size ~: 81
+timeStep: 21, pop: gValue: 21, hValue: 5, violations: 0, electrode: 87, 3: (11, 8); ; moveNext: 0.
+gValue: 22, hValue: 5, violations: 0, electrode: 87, 3: (11, 8); ; moveNext: 0.
+add to openlist
+gValue: 22, hValue: 4, violations: 0, electrode: 87, 3: (11, 7); ; moveNext: 0.
+add to openlist/closelist
+gValue: 22, hValue: 6, violations: 0, electrode: 87, 3: (11, 9); ; moveNext: 0.
+
+OpenList size: 90;  closedList size ~: 82
+timeStep: 22, pop: gValue: 22, hValue: 4, violations: 0, electrode: 87, 3: (11, 7); ; moveNext: 0.
+gValue: 23, hValue: 4, violations: 0, electrode: 87, 3: (11, 7); ; moveNext: 0.
+add to openlist
+gValue: 23, hValue: 3, violations: 0, electrode: 87, 3: (11, 6); ; moveNext: 0.
+add to openlist/closelist
+gValue: 23, hValue: 5, violations: 0, electrode: 87, 3: (11, 8); ; moveNext: 0.
+gValue: 23, hValue: 3, violations: 0, electrode: 87, 3: (10, 7); ; moveNext: 0.
+add to openlist/closelist
+
+OpenList size: 92;  closedList size ~: 84
+timeStep: 23, pop: gValue: 23, hValue: 3, violations: 0, electrode: 87, 3: (11, 6); ; moveNext: 0.
+gValue: 24, hValue: 3, violations: 0, electrode: 87, 3: (11, 6); ; moveNext: 0.
+add to openlist
+gValue: 24, hValue: 2, violations: 0, electrode: 87, 3: (11, 5); ; moveNext: 0.
+add to openlist/closelist
+gValue: 24, hValue: 4, violations: 0, electrode: 87, 3: (11, 7); ; moveNext: 0.
+gValue: 24, hValue: 2, violations: 0, electrode: 87, 3: (10, 6); ; moveNext: 0.
+add to openlist/closelist
+
+OpenList size: 94;  closedList size ~: 86
+timeStep: 23, pop: gValue: 23, hValue: 3, violations: 0, electrode: 87, 3: (10, 7); ; moveNext: 0.
+gValue: 24, hValue: 3, violations: 0, electrode: 87, 3: (10, 7); ; moveNext: 0.
+add to openlist
+gValue: 24, hValue: 2, violations: 0, electrode: 87, 3: (10, 6); ; moveNext: 0.
+gValue: 24, hValue: 4, violations: 0, electrode: 87, 3: (11, 7); ; moveNext: 0.
+gValue: 24, hValue: 4, violations: 0, electrode: 87, 3: (9, 7); ; moveNext: 0.
+add to openlist/closelist
+
+OpenList size: 95;  closedList size ~: 87
+timeStep: 24, pop: gValue: 24, hValue: 2, violations: 0, electrode: 87, 3: (11, 5); ; moveNext: 0.
+gValue: 25, hValue: 2, violations: 0, electrode: 87, 3: (11, 5); ; moveNext: 0.
+add to openlist
+gValue: 25, hValue: 1, violations: 0, electrode: 87, 3: (11, 4); ; moveNext: 0.
+add to openlist/closelist
+gValue: 25, hValue: 3, violations: 0, electrode: 87, 3: (11, 6); ; moveNext: 0.
+gValue: 25, hValue: 1, violations: 0, electrode: 87, 3: (10, 5); ; moveNext: 0.
+add to openlist/closelist
+
+OpenList size: 97;  closedList size ~: 89
+timeStep: 24, pop: gValue: 24, hValue: 2, violations: 0, electrode: 87, 3: (10, 6); ; moveNext: 0.
+gValue: 25, hValue: 2, violations: 0, electrode: 87, 3: (10, 6); ; moveNext: 0.
+add to openlist
+gValue: 25, hValue: 1, violations: 0, electrode: 87, 3: (10, 5); ; moveNext: 0.
+gValue: 25, hValue: 3, violations: 0, electrode: 87, 3: (11, 6); ; moveNext: 0.
+gValue: 25, hValue: 3, violations: 0, electrode: 87, 3: (10, 7); ; moveNext: 0.
+gValue: 25, hValue: 3, violations: 0, electrode: 88, 3: (9, 6); ; moveNext: 0.
+add to openlist/closelist
+
+OpenList size: 98;  closedList size ~: 90
+timeStep: 25, pop: gValue: 25, hValue: 1, violations: 0, electrode: 87, 3: (11, 4); ; moveNext: 0.
+gValue: 26, hValue: 1, violations: 0, electrode: 87, 3: (11, 4); ; moveNext: 0.
+add to openlist
+gValue: 26, hValue: 2, violations: 1, electrode: 88, 3: (11, 3); ; moveNext: 0.
+add to openlist/closelist
+gValue: 26, hValue: 2, violations: 0, electrode: 87, 3: (11, 5); ; moveNext: 0.
+gValue: 26, hValue: 0, violations: 0, electrode: 87, 3: (10, 4); ; moveNext: 0.
+add to openlist/closelist
+
+OpenList size: 100;  closedList size ~: 92
+timeStep: 25, pop: gValue: 25, hValue: 1, violations: 0, electrode: 87, 3: (10, 5); ; moveNext: 0.
+gValue: 26, hValue: 1, violations: 0, electrode: 87, 3: (10, 5); ; moveNext: 0.
+add to openlist
+gValue: 26, hValue: 0, violations: 0, electrode: 87, 3: (10, 4); ; moveNext: 0.
+gValue: 26, hValue: 2, violations: 0, electrode: 87, 3: (11, 5); ; moveNext: 0.
+gValue: 26, hValue: 2, violations: 0, electrode: 87, 3: (10, 6); ; moveNext: 0.
+gValue: 26, hValue: 2, violations: 1, electrode: 88, 3: (9, 5); ; moveNext: 0.obey violations
+
+OpenList size: 100;  closedList size ~: 92
+timeStep: 26, pop: gValue: 26, hValue: 0, violations: 0, electrode: 87, 3: (10, 4); ; moveNext: 0.
