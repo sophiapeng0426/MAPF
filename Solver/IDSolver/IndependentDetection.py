@@ -202,30 +202,20 @@ class IDSolver(ConstraintSolver):
     def save(self, fileDir, filename):
         sys.setrecursionlimit(20000)
 
-        with open('/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/SingleAgent/Result/{0}/paths_{1}.pickle'.format(fileDir, filename),
-                  'wb') as f1:
+        with open('{0}/{1}.pickle'.format(fileDir, filename), 'wb') as f1:
             pickle.dump(self._pathList, f1)
+            pickle.dump(self._problemList, f1)
 
-        with open('/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/SingleAgent/Result/{0}/problem_{1}.pickle'.format(
-                fileDir, filename),
-                  'wb') as f2:
-            pickle.dump(self._problemList, f2)
-
-    def read(self, fileDir, name1, name2):
+    def read(self, fileDir, filename):
         """
         :param fileDir:
-        :param pathname: '0_1'
-        :param problemname: '0_2'
+        :param filename: '0_1', 'initial', 'solution'
         :return:
         """
-        # read pathlist and problemlist from files
-        with open('/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/SingleAgent/Result/{0}/{1}.pickle'.format(fileDir, name1),
-                  'rb') as f1:
+        with open('{0}/{1}.pickle'.format(fileDir, filename), 'rb') as f1:
             self._pathList = pickle.load(f1)
-        with open('/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/SingleAgent/Result/{0}/{1}.pickle'.format(fileDir, name2),
-                  'rb') as f2:
-            self._problemList = pickle.load(f2)
-        # fill solver() cat and usedtable in self.solve()
+            self._problemList = pickle.load(f1)
+            # fill solver() cat and usedtable in self.solve()
 
 def main():
     import time
