@@ -80,13 +80,13 @@ class GeneticAStar(ConstraintSolver):
                         if not self._closeList.contains(s):
                             self._openList.put(s)
                             self._closeList.add(s)
-                            if toPrint:
-                                print("add to openlist/closelist: {0}".format(s))
+                            # if toPrint:
+                            #     print("add to openlist/closelist: {0}".format(s))
 
                         elif s.isStay(currentState):
                             self._openList.put(s)
-                            if toPrint:
-                                print("add to openlist: {0}".format(s))
+                            # if toPrint:
+                            #     print("add to openlist: {0}".format(s))
 
         return False
 

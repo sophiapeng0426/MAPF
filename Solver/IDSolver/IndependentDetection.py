@@ -1,4 +1,6 @@
 import copy
+import pickle
+import sys
 from SingleAgent.Solver.AStar.ODAStar import ODAStar
 from SingleAgent.Solver.ConstraintSolver import ConstraintSolver
 from SingleAgent.Utilities.ProblemInstance import ProblemInstance
@@ -19,16 +21,24 @@ class IDSolver(ConstraintSolver):
         self._initialProblem = None
 
     def solve(self, problemInstance, fileDir):
+        """
+        :param problemInstance:
+        :param fileDir: save direction for intermediate result
+        :return:
+        """
+        # initial problemInstance
         self._initialProblem = problemInstance
+        # self.save(fileDir, 'initialProblem')
+        # fill pathList
         if len(self._pathList) == 0:
             if not self.populatePath(self._initialProblem):
                 return False
-
         self.save(fileDir, 'initial')
 
         for i in range(len(self.paths())):
-            self.solver().getCAT().addPath(self.paths()[i], i)
-            self.solver().getUsedTable().addPath(self.paths()[i], i)
+            if self.paths()[i] is not None:
+                self.solver().getCAT().addPath(self.paths()[i], i)
+                self.solver().getUsedTable().addPath(self.paths()[i], i)
 
         index = 0
         while index < len(self._pathList):
@@ -43,7 +53,6 @@ class IDSolver(ConstraintSolver):
                 self.save(fileDir, '{0}_{1}'.format(conflict.getGroup1(), conflict.getGroup2()))
             else:
                 self.save(fileDir, 'solution')
-
         return True
 
     def resolveConflict(self, id1, id2):
@@ -188,17 +197,9 @@ class IDSolver(ConstraintSolver):
     #         odPara.append(para1)
     #         res.append(odPara)
     #     return res
-
+    """ ================== pickle/IO ==========================
+    """
     def save(self, fileDir, filename):
-        # res = []
-        # for path in self._pathList:
-        #     if path is not None:
-        #         res.append(self._savePath(path))
-        #     else:
-        #         res.append(None)
-        #
-        import pickle
-        import sys
         sys.setrecursionlimit(20000)
 
         with open('/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/SingleAgent/Result/{0}/paths_{1}.pickle'.format(fileDir, filename),
@@ -210,31 +211,21 @@ class IDSolver(ConstraintSolver):
                   'wb') as f2:
             pickle.dump(self._problemList, f2)
 
-    def read(self, fileDir, pathname, problemname):
-        import pickle
+    def read(self, fileDir, name1, name2):
+        """
+        :param fileDir:
+        :param pathname: '0_1'
+        :param problemname: '0_2'
+        :return:
+        """
         # read pathlist and problemlist from files
-        with open('/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/SingleAgent/Result/{0}/paths_{1}.pickle'.format(fileDir, pathname),
-                  'wb') as f1:
+        with open('/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/SingleAgent/Result/{0}/{1}.pickle'.format(fileDir, name1),
+                  'rb') as f1:
             self._pathList = pickle.load(f1)
-        with open('/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/SingleAgent/Result/{0}/paths_{1}.pickle'.format(fileDir, problemname),
-                  'wb') as f2:
+        with open('/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/SingleAgent/Result/{0}/{1}.pickle'.format(fileDir, name2),
+                  'rb') as f2:
             self._problemList = pickle.load(f2)
         # fill solver() cat and usedtable in self.solve()
-
-
-
-
-
-
-    # def initiateFromFile(self, ):
-
-    # def read(self, filename, initialProblem):
-    #     """Reconstruct IDSovler to continue solving problem"""
-    #     with open('/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/SingleAgent/Result/{0}.pickle'.format(filename),
-    #               'rb') as f:
-    #         savedPaths = pickle.load(f)
-    #         print (savedPaths)
-
 
 def main():
     import time
@@ -257,32 +248,47 @@ def main():
     # solver1.visualizePath(problem1)
 
     print("==== test case 1 ====")
-    graph2 = Graph(ProblemMap(14, {(2, 5): (5, 2),
-                              (0, 10): (5, 16),
-                              (7, 1): (2, 5),
-                              (8, 6): (4, 2)
-                              }))
-    agent2 = [Agent(0, (0, 4), (0, 9)),
-              Agent(1, (0, 6), (3, 0)),
-              Agent(2, (0, 2), (9, 4)),
-              Agent(3, (13, 6), (4, 2)),
-              # Agent(4, (13, 0), (1, 3)),
-              # Agent(5, (6, 9), (12, 7))
-              ]
-    testProblem1 = ProblemInstance(graph2, agent2)
-    testProblem1.plotProblem()
+    # graph2 = Graph(ProblemMap(14, {(2, 5): (5, 2),
+    #                           (0, 10): (5, 16),
+    #                           (7, 1): (2, 5),
+    #                           (8, 6): (4, 2)
+    #                           }))
+    # agent2 = [Agent(0, (0, 4), (0, 9)),
+    #           Agent(1, (0, 6), (3, 0)),
+    #           Agent(2, (0, 2), (9, 4)),
+    #           Agent(3, (13, 6), (4, 2)),
+    #           # Agent(4, (13, 0), (1, 3)),
+    #           # Agent(5, (6, 9), (12, 7))
+    #           ]
+    # testProblem1 = ProblemInstance(graph2, agent2)
+    # testProblem1.plotProblem()
+    # with open('/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/SingleAgent/Result/{0}/InitialProblem_{1}.pickle'.format(
+    #     'ID1', '1'),'wb') as f:
+    #     pickle.dump(testProblem1, f)
 
     # ============== test solver ==================
-    startTime = time.time()
-    solver1 = IDSolver(ODAStar())
-    solver1.solve(testProblem1)
-    print("solver time: {0} ".format(time.time() - startTime))
+    # startTime = time.time()
+    # solver1 = IDSolver(ODAStar())
+    # solver1.solve(testProblem1, 'ID1')
+    # print("solver time: {0} ".format(time.time() - startTime))
+    #
+    # solver1.correctcheck(solver1.getPath())
+    # solver1.printPath()
+    # solver1.visualizePath(testProblem1)
 
-    solver1.correctcheck(solver1.getPath())
-    solver1.printPath()
-    solver1.visualizePath(testProblem1)
+#     ============= test save/read ================
+    with open('/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/SingleAgent/Result/{0}/InitialProblem_{1}.pickle'.format(
+                'ID1', '1'), 'rb') as f:
+        testProblem2 = pickle.load(f)
+    testProblem2.plotProblem()
+#
+    solver2 = IDSolver(ODAStar())
+    solver2.read('ID1', 'paths_0_2', 'problem_0_2')
+    solver2.solve(testProblem2, 'ID1/0_2')
 
-#     ============= test save ================
+    solver2.correctcheck(solver2.getPath())
+    solver2.printPath()
+    solver2.visualizePath(testProblem2)
 
 
 if __name__ == '__main__':

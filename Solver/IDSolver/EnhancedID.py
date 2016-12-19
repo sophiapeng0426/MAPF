@@ -1,3 +1,5 @@
+import pickle
+import sys
 from IndependentDetection import IDSolver
 from SingleAgent.Utilities.ProblemInstance import ProblemInstance
 from SingleAgent.Solver.Utils import Util
@@ -16,17 +18,15 @@ class EnhandcedID(IDSolver):
         self._solutions = []
         self._visitedOrder = set([])
 
-    def solve(self, problemInstance, fileDir):
+    def solve(self, problemInstance, saveDir):
         self._initialProblem = problemInstance
 
         for ith in range(self._shuffleNum):
             print("=== ITERATION {0}... ===".format(ith))
 
             if self.populatePath(ith):
+                self.save(saveDir, 'Iteration_{0}_initial'.format(ith))
 
-                # for i in range(len(self.paths())):
-                #     self.solver().getCAT().addPath(self.paths()[i], i)
-                #     self.solver().getUsedTable().addPath(self.paths()[i], i)
                 index = 0
                 solved = True
                 while index < len(self._pathList):
@@ -44,6 +44,10 @@ class EnhandcedID(IDSolver):
                         problemAfter = len(filter(lambda x: x is not None, pblist))
                         if problemBefore == problemAfter:
                             index = min(conflict.getGroup1(), conflict.getGroup2())
+                    if conflict is not None:
+                        self.save(saveDir, 'Iteration_{0}_{1}_{2}'.format(ith, conflict.getGroup1(), conflict.getGroup2()))
+                    elif conflict is None and index == len(self._pathList)-1:
+                        self.save(saveDir, 'Iteration_{0}_solution'.format(ith))
 
                 if solved:
                     totalCost, usedElectrode, finalPath = Util().mergePaths(self._pathList)
@@ -60,16 +64,59 @@ class EnhandcedID(IDSolver):
         else:
             return False
 
-    def recordResult(self, cost, electrode, finalPath, headline, strPath):
+    def solveFromPre(self, problemInstance, saveDir, readDir, file1, file2):
+        self._initialProblem = problemInstance
+        # fill pathlist and problemlist
+        self.read(readDir, file1, file2)
+        self.save(saveDir, 'initial')
+        # fill cat and usedelectrode
+        for i in range(len(self.paths())):
+            if self.paths()[i] is not None:
+                self.solver().getCAT().addPath(self.paths()[i], i)
+                self.solver().getUsedTable().addPath(self.paths()[i], i)
+        index = 0
+        while index < len(self._pathList):
+            conflict = Util().conflict(index, 0, self._pathList)
+            if conflict is None:
+                index += 1
+            else:
+                pblist = self._problemList[:]
+                problemBefore = len(filter(lambda x: x is not None, pblist))
+                if not self.resolveConflict(conflict.getGroup1(), conflict.getGroup2()):
+                    return False
+                pblist = self._problemList[:]
+                problemAfter = len(filter(lambda x: x is not None, pblist))
+                if problemBefore == problemAfter:
+                    index = min(conflict.getGroup1(), conflict.getGroup2())
+            if conflict is not None:
+                self.save(saveDir, '{0}_{1}'.format(conflict.getGroup1(), conflict.getGroup2()))
+            elif conflict is None and index == len(self._pathList) - 1:
+                self.save(saveDir, 'solution')
+
+        totalCost, usedElectrode, finalPath = Util().mergePaths(self._pathList)
+        assert self.correctcheck(finalPath), 'Wrong answer!'
+
+        headline = "Total cost: {0}, used electrode: {1} \n".format(totalCost, usedElectrode)
+        strPath = self.strPath(finalPath)
+        print(headline + strPath + '\n')
+
+        self.toFile(headline + '\n', file1)
+        self.recordResult(totalCost, usedElectrode, finalPath, headline, strPath)
+        return True
+
+    """ ============ file IO ==============="""
+    def recordResult(self, cost, electrode, finalPath, headline, strPath, file1=''):
         # TODO: summarize write to file result, delete non-dominated solutions
         if cost < self._bestCost[0]:
             self._bestCost[0] = cost
             self._solutions.append(finalPath)
-            self.toFile(headline + strPath + '\n')
+            self.toFile(headline + strPath + '\n', file1)
+            print("Done writing...")
         elif electrode < self._bestCost[1]:
             self._bestCost[1] = electrode
             self._solutions.append(finalPath)
-            self.toFile(headline + strPath + '\n')
+            self.toFile(headline + strPath + '\n', file1)
+            print("Done writing...")
 
     def strPath(self, pathList):
         """print paths"""
@@ -87,12 +134,12 @@ class EnhandcedID(IDSolver):
             strout += '; gValue: {0}; hValue: {1} \n '.format(gValue, hValue)
         return(strout)
 
-    def toFile(self, content):
-        f = open('/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/SingleAgent/Result/{0}.txt'.format(self._ouput), 'a+')
+    def toFile(self, content, appendix=''):
+        f = open('/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/SingleAgent/Result/{0}.txt'.format(self._ouput +
+                                                                                                     appendix), 'a+')
         f.write(content)
         f.close()
-        print("Done writing...")
-
+    """ ============================="""
     def populatePath(self, ith):
         """
         clear solver() tables
@@ -101,9 +148,9 @@ class EnhandcedID(IDSolver):
         :return:
         """
         from random import shuffle
-        # clear solver() tables
+        # ===== clear solver() tables ===
         self.clearSolver()
-        # clear ProblemList and shuffle
+        # ===== clear ProblemList and shuffle ===
         self._problemList[:] = []
         for agent in self._initialProblem.getAgents():
             # problemInstance requires _singleAgents a list!
@@ -118,16 +165,10 @@ class EnhandcedID(IDSolver):
                     findNew = True
         print("Initial problem: {0} ".format([[x.getId() for x in problem.getAgents()]
                                               for problem in self._problemList]))
-        # clear PathList
+        # ===== clear PathList =====
         self._pathList[:] = []
         if not self.solveInitialProblem():
             return False
-        # for problem in self._problemList:
-        #     # use solver without initializing cat and used table
-        #     if not self.solver().solve(problem):
-        #         return False
-        #     self._pathList.append(self._solver.getPath())
-        #  initialize conflictInPast table
         self._conflictInPast = [[False for i in range(len(self.paths()))] for j in range(len(self.paths()))]
         return True
 
@@ -471,7 +512,7 @@ def main():
     # if solver1.solve(testProblem):
     #     print("solver time: {0} ".format(time.time() - startTime))
 
-    print("============== test_12_12_1 ================")
+    print("============== test cases ================")
     # graph = Graph(ProblemMap(12, {(7, 1): (3, 3),
     #                 (3, 8): (2, 2),
     #                 (1, 3): (2, 3),
@@ -539,11 +580,6 @@ def main():
     #
     # assert solver1.correctcheck(finalPath), 'correct check not pass.'
 
-    #
-
-
-
-
 
     # ======== test shuffle problemlist ======
     # solver1 = EnhandcedID(ODAStar(), 4, 5)
@@ -557,16 +593,7 @@ def main():
     # print(problemList)
     # print(solver1.problems())
 
-#     ======= test open =============
-#     import os
-#     print(os.getcwd())
-#
-#     # print(os.path.join('./SingleAgent/Result/test1.txt'))
-#     # print(os.getcwd())
-#
-#     f = open('/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/SingleAgent/Result/test2.txt', 'a+')
-#     f.write('a')
-#     f.close()
+
 
 
 if __name__ == '__main__':

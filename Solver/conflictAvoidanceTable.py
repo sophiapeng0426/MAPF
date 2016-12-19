@@ -36,8 +36,18 @@ class ConflictAvoidanceTable(object):
     #         conflictGroup |= self._violationSingleState(singleAgentState)
     #     # return conflictGroup, len(conflictGroup)
     #     return len(conflictGroup)
+
     def violation(self, state):
-        for singleAgentState in state.getSingleAgents():
+        from SingleAgent.States.ODState import ODState
+        if isinstance(state, ODState):
+            movenext = state.getMoveNext()
+            if movenext == 0:
+                index = len(state.getSingleAgents())
+            else:
+                index = movenext
+        else:
+            index = len(state.getSingleAgents())
+        for singleAgentState in state.getSingleAgents()[0: index]:
             if self._violationSingleState(singleAgentState):
                 return True
         return False
@@ -48,29 +58,21 @@ class ConflictAvoidanceTable(object):
         :param singleAgentState:
         :return:
         """
-        # coord = singleAgentState.getCoord()
-        # # violation in groupOccupantTable
-        # conflictGroup = set([])
-        # if coord in self._groupOccupantTable:
-        #     conflictGroup |= self._groupOccupantTable[coord]
-        # # violation in destination
-        # pos = coord.getNode().getPosition()
-        # if pos in self._agentDestination:
-        #     preDic = self._agentDestination[pos]
-        #     for id, t in preDic.items():
-        #         if coord.getTimeStep() >= t:
-        #             conflictGroup |= set([id])
-        # return conflictGroup
+        coordList = []
         coord = singleAgentState.getCoord()
+        coordList.append(coord)
+        coordList.append(Coordinate(coord.getTimeStep() + 1, coord.getNode()))
+        coordList.append(Coordinate(coord.getTimeStep() - 1, coord.getNode()))
         # violation in groupOccupantTable
-        if coord in self._groupOccupantTable:
-            return True
+        for coord in coordList:
+            if coord in self._groupOccupantTable:
+                return True
         # violation in destination
         pos = coord.getNode().getPosition()
         if pos in self._agentDestination:
             preDic = self._agentDestination[pos]
             for id, t in preDic.items():
-                if coord.getTimeStep() >= t:
+                if coord.getTimeStep() >= t - 1:
                     return True
         return False
 
@@ -79,7 +81,7 @@ class ConflictAvoidanceTable(object):
         :param path:
         :return:
         """
-        print("cat add path {0}".format(id))
+        # print("cat add path {0}".format(id))
         self._initial = True
         # paths include only OD states
         for i in range(len(path)):
@@ -103,7 +105,7 @@ class ConflictAvoidanceTable(object):
                 self._addCoordinate(neighborCoord, id)
 
     def _addCoordinate(self, coord, id):
-        if not coord in self._groupOccupantTable:
+        if coord not in self._groupOccupantTable:
             self._groupOccupantTable[coord] = set([id])
         else:
             self._groupOccupantTable[coord].add(id)
@@ -132,7 +134,7 @@ class ConflictAvoidanceTable(object):
         :param path:
         :return:
         """
-        print("cat delete path {0}".format(id))
+        # print("cat delete path {0}".format(id))
         # delete states in paths
         for i in range(len(path)):
             state = path[i]

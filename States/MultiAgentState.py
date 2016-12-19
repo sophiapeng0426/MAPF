@@ -238,7 +238,6 @@ def main():
     #           'wb') as f:
     #     pickle.dump([s1, expand1], f)
 
-
     with open('/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/SingleAgent/Result/{0}.pickle'.format('testMultiple'),
               'rb') as f:
         x = pickle.load(f)
