@@ -456,7 +456,7 @@ def main():
     # # filename ='in-vitro_2.3'
     # # filename = 'protein.9'
     # # filename = 'in-vitro_2.5'
-    filename = 'test_12_12_2.in'
+    filename = 'test_12_12_1.in'
     # filename = 'test_24_24_1.in'
     testProblem = generateProblem(os.path.join(fileroot, filename))
     testProblem.plotProblem()
@@ -469,7 +469,7 @@ def main():
         pickle.dump(testProblem, f)
     # save result and other things
     startTime = time.time()
-    solver1 = EnhandcedID(ODAStar(), 1, saveRoot + 'test_12_12_2')
+    solver1 = EnhandcedID(ODAStar(), 1, saveRoot + 'test_12_12_1')
     if solver1.solve(testProblem, saveRoot):
         print("solver time: {0} ".format(time.time() - startTime))
 

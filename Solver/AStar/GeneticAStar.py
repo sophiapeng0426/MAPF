@@ -35,7 +35,7 @@ class GeneticAStar(ConstraintSolver):
         # f = open('/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/SingleAgent/Result/test_12_12_1/test35/{0}.txt'
         #          .format(name), 'w')
         # ===== end ======
-        maxgValue = problemInstance.getGraph().getSize() * 2
+        maxgValue = problemInstance.getGraph().getSize() * 3
         maxgValue = maxgValue * self._heuristic.nAgent()
         print("max cost: {0}".format(maxgValue))
         # f.write("max cost: {0}".format(maxgValue))
