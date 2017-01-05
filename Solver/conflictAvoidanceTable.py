@@ -8,6 +8,7 @@ class ConflictAvoidanceTable(object):
         """
         self._groupOccupantTable = {}
         self._agentDestination = {}
+        self._groupToAgentIndex = {}
         self._initial = False
         # self._earlistConflictWhileAdding = None
 
@@ -26,31 +27,35 @@ class ConflictAvoidanceTable(object):
     def isEmpty(self):
         return len(self._groupOccupantTable) == 0 and len(self._agentDestination) == 0
 
-    # def violation(self, state):
-    #     """ return num of violation in state
-    #     :param state:
-    #     :return:
-    #     """
-    #     conflictGroup = set([])
-    #     for singleAgentState in state.getSingleAgents():
-    #         conflictGroup |= self._violationSingleState(singleAgentState)
-    #     # return conflictGroup, len(conflictGroup)
-    #     return len(conflictGroup)
-
     def violation(self, state):
-        from SingleAgent.States.ODState import ODState
-        if isinstance(state, ODState):
-            movenext = state.getMoveNext()
-            if movenext == 0:
-                index = len(state.getSingleAgents())
-            else:
-                index = movenext
-        else:
+        """ return num of violation in state
+        :param state:
+        :return:
+        """
+        movenext = state.getMoveNext()
+        if movenext == 0:
             index = len(state.getSingleAgents())
-        for singleAgentState in state.getSingleAgents()[0: index]:
-            if self._violationSingleState(singleAgentState):
-                return True
-        return False
+        else:
+            index = movenext
+        res = 0
+        for s in state.getSingleAgents()[0: index]:
+            res += self._violationSingleState(s)
+        return res
+
+    # def violation(self, state):
+    #     from SingleAgent.States.ODState import ODState
+    #     if isinstance(state, ODState):
+    #         movenext = state.getMoveNext()
+    #         if movenext == 0:
+    #             index = len(state.getSingleAgents())
+    #         else:
+    #             index = movenext
+    #     else:
+    #         index = len(state.getSingleAgents())
+    #     for singleAgentState in state.getSingleAgents()[0: index]:
+    #         if self._violationSingleState(singleAgentState):
+    #             return True
+    #     return False
 
     def _violationSingleState(self, singleAgentState):
         """
@@ -64,17 +69,24 @@ class ConflictAvoidanceTable(object):
         coordList.append(Coordinate(coord.getTimeStep() + 1, coord.getNode()))
         coordList.append(Coordinate(coord.getTimeStep() - 1, coord.getNode()))
         # violation in groupOccupantTable
+        conflictGroup = set([])
         for coord in coordList:
             if coord in self._groupOccupantTable:
-                return True
+                conflictGroup |= self._groupOccupantTable[coord]
+
         # violation in destination
         pos = coord.getNode().getPosition()
         if pos in self._agentDestination:
             preDic = self._agentDestination[pos]
             for id, t in preDic.items():
                 if coord.getTimeStep() >= t - 1:
-                    return True
-        return False
+                    conflictGroup |= set([id])
+
+        conflictGroup = list(conflictGroup)
+        totalconflict = 0
+        for group in conflictGroup:
+            totalconflict += len(self._groupToAgentIndex[group])
+        return totalconflict
 
     def addPath(self, path, id):
         """
@@ -83,6 +95,7 @@ class ConflictAvoidanceTable(object):
         """
         # print("cat add path {0}".format(id))
         self._initial = True
+        self._groupToAgentIndex[id] = [x.getAgentId() for x in path[0].getSingleAgents()]
         # paths include only OD states
         for i in range(len(path)):
             state = path[i]
@@ -135,6 +148,7 @@ class ConflictAvoidanceTable(object):
         :return:
         """
         # print("cat delete path {0}".format(id))
+        del self._groupToAgentIndex[id]
         # delete states in paths
         for i in range(len(path)):
             state = path[i]
@@ -178,6 +192,7 @@ class ConflictAvoidanceTable(object):
     def clear(self):
         self._groupOccupantTable.clear()
         self._agentDestination.clear()
+        self._groupToAgentIndex.clear()
         self._initial = False
 
 
@@ -189,40 +204,47 @@ def main():
     from SingleAgent.Utilities.ProblemMap import ProblemMap
     from SingleAgent.Solver.AStar.ODAStar import ODAStar
 
-    cat = ConflictAvoidanceTable()
+
     graph2 = Graph(ProblemMap(14, {(2, 5): (5, 2),
                                    (0, 10): (5, 16),
                                    (7, 1): (2, 5),
                                    (8, 6): (4, 2)
                                    }))
-    agent2 = [#Agent(0, (0, 4), (0, 9)),
-              Agent(0, (0, 6), (3, 0)),
-              Agent(1, (0, 2), (9, 4))
+    agent1 = [#Agent(0, (0, 4), (0, 9)),
+              Agent(1, (0, 6), (3, 0)),
+              Agent(2, (0, 2), (9, 4))
               # Agent(3, (13, 6), (4, 2)),
               # Agent(4, (13, 0), (1, 3)),
               # Agent(5, (6, 9), (12, 7))
               ]
-    agent3 = [Agent(0, (0, 4), (0, 9))
+    agent2 = [Agent(0, (0, 4), (0, 9))
               # Agent(1, (0, 6), (3, 0)),
               # Agent(2, (0, 2), (9, 4)),
               # Agent(3, (13, 6), (4, 2))
               # Agent(4, (13, 0), (1, 3)),
               # Agent(5, (6, 9), (12, 7))
               ]
-    testProblem1 = ProblemInstance(graph2, agent2)
-    testProblem2 = ProblemInstance(graph2, agent3)
+    agent3 = [#Agent(0, (0, 4), (0, 9))
+              # Agent(1, (0, 6), (3, 0)),
+              # Agent(2, (0, 2), (9, 4)),
+              Agent(3, (13, 6), (4, 2)),
+              Agent(4, (13, 0), (1, 3)),
+              Agent(5, (6, 9), (12, 7))
+              ]
+    testProblem1 = ProblemInstance(graph2, agent1)
+    testProblem2 = ProblemInstance(graph2, agent2)
+    testProblem3 = ProblemInstance(graph2, agent3)
     testProblem1.plotProblem()
     print()
     testProblem2.plotProblem()
 
-    startTime = time.time()
     solver1 = ODAStar()
     solver1.solve(testProblem1)
-    print("solver time: {0} ".format(time.time() - startTime))
     solver1.printPath()
     solver1.visualizePath(testProblem1)
 
 #   =====  test addPath ===
+    cat = ConflictAvoidanceTable()
     cat.addPath(solver1.getPath(), 0)
     for key, value in cat.groupOccupantTable().items():
         print("{0}, {1}".format(key, value))
@@ -233,12 +255,15 @@ def main():
 #    ==== test violation ===
     solver2 = ODAStar()
     solver2.solve(testProblem2)
+    print("path 2:")
     solver2.printPath()
-    state = solver2.getPath()[0]
-    num = cat.violation(state)
-    assert num == 0
+
+    num = cat.violation(solver2.getPath()[0])
+    assert num == 2
+
     num = cat.violation(solver2.getPath()[1])
-    assert num == 1
+    assert num == 2
+
 #   === test deletePath ====
     cat.deletePath(solver1.getPath(), 0)
     assert len(cat.groupOccupantTable()) == 0

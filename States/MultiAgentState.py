@@ -52,14 +52,14 @@ class MultiAgentState(State):
             self._hValue += singleState.hValue()
 
     def updateCATViolations(self, cat):
-        if cat.violation(self):
-            newViolation = 1
-        else:
-            newViolation = 0
+        # if cat.violation(self):
+        #     newViolation = 1
+        # else:
+        #     newViolation = 0
         if self.predecessor() is None:
-            self._conflictViolations = newViolation
+            self._conflictViolations = cat.violation(self)
         else:
-            self._conflictViolations = self.predecessor().conflictViolations() + newViolation
+            self._conflictViolations = self.predecessor().conflictViolations() + cat.violation(self)
 
     def updateUsedElectrode(self, table, nsize):
         tempList = table.toList(nsize)

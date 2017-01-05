@@ -39,6 +39,10 @@ class StateClosedList(ICLosedList):
         assert isinstance(state, State), "ClosedList add requires state class"
         self._closeSet[state] = state
 
+    def delete(self, state):
+        assert state in self._closeSet, 'state not in StateClosedList, \n{0}'.format(state)
+        del self._closeSet[state]
+
     def clear(self):
         self._closeSet.clear()
 

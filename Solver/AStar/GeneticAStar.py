@@ -27,19 +27,23 @@ class GeneticAStar(ConstraintSolver):
         Do not setUsedElectrode/cat if not initialized
         Do not setcat if isEmpty
         """
+        import os
         assert isinstance(problemInstance, ProblemInstance), "Initialize solve function require problemInstance"
         self.init(problemInstance)
         # ====== for debug ===========
-        # alist = [str(x.getId()) for x in problemInstance.getAgents()]
-        # name = '_'.join(alist)
-        # f = open('/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/SingleAgent/Result/test_12_12_1/test35/{0}.txt'
-        #          .format(name), 'w')
+        alist = [str(x.getId()) for x in problemInstance.getAgents()]
+        name = '_'.join(alist)
+        dirname = '/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/Result/test_12_12_1/log3/'
+        if not os.path.exists(os.path.dirname(dirname)):
+            os.makedirs(os.path.dirname(dirname))
+        f = open('{0}{1}.txt'
+                 .format(dirname, name), 'a')
         # ===== end ======
         maxgValue = problemInstance.getGraph().getSize() * 3
-        maxgValue = maxgValue * self._heuristic.nAgent()
+        # maxgValue = maxgValue * self._heuristic.nAgent()
         print("max cost: {0}".format(maxgValue))
-        # f.write("max cost: {0}".format(maxgValue))
-        # f.write("\n")
+        f.write("max cost: {0}".format(maxgValue))
+        f.write("\n")
 
         root = self.createRoot(problemInstance)
         self.setHeuristic(root, 'trueDistance', self._heuristic)
@@ -57,14 +61,12 @@ class GeneticAStar(ConstraintSolver):
             if toPrint:
                 print("\nOpenList size: {0};  closedList size ~: {1}".format(self._openList.qsize(),
                                                                            self.closeList().size()))
-                # f.write("\n")
-                # f.write("OpenList size: {0};  closedList size ~: {1}".format(self._openList.qsize(),
-                #                                                            self.closeList().size()))
-                # f.write("\n")
 
                 print("timeStep: {0}, pop: {1}".format(currentState.timeStep(), currentState))
-                # f.write("timeStep: {0}, pop: {1}".format(currentState.timeStep(), currentState))
-                # f.write("\n")
+
+            f.write("\nOpenList size: {0};  closedList size ~: {1}".format(self._openList.qsize(),
+                                                              self.closeList().size()))
+            f.write("\ntimeStep: {0}, pop: {1}\n".format(currentState.timeStep(), currentState))
 
             self._closeList.add(currentState)
 
@@ -76,16 +78,26 @@ class GeneticAStar(ConstraintSolver):
                 else:
                     nextgoal = currentState.generateNextGoal(problemInstance)
                     if self.getReservation().isValid(nextgoal):
-                        # print("put back {0}, timestep: {1} ".format(nextgoal, nextgoal.timeStep()))
-                        # f.write("put back {0}, timestep: {1} ".format(nextgoal, nextgoal.timeStep()))
-                        # f.write("\n")
+                        print("put back {0}, timestep: {1} ".format(nextgoal, nextgoal.timeStep()))
+                        f.write("put back {0}, timestep: {1} ".format(nextgoal, nextgoal.timeStep()))
+                        f.write("\n")
+
                         self.setHeuristic(nextgoal, 'trueDistance', self._heuristic)
                         self._setTables(nextgoal, problemInstance)
                         self._openList.put(nextgoal)
-                    # else:
-                        # print("Conflict with reservation, do not put back.")
-                        # f.write("Conflict with reservation, do not put back.")
-                        # f.write("\n")
+                    else:
+                        # delete goal in closelist
+                        # self._closeList.delete(currentState)
+                        # ====== experiment with deleting all ========
+                        # preS = currentState.getPreState()
+                        # while preS is not None:
+                        #     if preS in self._closeList.getClosedList():
+                        #         self._closeList.delete(preS)
+                        #     preS = preS.getPreState()
+                        # ======== end ==========
+                        print("Conflict with reservation, do not put back.")
+                        f.write("Conflict with reservation, do not put back.")
+                        f.write("\n")
 
             # not reach goal state
             else:
@@ -93,35 +105,42 @@ class GeneticAStar(ConstraintSolver):
                 for s in potentialStates:
                     self.setHeuristic(s, 'trueDistance', self._heuristic)
                     self._setTables(s, problemInstance)
+                    # ======== each agent maxCost ======
+                    lessValue = True
+                    for singleS in s.getSingleAgents():
+                        if singleS.fValue() > maxgValue:
+                            lessValue = False
+                    # ========= end =============
                     if self.getReservation().isValid(s):
-                        if s.gValue() + s.hValue() < maxgValue:
+                        # if s.gValue() + s.hValue() < maxgValue:
+                        if lessValue:
                         # unlimited openlist pop and put into
                             if toPrint:
                                 print(s)
-                                # f.write(str(s))
-                                # f.write("\n")
+                            f.write(str(s))
+                            f.write("\n")
                             # agents stays
                             if not self._closeList.contains(s):
                                 self._openList.put(s)
                                 self._closeList.add(s)
                                 if toPrint:
                                     print("add to openlist/closelist")
-                                    # f.write("add to openlist/closelist")
-                                    # f.write("\n")
+                                f.write("add to openlist/closelist")
+                                f.write("\n")
                             elif s.isStay(currentState):
                                 self._openList.put(s)
                                 if toPrint:
                                     print("add to openlist")
-                                    # f.write("add to openlist")
-                                    # f.write("\n")
-                    # else:
-                    #     if toPrint:
-                    #         print(s)
-                            # f.write(str(s))
-                            # f.write("obey violations")
-                            # f.write("\n")
+                                f.write("add to openlist")
+                                f.write("\n")
+                    else:
+                        if toPrint:
+                            print(s)
+                        f.write(str(s))
+                        f.write("obey violations")
+                        f.write("\n")
 
-        # f.close()
+        f.close()
         return False
 
     def init(self, problemInstance):
@@ -133,7 +152,6 @@ class GeneticAStar(ConstraintSolver):
         from TDHeuristic import TDHeuristic
         while not self._openList.empty():
             self._openList.get()
-        # self._openList = PriorityQueue()
         self._closeList.clear()
         self._goalState = None
         # init TDHeuristic

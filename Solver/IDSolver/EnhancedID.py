@@ -423,10 +423,13 @@ def generateProblem(filename):
 def main():
     import time
     import os
+    import sys
     from SingleAgent.Utilities.Agent import Agent
     from SingleAgent.Utilities.Graph import Graph
     from SingleAgent.Utilities.ProblemMap import ProblemMap
     from SingleAgent.Solver.AStar.ODAStar import ODAStar
+
+    sys.setrecursionlimit(30000)
 
     # graph = Graph(ProblemMap(12, {(7, 1): (3, 3),
     #                 (3, 8): (2, 2),
@@ -451,17 +454,17 @@ def main():
 
     # ========== read from file ================
     fileroot = '/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/DMFB'
-    # # filename = 'benchmark_2_minsik'
+    # filename = 'benchmark_9_minsik'
     # # filename = 'in-vitro.3'
     # # filename ='in-vitro_2.3'
     # # filename = 'protein.9'
     # # filename = 'in-vitro_2.5'
+    # filename = 'test_12_12_1.in'
     filename = 'test_12_12_1.in'
-    # filename = 'test_24_24_1.in'
     testProblem = generateProblem(os.path.join(fileroot, filename))
     testProblem.plotProblem()
 
-    saveRoot= '/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/SingleAgent/Result/{0}/'.format(filename[0:-3])
+    saveRoot= '/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/Result/{0}/'.format(filename[0:-3])
     if not os.path.exists(os.path.dirname(saveRoot)):
         os.makedirs(os.path.dirname(saveRoot))
     # save probleminstance
@@ -469,22 +472,22 @@ def main():
         pickle.dump(testProblem, f)
     # save result and other things
     startTime = time.time()
-    solver1 = EnhandcedID(ODAStar(), 1, saveRoot + 'test_12_12_1')
+    solver1 = EnhandcedID(ODAStar(), 1, saveRoot + 'x2.5')
     if solver1.solve(testProblem, saveRoot):
         print("solver time: {0} ".format(time.time() - startTime))
 
     # ========== test read from pickle file ================
     # read probleminstance
-    # readRoot = '/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/SingleAgent/Result/test_12_12_1/'
-    # saveRoot= readRoot + 'test35/'
+    # readRoot = '/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/Result/test_12_12_2/'
+    # saveRoot= readRoot + 'test0_10/'
     # if not os.path.exists(os.path.dirname(saveRoot)):
     #     os.makedirs(os.path.dirname(saveRoot))
     #
     # with open(readRoot + 'InitialProblem.pickle', 'rb') as f:
     #     testProblem = pickle.load(f)
     #
-    # solver2 = EnhandcedID(ODAStar(), 1, saveRoot + 'test_12_12_1_test35')
-    # solver2.read(readRoot, '1_9')
+    # solver2 = EnhandcedID(ODAStar(), 1, saveRoot + 'test_12_12_2_test0_10')
+    # solver2.read(readRoot, '0_2')
     # solver2.solve(testProblem, saveRoot)
 
     #  === test conflict as priority =======

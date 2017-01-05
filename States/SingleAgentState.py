@@ -17,7 +17,7 @@ class SingleAgentState(State):
         """
         assert isinstance(backPointer, State) or backPointer is None, "para 2 class is not State"
         assert isinstance(problemInstance, ProblemInstance), "para 3 class is not ProblemInstance"
-        assert isinstance(currentNode, Node), "para 1 class is not Node"
+        assert isinstance(currentNode, Node), "para 1 class is not Node. \n{0}".format(currentNode)
 
         super(SingleAgentState, self).__init__(backPointer)
         self._agentId = agentId
