@@ -33,13 +33,13 @@ class GeneticAStar(ConstraintSolver):
         # ====== for debug ===========
         alist = [str(x.getId()) for x in problemInstance.getAgents()]
         name = '_'.join(alist)
-        dirname = '/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/Result/test_12_12_1/log3/'
+        dirname = '/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/Result/test_12_12_2/log2/'
         if not os.path.exists(os.path.dirname(dirname)):
             os.makedirs(os.path.dirname(dirname))
         f = open('{0}{1}.txt'
                  .format(dirname, name), 'a')
         # ===== end ======
-        maxgValue = problemInstance.getGraph().getSize() * 3
+        maxgValue = problemInstance.getGraph().getSize() * 2
         # maxgValue = maxgValue * self._heuristic.nAgent()
         print("max cost: {0}".format(maxgValue))
         f.write("max cost: {0}".format(maxgValue))
@@ -87,7 +87,7 @@ class GeneticAStar(ConstraintSolver):
                         self._openList.put(nextgoal)
                     else:
                         # delete goal in closelist
-                        # self._closeList.delete(currentState)
+                        self._closeList.delete(currentState)
                         # ====== experiment with deleting all ========
                         # preS = currentState.getPreState()
                         # while preS is not None:
