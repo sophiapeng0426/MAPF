@@ -24,10 +24,61 @@ class Util(object):
                         isGoalState = True
                     else:
                         compareState = path[t]
-                    if self.conflictState(thisState, compareState, isGoalState):
+
+                    conflict = Conflict(t, index, i, None, None)
+                    if self.conflictState2(thisState, compareState, isGoalState, conflict):
                         # return earliest conflict of thisPath and pathList
-                        return Conflict(t, index, i)
+                        return conflict
         return None
+
+    def conflictState2(self, thisState, compareState, isGoal, conflict):
+        """
+        return first conflict found include agentId if conflict exists, more efficient should include
+        all conflicts between these two OD states
+        :param thisState:
+        :param compareState:
+        :param isGoal: if compare state is goal state
+        :param conflict: changed conflict
+        :return:
+        """
+        for thisS in thisState.getSingleAgents():
+            thisP = thisS.getCoord().getNode().getPosition()
+            for compareS in compareState.getSingleAgents():
+                compareP = set([])
+                # current position and neighbor
+                compareP.add(compareS.getCoord().getNode().getPosition())
+                for node in compareS.getCoord().getNode().get_neighbor():
+                    if node is not None:
+                        compareP.add(node.getPosition())
+                # previous position and neighbor
+                if not isGoal and compareS.predecessor() is not None:
+                    compareP.add(compareS.predecessor().getCoord().getNode().getPosition())
+                    for node in compareS.predecessor().getCoord().getNode().get_neighbor():
+                        if node is not None:
+                            compareP.add(node.getPosition())
+                if thisP in compareP:
+                    conflict.setAgent(thisS.getAgentId(), compareS.getAgentId())
+                    return True
+
+        for thisS in compareState.getSingleAgents():
+            thisP = thisS.getCoord().getNode().getPosition()
+            for compareS in thisState.getSingleAgents():
+                compareP = set([])
+                # current position and neighbor
+                compareP.add(compareS.getCoord().getNode().getPosition())
+                for node in compareS.getCoord().getNode().get_neighbor():
+                    if node is not None:
+                        compareP.add(node.getPosition())
+                # previous position and neighbor
+                if compareS.predecessor() is not None:
+                    compareP.add(compareS.predecessor().getCoord().getNode().getPosition())
+                    for node in compareS.predecessor().getCoord().getNode().get_neighbor():
+                        if node is not None:
+                            compareP.add(node.getPosition())
+                if thisP in compareP:
+                    conflict.setAgent(compareS.getAgentId(), thisS.getAgentId())
+                    return True
+        return False
 
     def conflictState(self, thisState, compareState, isGoal):
         """ check if two states have time conflict
@@ -96,6 +147,18 @@ class Util(object):
             if path is not None and len(path) > r:
                 r = len(path)
         return r
+
+    def pathLength(self, path):
+        reversed = path[::-1]
+        i = 0
+        while i < len(reversed) - 1:
+            if reversed[i] == reversed[i+1]:
+                i += 1
+            else:
+                break
+        return len(path)-i-1
+
+
 
 
 def main():

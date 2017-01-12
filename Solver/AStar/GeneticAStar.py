@@ -33,17 +33,17 @@ class GeneticAStar(ConstraintSolver):
         # ====== for debug ===========
         alist = [str(x.getId()) for x in problemInstance.getAgents()]
         name = '_'.join(alist)
-        dirname = '/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/Result/test_12_12_2/log2/'
+        dirname = '/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/Result/test_16_16_1/log3/'
         if not os.path.exists(os.path.dirname(dirname)):
             os.makedirs(os.path.dirname(dirname))
         f = open('{0}{1}.txt'
                  .format(dirname, name), 'a')
+        f.write(dirname)
         # ===== end ======
-        maxgValue = problemInstance.getGraph().getSize() * 2
+        maxgValue = problemInstance.getGraph().getSize() * 3
         # maxgValue = maxgValue * self._heuristic.nAgent()
         print("max cost: {0}".format(maxgValue))
-        f.write("max cost: {0}".format(maxgValue))
-        f.write("\n")
+        f.write("max cost: {0}\n".format(maxgValue))
 
         root = self.createRoot(problemInstance)
         self.setHeuristic(root, 'trueDistance', self._heuristic)

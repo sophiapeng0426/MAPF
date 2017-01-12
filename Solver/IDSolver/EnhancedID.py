@@ -18,6 +18,7 @@ class EnhandcedID(IDSolver):
 
         if len(self._problemList) == 0:
             if not self.populatePath(self._initialProblem):
+                # changed initialize self._conflictInPast [group][id]
                 return False
         self.save(saveDir, 'initial')
 
@@ -29,28 +30,35 @@ class EnhandcedID(IDSolver):
         index = 0
         while index < len(self._pathList):
             conflict = Util().conflict(index, 0, self._pathList)
-            if conflict is None:
+            if conflict is None or conflict.isEmpty():
                 index += 1
             else:
-                pblist = self._problemList[:]
-                problemBefore = len(filter(lambda x: x is not None, pblist))
-                if not self.resolveConflict(conflict.getGroup1(), conflict.getGroup2()):
+                # pblist = self._problemList[:]
+                # problemBefore = len(filter(lambda x: x is not None, pblist))
+                swallowed = False
+                if not self.enhanced_resolveConflict(conflict, swallowed):
                     return False
                 # ======= for debugging ==========
                 # else:
                 #     return True
                 # ======= end ===========
-                pblist = self._problemList[:]
-                problemAfter = len(filter(lambda x: x is not None, pblist))
-                if problemBefore == problemAfter:
+                # pblist = self._problemList[:]
+                # problemAfter = len(filter(lambda x: x is not None, pblist))
+
+                # if problemBefore == problemAfter:
+                if not swallowed:
+                    # does not swallow
                     index = min(conflict.getGroup1(), conflict.getGroup2())
-            if conflict is not None:
+            if conflict is not None and not conflict.isEmpty():
                 self.save(saveDir, '{0}_{1}'.format(conflict.getGroup1(), conflict.getGroup2()))
             elif conflict is None and index == len(self._pathList)-1:
                 self.save(saveDir, 'solution')
 
+        # ==== record final result =====
         totalCost, usedElectrode, finalPath = Util().mergePaths(self._pathList)
-        assert self.correctcheck(finalPath), 'Wrong answer!'
+
+        if not self.correctcheck(finalPath):
+            print("=== Final check is wrong answer! ===")
         headline = "total cost: {0}, used electrode: {1} \n".format(totalCost, usedElectrode)
         strPath = self.strPath(finalPath)
         print(headline + strPath + '\n')
@@ -108,7 +116,7 @@ class EnhandcedID(IDSolver):
         """
         clear solver() tables, populate problemList, pathList
         """
-        from random import shuffle
+        # from random import shuffle
         # ===== clear solver() tables ===
         self.clearSolver()
         # ===== clear ProblemList and shuffle ===
@@ -121,7 +129,10 @@ class EnhandcedID(IDSolver):
         if not self.solveInitialProblem():
             return False
         self.clearSolver()
-        self._conflictInPast = [[False for i in range(len(self.paths()))] for j in range(len(self.paths()))]
+
+        # self._conflictInPast = [[False for i in range(len(self.paths()))] for j in range(len(self.paths()))]
+        self._conflictInPast = [[False for i in range(len(problemInstance.getAgents()))]
+                                for j in range(len(self.paths()))]
         return True
 
     def solveInitialProblem(self):
@@ -173,40 +184,134 @@ class EnhandcedID(IDSolver):
     #     self.solver().getUsedTable().addPath(self.paths()[id1], id1)
     #     return True
 
-    def resolveConflict(self, id1, id2):
-        print("\n==== Resolve Conflict {0} {1} ====".format(id1, id2))
-        totalSize = len(self._problemList[id1].getAgents()) + len(self._problemList[id2].getAgents())
-        exceed = totalSize > self._mgs
-        if exceed:
-            if self._conflictInPast[id1][id2] is True:
-                if totalSize <= self._mgs + 3:
-                    self.solver().setIgnore(True)
-                    self.updateConflictPast(id1)
-                    return super(EnhandcedID, self).resolveConflict(id1, id2)
-                else:
-                    print("Exceed MGS, fail to find path.")
-                    return False
+    def enhanced_resolveConflict(self, conflict, swallowed):
+        """
+        resolve conflict
+        :param conflict: new conflict include ids
+        :return:
+        """
+        print("\n==== Resolve Conflict {0} {1} ====".format(conflict.getGroup1(), conflict.getGroup2()))
+        # ===== debug: print conflictInPast ===
+        # for line in self._conflictInPast:
+        #     print(line)
+        # ======== end  =====
+        faster = conflict.getGroup1()
+        slower = conflict.getGroup2()
+        fastera = conflict.getAgent1()
+        slowera = conflict.getAgent2()
+
+        if sum(self._conflictInPast[faster]) > sum(self._conflictInPast[slower]):
+            faster, slower = slower, faster
+            fastera, slowera = slowera, fastera
+        elif sum(self._conflictInPast[faster]) == sum(self._conflictInPast[slower]):
+            if Util().pathLength(self.paths()[faster]) > Util().pathLength(self.paths()[slower]):
+                faster, slower = slower, faster
+                fastera, slowera = slowera, fastera
+
+        totalSize = len(self._problemList[faster].getAgents()) + len(self._problemList[slower].getAgents())
+        oversize = totalSize > self._mgs
+        newPath = None
+
+        # === replan group[faster] ====
+        print("\n==Replan faster {0}==".format(faster))
+        if not self._conflictInPast[faster][slowera]:
+            self.solver().getCAT().deletePath(self._pathList[faster], faster)
+            self.solver().getUsedTable().deletePath(self._pathList[faster], faster)
+            self.solver().getReservation().reservePath(self._pathList[slower])
+            newpath = self.findAlternativePath(faster, slower, oversize)
+            self.solver().getReservation().clear()
+            if newpath is not None:
+                # success
+                print("@@Find new path for group {0}".format(faster))
+                self._conflictInPast[faster][slowera] = True
+                self._pathList[faster] = newpath
+                self.solver().getCAT().addPath(newpath, faster)
+                self.solver().getUsedTable().addPath(newpath, faster)
+                return True
             else:
-                alternative = self._findLessViolationPath(id2, id1)
-                if not alternative:
-                    alternative = self._findLessViolationPath(id1, id2)
-                self._conflictInPast[id1][id2] = True
-                self._conflictInPast[id2][id1] = True
-        else:
-            if self._conflictInPast[id1][id2] is True:
-                self.updateConflictPast(id1)
-                return super(EnhandcedID, self).resolveConflict(id1, id2)
+                # not success
+                print("@@Failed replan faster {0}".format(faster))
+                self.solver().getCAT().addPath(self._pathList[faster], faster)
+                self.solver().getUsedTable().addPath(self._pathList[faster], faster)
+
+        # === replan group[slower] ====
+        print("\n==Replan slower {0}==".format(slower))
+        if not self._conflictInPast[slower][fastera]:
+            self.solver().getCAT().deletePath(self._pathList[slower], slower)
+            self.solver().getUsedTable().deletePath(self._pathList[slower], slower)
+            self.solver().getReservation().reservePath(self._pathList[faster])
+            newpath = self.findAlternativePath(slower, faster, oversize)
+            self.solver().getReservation().clear()
+            if newpath is not None:
+                # success
+                print("@@Find new path for group {0}".format(slower))
+                self._conflictInPast[slower][fastera] = True
+                self._pathList[slower] = newpath
+                self.solver().getCAT().addPath(newpath, slower)
+                self.solver().getUsedTable().addPath(newpath, slower)
+                return True
             else:
-                alternative = self._findEqualCostPath(id2, id1)
-                if not alternative:
-                    alternative = self._findEqualCostPath(id1, id2)
-                self._conflictInPast[id1][id2] = True
-                self._conflictInPast[id2][id1] = True
-        if alternative:
-            print("found new path.")
-            return True
+                # not success
+                print("@@Failed replan slower {0}".format(slower))
+                self.solver().getCAT().addPath(self._pathList[slower], slower)
+                self.solver().getUsedTable().addPath(self._pathList[slower], slower)
+
+        # ==== swallow ===
+        print("\n==Plan group together {0}, {1}==".format(faster, slower))
+        swallowed = True
+        if totalSize > 4:
+            print("Exceed MGS (4), fail to find path.")
+            return False
+        # does not exceed 4 droplets
+        if oversize:
+            self.solver().setIgnore(True)
         else:
-            return self.resolveConflict(id1, id2)
+            self.solver().setIgnore(False)
+        # update conflictInPast
+        for i in range(len(self._conflictInPast[faster])):
+            self._conflictInPast[faster][i] = False
+        return self.resolveConflict(faster, slower)
+
+    def findAlternativePath(self, pathId1, pathId2, oversize):
+        """
+        find alternative for path1
+        :param pathId:
+        :param oversize:
+        :return: path
+        """
+        costLimit = 10000
+        if oversize:
+            self.solver().setIgnore(True)
+        else:
+            self.solver().setIgnore(False)
+            costLimit = self.paths()[pathId1][-1].gValue()
+
+        if self.solver().solve(self.problems()[pathId1]):
+            newpath1 = self.solver().getPath()
+            # ====== confirm newpath is no conflict ===========
+            if self.haveConflict(newpath1, self.paths()[pathId2]):
+                print("Replan failed conflict check.")
+                self.solver().getReservation().clear()
+                return None
+            # ====== end ==========
+        else:
+            # failed to find alternative path
+            return None
+
+        newCost = newpath1[-1].gValue()
+        if not oversize:
+            if newCost <= costLimit:
+                print("=== find new path, new cost: {0} ===".format(newCost))
+                self.solver().printPath()
+                return newpath1
+            else:
+                print("=== Failed to find same cost alternative path, new cost {0} ===".format(newCost))
+                return None
+        else:
+            print("=== find new path, new cost: {0} ===".format(newCost))
+            self.solver().printPath()
+            return newpath1
+
 
     def haveConflict(self, newpath1, path2):
         # ====== confirm newpath is no conflict ===========
@@ -423,10 +528,9 @@ def generateProblem(filename):
 def main():
     import time
     import os
-    import sys
-    from SingleAgent.Utilities.Agent import Agent
-    from SingleAgent.Utilities.Graph import Graph
-    from SingleAgent.Utilities.ProblemMap import ProblemMap
+    # from SingleAgent.Utilities.Agent import Agent
+    # from SingleAgent.Utilities.Graph import Graph
+    # from SingleAgent.Utilities.ProblemMap import ProblemMap
     from SingleAgent.Solver.AStar.ODAStar import ODAStar
 
     sys.setrecursionlimit(30000)
@@ -460,7 +564,7 @@ def main():
     # # filename = 'protein.9'
     # # filename = 'in-vitro_2.5'
     # filename = 'test_12_12_1.in'
-    filename = 'test_12_12_2.in'
+    filename = 'test_16_16_1.in'
     testProblem = generateProblem(os.path.join(fileroot, filename))
     testProblem.plotProblem()
 
@@ -472,7 +576,7 @@ def main():
         pickle.dump(testProblem, f)
     # save result and other things
     startTime = time.time()
-    solver1 = EnhandcedID(ODAStar(), 1, saveRoot + 'x3.5')
+    solver1 = EnhandcedID(ODAStar(), 1, saveRoot + 'x3')
     if solver1.solve(testProblem, saveRoot):
         print("solver time: {0} ".format(time.time() - startTime))
 

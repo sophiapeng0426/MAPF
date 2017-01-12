@@ -56,7 +56,7 @@ class IDSolver(ConstraintSolver):
         return True
 
     def resolveConflict(self, id1, id2):
-        print("resolve conflict for group: {0}, {1}".format(id1, id2))
+        # print("resolve conflict for group: {0}, {1}".format(id1, id2))
         # update _problemList[id1]
         self._problemList[id1].join(self._problemList[id2])
         # exclude paths for id1 and id2 for cat and UsedTable
