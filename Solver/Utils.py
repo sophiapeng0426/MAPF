@@ -10,7 +10,6 @@ class Util(object):
         :return:
         """
         thisPath = pathList[index]
-        isGoalState = False
         if thisPath is None:
             return None
         for i in range(startIndex, len(pathList)):
@@ -18,6 +17,7 @@ class Util(object):
                 path = pathList[i]
                 # iterate over each time step
                 for t in range(len(thisPath)):
+                    isGoalState = False
                     thisState = thisPath[t]
                     if t > len(path) - 1:
                         compareState = path[-1]
@@ -116,7 +116,7 @@ class Util(object):
                 return True
         return False
 
-    def mergePaths(self, pathList):
+    def mergePaths(self, pathList, problemInstance):
         """ generate paths for IDSolver
         :param pathList:
         :return: list of list of singleAgents
@@ -125,6 +125,7 @@ class Util(object):
         longestLength = self.getLongestPath(paths)
         mergedList = [[] for i in range(longestLength)]
         usedElectrode = set([])
+        startOrGoal = problemInstance.startandGoalPosition()
         for t in range(longestLength):
             for path in paths:
                 if t < len(path):
@@ -133,7 +134,8 @@ class Util(object):
                     state = path[-1]
                 for singleAgent in state.getSingleAgents():
                     mergedList[t].append(singleAgent)
-                    usedElectrode.add(singleAgent.getCoord().getNode().getPosition())
+                    if singleAgent.getCoord().getNode().getPosition() not in startOrGoal:
+                        usedElectrode.add(singleAgent.getCoord().getNode().getPosition())
         totalCost = 0
         for path in pathList:
             if path is not None:

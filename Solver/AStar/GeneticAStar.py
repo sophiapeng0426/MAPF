@@ -18,30 +18,32 @@ class GeneticAStar(ConstraintSolver):
         self._heuristic = None
         self._ignoreCost = False
 
-    def solve(self, problemInstance):
-        """ solver for singleAgent and multiAgent
+    def solve(self, problemInstance, root, cost, total):
+        """ updated solve
         :param problemInstance:
+        :param root:
+        :param cost:
+        :param total:
         :return:
-        """
-        """
-        Do not setUsedElectrode/cat if not initialized
-        Do not setcat if isEmpty
         """
         import os
         assert isinstance(problemInstance, ProblemInstance), "Initialize solve function require problemInstance"
         self.init(problemInstance)
+
         # ====== for debug ===========
         alist = [str(x.getId()) for x in problemInstance.getAgents()]
         name = '_'.join(alist)
-        dirname = '/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/Result/test_16_16_1/log3/'
+        dirname = root + '/log/'
+        # dirname = '/Users/chengpeng/Documents/MTSL/ElectrodeDesgin/Result/test_16_16_1/log3.5t/'
         if not os.path.exists(os.path.dirname(dirname)):
             os.makedirs(os.path.dirname(dirname))
-        f = open('{0}{1}.txt'
-                 .format(dirname, name), 'a')
+        f = open('{0}{1}.txt'.format(dirname, name), 'a')
         f.write(dirname)
         # ===== end ======
-        maxgValue = problemInstance.getGraph().getSize() * 3
-        # maxgValue = maxgValue * self._heuristic.nAgent()
+
+        maxgValue = problemInstance.getGraph().getSize() * cost
+        if total:
+            maxgValue = maxgValue * self._heuristic.nAgent()
         print("max cost: {0}".format(maxgValue))
         f.write("max cost: {0}\n".format(maxgValue))
 
@@ -50,10 +52,10 @@ class GeneticAStar(ConstraintSolver):
         self._setTables(root, problemInstance)
         self._openList.put(root)
 
-        while not self._openList.empty() and self._closeList.size() < 1500000:
+        while not self._openList.empty() and self._closeList.size() < 1000000:
             currentState = self._openList.get()
 
-            if self._closeList.size() % 5000 == 0:
+            if self._closeList.size() % 10000 == 0:
                 toPrint = True
             else:
                 toPrint = False
@@ -63,7 +65,6 @@ class GeneticAStar(ConstraintSolver):
                                                                            self.closeList().size()))
 
                 print("timeStep: {0}, pop: {1}".format(currentState.timeStep(), currentState))
-
             f.write("\nOpenList size: {0};  closedList size ~: {1}".format(self._openList.qsize(),
                                                               self.closeList().size()))
             f.write("\ntimeStep: {0}, pop: {1}\n".format(currentState.timeStep(), currentState))
@@ -79,8 +80,7 @@ class GeneticAStar(ConstraintSolver):
                     nextgoal = currentState.generateNextGoal(problemInstance)
                     if self.getReservation().isValid(nextgoal):
                         print("put back {0}, timestep: {1} ".format(nextgoal, nextgoal.timeStep()))
-                        f.write("put back {0}, timestep: {1} ".format(nextgoal, nextgoal.timeStep()))
-                        f.write("\n")
+                        f.write("put back {0}, timestep: {1}\n".format(nextgoal, nextgoal.timeStep()))
 
                         self.setHeuristic(nextgoal, 'trueDistance', self._heuristic)
                         self._setTables(nextgoal, problemInstance)
@@ -96,8 +96,7 @@ class GeneticAStar(ConstraintSolver):
                         #     preS = preS.getPreState()
                         # ======== end ==========
                         print("Conflict with reservation, do not put back.")
-                        f.write("Conflict with reservation, do not put back.")
-                        f.write("\n")
+                        f.write("Conflict with reservation, do not put back.\n")
 
             # not reach goal state
             else:
@@ -107,39 +106,34 @@ class GeneticAStar(ConstraintSolver):
                     self._setTables(s, problemInstance)
                     # ======== each agent maxCost ======
                     lessValue = True
-                    for singleS in s.getSingleAgents():
-                        if singleS.fValue() > maxgValue:
-                            lessValue = False
-                    # ========= end =============
+                    if not total:
+                        for singleS in s.getSingleAgents():
+                            if singleS.fValue() > maxgValue:
+                                lessValue = False
+                    else:
+                        lessValue = s.gValue() + s.hValue() < maxgValue
+                    # ========= end ============
                     if self.getReservation().isValid(s):
-                        # if s.gValue() + s.hValue() < maxgValue:
                         if lessValue:
-                        # unlimited openlist pop and put into
                             if toPrint:
                                 print(s)
-                            f.write(str(s))
-                            f.write("\n")
+                            f.write(str(s) + '\n')
                             # agents stays
                             if not self._closeList.contains(s):
                                 self._openList.put(s)
                                 self._closeList.add(s)
                                 if toPrint:
                                     print("add to openlist/closelist")
-                                f.write("add to openlist/closelist")
-                                f.write("\n")
+                                f.write("add to openlist/closelist\n")
                             elif s.isStay(currentState):
                                 self._openList.put(s)
                                 if toPrint:
                                     print("add to openlist")
-                                f.write("add to openlist")
-                                f.write("\n")
+                                f.write("add to openlist\n")
                     else:
                         if toPrint:
                             print(s)
-                        f.write(str(s))
-                        f.write("obey violations")
-                        f.write("\n")
-
+                        f.write(str(s) + "obey violations\n")
         f.close()
         return False
 

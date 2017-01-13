@@ -36,7 +36,7 @@ class Conflict(object):
             return False
 
     def __str__(self):
-        return "Group 1: {0}, Group 2: {1}, timeStep: {2}".format(self._group1, self._group2, self._timeStep)
+        return "g{0}_{1}t{2}".format(self._group1, self._group2, self._timeStep)
 
     def __eq__(self, other):
         """ Compares timeStep, group1 and group2

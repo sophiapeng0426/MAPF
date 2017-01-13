@@ -76,6 +76,16 @@ class ProblemInstance(object):
     def getGoals(self):
         return self.__goals
 
+    def startandGoalPosition(self):
+        """
+        :return: set of star and goal positions
+        """
+        pos = set([])
+        for agent in self.__agents:
+            pos.add(agent.getStart())
+            pos.add(agent.getGoal())
+        return pos
+
     def plotProblem(self):
         """
         graph + agents for visualization
