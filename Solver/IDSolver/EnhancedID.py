@@ -541,7 +541,7 @@ def main():
     # save result and other things
     startTime = time.time()
     solver1 = EnhandcedID(ODAStar(), 1)
-    if solver1.solve2(testProblem, saveRoot, 3, True):
+    if solver1.solve2(testProblem, saveRoot, 2.5, False):
         print("solver time: {0} ".format(time.time() - startTime))
 
     # ========== test read from pickle file ================
